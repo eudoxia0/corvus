@@ -26,3 +26,16 @@ struct SExp {
     } atom;
   } content;
 };
+
+/* The following macros are here to reduce the verbosity of accessing the
+   various nested union members in the SExp structure. */
+#define listp(sexp) (sexp->type == LIST)
+#define first(sexp) (sexp->content.list.first)
+#define rest(sexp) (sexp->content.list.rest)
+#define val(sexp) (sexp->content.atom.val)
+
+SExp* makeSExp(std::string data, SExpType type);
+SExp* cons(SExp* first, SExp* rest);
+void push(SExp* list, SExp* obj);
+std::string print(SExp* sexp);
+void freeSExp(SExp* sexp);
