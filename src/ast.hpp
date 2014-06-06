@@ -32,10 +32,21 @@ struct SExp {
 #define listp(sexp) (sexp->type == LIST)
 #define first(sexp) (sexp->content.list.first)
 #define rest(sexp) (sexp->content.list.rest)
+#define line(sexp) (sexp->content.atom.line)
+#define col(sexp) (sexp->content.atom.col)
 #define val(sexp) (sexp->content.atom.val)
 
+/* Create an atom from an std::string and a SExpType; */
 SExp* makeSExp(std::string data, SExpType type);
+
+/* The 'cons' function puts 'first' at the front of the 'rest' list. */
 SExp* cons(SExp* first, SExp* rest);
+
+/* The opposite of cons: Put 'obj' at the end of 'list'. */
 void push(SExp* list, SExp* obj);
+
+/* Return a printed representation of an S-expression. */
 std::string print(SExp* sexp);
+
+/* Free a SExp. */
 void freeSExp(SExp* sexp);
