@@ -21,6 +21,13 @@ likely become `i32` or `i16`).
 The symbol `word` is aliased to the integer type that represents a machine
 word. In 64-bit systems, this is usually `i64`.
 
+### Floating-point
+
+* `half`: Half precision, 16 bits wide.
+* `single`: Single precision, 32 bits wide.
+* `double`: Double precision, 64 bits wide.
+* `quad`: Quadruple precision, 128 bits wide.
+
 ## Aggregate Types
 
 ### Tuples
