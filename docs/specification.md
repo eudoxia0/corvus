@@ -37,3 +37,11 @@ word. In 64-bit systems, this is usually `i64`.
 ## Type Expressions
 
 Type expressions can be used to construct or operate on types.
+
+### Type Construction
+
+* `(tup t1 t2 ... tn)`: Create a tuple of types `t1 t2 ... tn`.
+* `(rec (name1 t1) ... (namen tn))`: Create a record type, where each argument
+  is a `name,type` pair.
+* `(fn t1 t2 ... tn ret)`: Create a function pointer type. `t1` to `tn` are the
+  types of the arguments, and `ret` is the return type.
