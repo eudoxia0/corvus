@@ -45,3 +45,13 @@ Type expressions can be used to construct or operate on types.
   is a `name,type` pair.
 * `(fn t1 t2 ... tn ret)`: Create a function pointer type. `t1` to `tn` are the
   types of the arguments, and `ret` is the return type.
+
+### Type Operations
+
+* `([p|pp|ppp|pppp] type)`: Increases the indirection level of `type` by the
+  number of p's in the expression's name. In C terms, `(pp byte)` is equivalent
+  to` char**`.
+* `(base type)`: If `type` is a pointer of any indirection (eg, pointer to
+  pointer to ...), return the base type.
+* `(ret fn-type)`: Extract the return type from a function pointer type. For
+  example, `(ret (fn i32 i32 (p i8)))` is `i8`.
