@@ -30,7 +30,30 @@
    This helps search a lot. For one, if the reader is reading a macro that
    starts with a given character % and there are three reader macros that start
    with that character in the entry, the reader will find the first, and then
-   will search starting from that position when reading subsequent bytes. */
+   will search starting from that position when reading subsequent bytes.
+
+   The matching algorithm is as follows:
+
+     - Read the first byte, and having found it in the readtable, record the
+   position of the first matching reader macro in the table as 'pos'.
+
+     - Record the length of that first macro's match string (And, because of the
+       constraint that all macros have the same length, the length of all
+       subsequent macros) as 'len'.
+
+     - If 'len' equals 1, then the macro has been found, and its associated
+       reader function is called.
+
+     - Otherwise, 'len' bytes are read from the input.
+
+     - If the stream ends before all bytes are read, or the bytes don't match
+       any reader macro, an error is signalled.
+
+     - Otherwise, the associated reader macro function of the matched macro is
+       called.
+
+  The S-Expression returned by the reader macro function is then recorded by the
+  reader, unless it is NULL, in which case an error is signaled. */
 
 /* Utilities */
 int peekc(FILE *stream);
