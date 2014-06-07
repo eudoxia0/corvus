@@ -30,3 +30,16 @@ typedef std::vector<ReaderMacro> MacroList;
 struct ReadTable {
   MacroList macros;
 };
+
+/* A helper function for readStream. A token is complete if it has at least one
+   byte. */
+bool completeToken(std::string tok_text);
+
+/* readStream is roughly built along the lines of the Common Lisp reader.
+
+   See: http://www.lispworks.com/documentation/lw51/CLHS/Body/02_b.htm */
+SExp* readStream(FILE* stream);
+
+/* A simple function to facilitate reading delimited sequences. It is used to
+   read nested S-expressions, as well as array and tuple literals. */
+SExp* readDelimitedSequence(FILE* stream, char delimiter);
