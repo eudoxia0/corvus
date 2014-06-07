@@ -25,3 +25,35 @@ void push(SExp* list, SExp* obj) {
   }
   rest(p) = obj;
 }
+
+std::string print(SExp* sexp) {
+  if(sexp) {
+    if(listp(sexp)) {
+      std::string out = "(";
+      SExp* p = sexp;
+      do {
+        if(p != sexp)
+          out += ' ';
+        out += print(rest(p));
+        p = rest(p);
+      } while(p != NULL);
+      return out += ')';
+    } else {
+      return val(sexp);
+    }
+  } else
+    return std::string("()");
+}
+
+void freeSExp(SExp* sexp) {
+  if(sexp) {
+    if(listp(sexp)) {
+      /* Recur */
+      if(rest(sexp))
+        freeSExp(rest(sexp));
+      if(first(sexp))
+        freeSExp(first(sexp));
+    }
+    delete sexp;
+  }
+}
