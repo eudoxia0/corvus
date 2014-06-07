@@ -52,3 +52,16 @@ SExp* readStream(FILE* stream) {
     /* EOF was reached before a complete token was read */
     return NULL;
 }
+
+SExp* readDelimitedSequence(FILE* stream, char delimiter) {
+  std::vector<SExp*> list;
+  SExp* current = readStream(stream);
+  do {
+    list.push_back(current);
+    current = readStream(stream);
+  } while(peekc(stream) != delimiter);
+  if(list.size() > 0)
+    return vectorToList(list);
+  else
+    return NULL;
+}
