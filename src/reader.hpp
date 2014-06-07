@@ -3,6 +3,35 @@
 #include <cctype>
 #include <vector>
 
+/* Reader Macros
+
+   The readtable is essentially a table like this:
+
+      |  Bytes | Macro function    |
+    --+--------+-------------------+
+    0 | //     | readComment       |
+    1 | #[     | readArrayLiteral  |
+    2 | #{     | readRecordLiteral |
+
+   The readStream function reads bytes one at a time. The first byte it reads
+   (At the beginning of the input stream, or when it's just finished a previous
+   token) is searched in the readtable: If it's not in the first position of any
+   entry, it's just a regular token. If it is, then the function sees its about
+   to receive a reader macro.
+
+   Now, the readtable has two constraints:
+
+     - No reader macro's bytes can be a substring of another's. That is, two
+       entries like '#{' and '#' can't exist in the same readtable, because the
+       reader has no way to differentiate between the two. That is, all entries
+       that start with a given byte must have the same length.
+     - Reader macros are sorted by character value of its bytes.
+
+   This helps search a lot. For one, if the reader is reading a macro that
+   starts with a given character % and there are three reader macros that start
+   with that character in the entry, the reader will find the first, and then
+   will search starting from that position when reading subsequent bytes. */
+
 /* Utilities */
 int peekc(FILE *stream);
 SExp* vectorToList(std::vector<SExp*> list);
