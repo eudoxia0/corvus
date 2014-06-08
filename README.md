@@ -6,6 +6,28 @@ This project is being rewritten. Please check back in a few megaseconds.
 
 A statically-typed, low-level dialect of Lisp that targets LLVM.
 
+# Why?
+
+The era of dynamic languages if over. There is currently a 'race to the bottom':
+Languages like Rust and Nimrod are mergin the world of low-level programming
+with high-level compiler features. [cmacro](https://github.com/eudoxia0/cmacro)
+is another one of my contributions to this movement.
+
+# Notes
+
+This project was originally called Hylas Lisp. I have been working on it on and
+off since early 2012, but I've wanted something along these lines for a much
+longer time. It was originally written in C++, then in Common Lisp. Third time's
+the charm 😹.
+
+The original repository was overwritten because I wanted a clean slate. I hope
+the code, in this third iteration, is to your liking. I have tried my best to
+write clean, concise code and comments.
+
+There will eventually be a language reference and manual. For now, most of the
+documentation on the compiler implementation is available as comments throughout
+the source code.
+
 # License
 
 Copyright (c) 2014 Fernando Borretti
