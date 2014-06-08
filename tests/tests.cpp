@@ -25,11 +25,29 @@ TEST(multiple_consing) {
   ASSERT(print(mcons) == "(a b c)");
 }
 
+TEST(free_atoms) {
+  freeSExp(a);
+  pass();
+  freeSExp(b);
+  pass();
+  freeSExp(c);
+  pass();
+}
+
+TEST(free_lists) {
+  freeSExp(scons);
+  pass();
+  freeSExp(mcons);
+  pass();
+}
+
 SUITE(ast) {
   RUN_TEST(print_empty);
   RUN_TEST(print_atom);
   RUN_TEST(consing);
   RUN_TEST(multiple_consing);
+  RUN_TEST(free_atoms);
+  RUN_TEST(free_lists);
 }
 
 int main(int argc, char **argv) {
