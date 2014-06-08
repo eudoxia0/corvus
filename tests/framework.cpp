@@ -1,13 +1,18 @@
 /* A simple test framework */
 #include <cstdio>
 
-long successes = 0;
-long failures = 0;
-long checks = 0;
+static long successes = 0;
+static long failures = 0;
+static long checks = 0;
 
-#define TEST(fn) void fn()
+void pass();
+void fail(const char* exp);
+float percentage(long n, long total);
+void report();
+
+#define TEST(fn) void fn(); void fn()
 #define RUN_TEST(fn) puts("  [ test " #fn " ]"); fn()
-#define SUITE(name) void name()
+#define SUITE(name) void name(); void name()
 #define RUN_SUITE(name) puts("[ suite " #name " ]"); name()
 
 #define ASSERT(exp) ((exp) ? pass() : fail((const char*)#exp));
