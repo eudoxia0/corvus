@@ -18,7 +18,16 @@
          - reg1 <- if reg0 true false
 
    Block syntax is very similar to LLVM IR, but remains an object rather than
-   text. */
+   text.
+
+   See also:
+     - A-normal form:
+         http://en.wikipedia.org/wiki/A-normal_form
+     - A-Normalization: Why and How:
+         http://matt.might.net/articles/a-normalization/
+     - K-Normalization:
+         http://esumii.github.io/min-caml/tutorial-mincaml-9.eng.htm
+*/
 
 enum BlockType { Instruction, Let, NamedFunction, Lambda };
 
