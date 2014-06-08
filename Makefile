@@ -29,3 +29,25 @@ CLINK = $(CXX) $(CXXFLAGS) -shared
 # Tests
 TEST_SRC = tests/tests.cpp
 TEST = test
+
+default: all
+
+$(AST): $(AST_SRC) $(AST_HEAD)
+	$(CMODULE)
+
+$(READER): $(READER_SRC) $(READER_HEAD)
+	$(CMODULE)
+
+$(MACROS): $(MACROS_SRC) $(MACROS_HEAD)
+	$(CMODULE)
+
+$(NORMALIZE): $(NORMALIZE_SRC) $(NORMALIZE_HEAD)
+	$(CMODULE)
+
+all: $(MODULES)
+
+$(TEST): $(TEST_SRC) all
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(AST) $(READER)
+
+clean:
+	rm src/*.o
