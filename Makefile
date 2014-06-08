@@ -20,3 +20,12 @@ NORMALIZE_SRC = src/normalize.cpp
 NORMALIZE = src/normalize.o
 
 MODULES = $(AST) $(READER) $(MACROS) $(NORMALIZE)
+
+# Compile a module
+CMODULE = $(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -c -o $@ $<
+# Link modules into a shared executable
+CLINK = $(CXX) $(CXXFLAGS) -shared
+
+# Tests
+TEST_SRC = tests/tests.cpp
+TEST = test
