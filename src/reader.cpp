@@ -27,7 +27,7 @@ SExp* readStream(FILE* stream) {
     if(isspace(c)) {
       if(completeToken(token_text))
         /* Return the complete token */
-        return makeSExp(token_text, IDENTIFIER);
+        return makeSExp(token_text.c_str(), IDENTIFIER);
       else
         continue;
     }
@@ -43,11 +43,11 @@ SExp* readStream(FILE* stream) {
     token_text += c;
     c = (char)getc(stream);
     if(peekc(stream) == ')')
-      return makeSExp(token_text, IDENTIFIER);
+      return makeSExp(token_text.c_str(), IDENTIFIER);
   }
   /* End-of-file was reached */
   if(completeToken(token_text))
-    return makeSExp(token_text, IDENTIFIER);
+    return makeSExp(token_text.c_str(), IDENTIFIER);
   else
     /* EOF was reached before a complete token was read */
     return NULL;
