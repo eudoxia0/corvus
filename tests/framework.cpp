@@ -23,3 +23,19 @@ void fail(const char* exp) {
   failures++;
   checks++;
 }
+
+float percentage(long n, long total) {
+  return (n*100)/total;
+}
+
+void report() {
+  if(checks > 0) {
+    printf("Ran %li checks, of which %li (%4.2f%%) succeeded and %li (%4.2f%%) failed.\n",
+           checks,
+           successes,
+           percentage(successes, checks),
+           failures,
+           percentage(failures, checks));
+  }
+}
+
