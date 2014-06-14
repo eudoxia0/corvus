@@ -49,7 +49,29 @@ SUITE(ast) {
   RUN_TEST(free_list);
 }
 
+TEST(read_atom) {
+  FILE* file = fopen("tests/input.1.txt", "r");
+  SExp* atom = readStream(file);
+  ASSERT(print(atom) == "a");
+  freeSExp(atom);
+  fclose(file);
+}
+
+TEST(read_list) {
+  FILE* file = fopen("tests/input.2.txt", "r");
+  SExp* atom = readStream(file);
+  ASSERT(print(atom) == "(a b c)");
+  freeSExp(atom);
+  fclose(file);
+}
+
+SUITE(reader) {
+  RUN_TEST(read_atom);
+  RUN_TEST(read_list);
+}
+
 int main(int argc, char **argv) {
   RUN_SUITE(ast);
+  RUN_SUITE(reader);
   report();
 }
