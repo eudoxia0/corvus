@@ -59,9 +59,9 @@ TEST(read_atom) {
 
 TEST(read_list) {
   FILE* file = fopen("tests/input.2.txt", "r");
-  SExp* atom = readStream(file);
-  ASSERT(print(atom) == "(a b c)");
-  freeSExp(atom);
+  SExp* list = readStream(file);
+  ASSERT(print(list) == std::string("(a b c)"));
+  freeSExp(list);
   fclose(file);
 }
 
