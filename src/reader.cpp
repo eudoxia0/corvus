@@ -7,9 +7,10 @@ int peekc(FILE *stream) {
 }
 
 SExp* vectorToList(std::vector<SExp*> list) {
-  SExp* sexp = list[0];
+  std::reverse(list.begin(), list.end());
+  SExp* sexp = NULL;
   for(size_t i = 0; i < list.size(); i++) {
-    push(sexp, list[i]);
+    sexp = cons(list[i], sexp);
   }
   return sexp;
 }
@@ -27,9 +28,11 @@ SExp* readStream(FILE* stream) {
     if(isspace(c)) {
       if(completeToken(token_text))
         /* Return the complete token */
-        return makeSExp(token_text.c_str(), IDENTIFIER);
-      else
+        return makeSExp(token_text, IDENTIFIER);
+      else {
+        c = (char)getc(stream);
         continue;
+      }
     }
     /* If c is a dispatching or non-dispatching macro character, its associated
        function is called */
@@ -38,16 +41,18 @@ SExp* readStream(FILE* stream) {
     if(c == '(') {
       return readDelimitedSequence(stream, ')');
     }
+    if(c == ')') {
+      return makeSExp(token_text, IDENTIFIER);
+    }
     /* Any character that is not a macro character is a constituent character
        of a token. At this point, a token begins to be accumulated */
     token_text += c;
     c = (char)getc(stream);
-    if(peekc(stream) == ')')
-      return makeSExp(token_text.c_str(), IDENTIFIER);
   }
   /* End-of-file was reached */
+  ungetc(EOF, stream);
   if(completeToken(token_text))
-    return makeSExp(token_text.c_str(), IDENTIFIER);
+    return makeSExp(token_text, IDENTIFIER);
   else
     /* EOF was reached before a complete token was read */
     return NULL;
@@ -59,7 +64,7 @@ SExp* readDelimitedSequence(FILE* stream, char delimiter) {
   do {
     list.push_back(current);
     current = readStream(stream);
-  } while(peekc(stream) != delimiter);
+  } while((peekc(stream) != delimiter) and (peekc(stream) != EOF));
   if(list.size() > 0)
     return vectorToList(list);
   else

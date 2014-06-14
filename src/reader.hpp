@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <cctype>
 #include <vector>
+#include <algorithm>
 
 /* Reader Macros
 
