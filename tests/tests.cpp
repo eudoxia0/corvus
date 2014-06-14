@@ -9,12 +9,16 @@ TEST(print_empty) {
 TEST(print_atom) {
   SExp* a = makeSExp("a", IDENTIFIER);
   ASSERT(print(a) == "a");
+  freeSExp(a);
+  pass();
 }
 
 TEST(consing) {
   SExp* a = makeSExp("a", IDENTIFIER);
   SExp* scons = cons(a, NULL);
   ASSERT(print(scons) == "(a)");
+  freeSExp(scons);
+  pass();
 }
 
 TEST(multiple_consing) {
@@ -23,19 +27,6 @@ TEST(multiple_consing) {
   SExp* c = makeSExp("c", IDENTIFIER);
   SExp* mcons = cons(a, cons(b, cons(c, NULL)));
   ASSERT(print(mcons) == "(a b c)");
-}
-
-TEST(free_atom) {
-  SExp* atom = makeSExp("test", IDENTIFIER);
-  freeSExp(atom);
-  pass();
-}
-
-TEST(free_list) {
-  SExp* a = makeSExp("a", IDENTIFIER);
-  SExp* b = makeSExp("b", IDENTIFIER);
-  SExp* c = makeSExp("c", IDENTIFIER);
-  SExp* mcons = cons(a, cons(b, cons(c, NULL)));
   freeSExp(mcons);
   pass();
 }
@@ -45,8 +36,6 @@ SUITE(ast) {
   RUN_TEST(print_atom);
   RUN_TEST(consing);
   RUN_TEST(multiple_consing);
-  RUN_TEST(free_atom);
-  RUN_TEST(free_list);
 }
 
 TEST(read_atom) {
