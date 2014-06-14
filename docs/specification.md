@@ -8,15 +8,15 @@
 
 ### Integers
 
-Integers can be of any bit-width between 1 (Boolean) and 2<sup>23</sup>-1, but
-[type legalization](http://blog.llvm.org/2011/12/llvm-31-vector-changes.html)
-will convert integers to the nearest lossless representation (ie, `i12` will
-likely become `i32` or `i16`).
+Integer types are denoted by the letter 'i' followed by the integer's
+bit-width. The following integer types are supported:
 
-* `i1`: Boolean, can only be true and false.
-* `i32`: C's `int`.
-* `ui64`: C's `unsigned long long`.
-* `i128`: A very large integer.
+- `i1`
+- `i8`
+- `i16`
+- `i32`
+- `i64`
+- `i128`
 
 The symbol `word` is aliased to the integer type that represents a machine
 word. In 64-bit systems, this is usually `i64`.
