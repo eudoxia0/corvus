@@ -20,15 +20,6 @@ SExp* cons(SExp* first, SExp* rest) {
   return sexp;
 }
 
-void push(SExp* list, SExp* obj) {
-  SExp* p = list;
-  p->type = LIST;
-  while(rest(p) != NULL) {
-    p = rest(p);
-  }
-  rest(p) = obj;
-}
-
 std::string print(SExp* sexp) {
   if(sexp) {
     if(listp(sexp)) {

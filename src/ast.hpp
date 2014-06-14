@@ -42,9 +42,6 @@ SExp* makeSExp(std::string val, SExpType type);
 /* The 'cons' function puts 'first' at the front of the 'rest' list. */
 SExp* cons(SExp* first, SExp* rest);
 
-/* The opposite of cons: Put 'obj' at the end of 'list'. */
-void push(SExp* list, SExp* obj);
-
 /* Return a printed representation of an S-expression. */
 std::string print(SExp* sexp);
 
