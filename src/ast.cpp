@@ -1,11 +1,14 @@
 #include "ast.hpp"
 
-SExp* makeSExp(const char* val, SExpType type) {
+SExp* makeSExp(std::string val, SExpType type) {
   SExp* sexp = new SExp;
+  char* buffer = new char[val.length()+1];
+  val.copy(buffer, val.size());
+  buffer[val.size()] = '\0';
   sexp->type = type;
   first(sexp) = NULL;
   rest(sexp)  = NULL;
-  val(sexp)   = val;
+  val(sexp)   = buffer;
   return sexp;
 }
 
@@ -18,8 +21,8 @@ SExp* cons(SExp* first, SExp* rest) {
 }
 
 void push(SExp* list, SExp* obj) {
-  assert(listp(list));
   SExp* p = list;
+  p->type = LIST;
   while(rest(p) != NULL) {
     p = rest(p);
   }
@@ -53,6 +56,8 @@ void freeSExp(SExp* sexp) {
         freeSExp(first(sexp));
       if(rest(sexp))
         freeSExp(rest(sexp));
+    } else {
+      delete val(sexp);
     }
     delete sexp;
   }

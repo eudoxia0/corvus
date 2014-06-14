@@ -37,7 +37,7 @@ struct SExp {
 #define val(sexp) (sexp->content.atom.val)
 
 /* Create an atom from a byte array and a SExpType; */
-SExp* makeSExp(const char* val, SExpType type);
+SExp* makeSExp(std::string val, SExpType type);
 
 /* The 'cons' function puts 'first' at the front of the 'rest' list. */
 SExp* cons(SExp* first, SExp* rest);
