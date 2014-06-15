@@ -28,6 +28,23 @@ There will eventually be a language reference and manual. For now, most of the
 documentation on the compiler implementation is available as comments throughout
 the source code.
 
+# Acknowledgments
+
+* The [LLVM compiler infrastructure project](http://llvm.org/), an unparalleled
+  contribution to the open source community.
+* [Jookia](https://github.com/Jookia), for Unicode advice.
+* Paul Graham, for [rekindling](http://paulgraham.com/onlisp.html) my interest
+  in Lisp.
+* [Danny Hillis](http://en.wikipedia.org/wiki/W._Daniel_Hillis) for the idea of
+  Xectors and the [Connection Machine](http://en.wikipedia.org/wiki/Connection_Machine).
+* [Thinking Machines Corporation](http://en.wikipedia.org/wiki/Thinking_Machines_Corporation)
+  for the implementation of the above, and the concept of *shapes* in the
+  [C*](http://en.wikipedia.org/wiki/C*) language.
+* [Paul Khuong](http://www.pvk.ca/) for a Common Lisp
+  [implementation](https://github.com/pkhuong/Xecto) of Xectors.
+* [Mozilla](http://www.mozilla.org), for both [Rust](http://www.rust-lang.org/)
+  and [sweet.js](http://sweetjs.org/).
+
 # License
 
 Copyright (c) 2014 Fernando Borretti
