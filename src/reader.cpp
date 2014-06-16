@@ -6,13 +6,24 @@ int peekc(FILE *stream) {
     return c;
 }
 
-SExp* vectorToList(std::vector<SExp*> list) {
-  std::reverse(list.begin(), list.end());
-  SExp* sexp = NULL;
-  for(size_t i = 0; i < list.size(); i++) {
-    sexp = cons(list[i], sexp);
+SExp* concat(SExp* list1, SExp* list2) {
+  if(list1 == NULL) {
+    return list2;
+  } else if (rest(list1) && !listp(rest(list1))) {
+    return cons(first(list1), list2);
+  } else {
+    return cons(first(list1),
+                concat(rest(list1), list2));
   }
-  return sexp;
+}
+
+SExp* reverse(SExp* list) {
+  if(list) {
+    concat(reverse(rest(list)),
+           cons(first(list), NULL));
+  } else {
+    return NULL;
+  }
 }
 
 bool completeToken(std::string tok_text) {
@@ -42,6 +53,7 @@ SExp* readStream(FILE* stream) {
       return readDelimitedSequence(stream, ')');
     }
     if(c == ')') {
+      ungetc(c, stream);
       return makeSExp(token_text, IDENTIFIER);
     }
     /* Any character that is not a macro character is a constituent character
@@ -50,7 +62,6 @@ SExp* readStream(FILE* stream) {
     c = (char)getc(stream);
   }
   /* End-of-file was reached */
-  ungetc(EOF, stream);
   if(completeToken(token_text))
     return makeSExp(token_text, IDENTIFIER);
   else
@@ -59,14 +70,16 @@ SExp* readStream(FILE* stream) {
 }
 
 SExp* readDelimitedSequence(FILE* stream, char delimiter) {
-  std::vector<SExp*> list;
-  SExp* current = readStream(stream);
-  do {
-    list.push_back(current);
+  SExp* list = NULL;
+  SExp* current = NULL;
+  while(1) {
+    char peek = peekc(stream);
+    if((peek == delimiter) || (peek == EOF)) {
+      getc(stream);
+      return reverse(list);
+    }
     current = readStream(stream);
-  } while((peekc(stream) != delimiter) and (peekc(stream) != EOF));
-  if(list.size() > 0)
-    return vectorToList(list);
-  else
-    return NULL;
+    list = cons(current, list);
+  }
+  return NULL;
 }

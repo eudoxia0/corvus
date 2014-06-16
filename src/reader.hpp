@@ -58,7 +58,8 @@
 
 /* Utilities */
 int peekc(FILE *stream);
-SExp* vectorToList(std::vector<SExp*> list);
+SExp* concat(SExp* list1, SExp* list2);
+SExp* reverse(SExp* list);
 
 /* This constant defines the maximum number of bytes a reader macro can have. By
    comparison, Common Lisp allows only two (Two-character macros are a single
