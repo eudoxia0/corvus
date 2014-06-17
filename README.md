@@ -14,6 +14,19 @@ Languages like [Rust](http://www.rust-lang.org/) and
 with high-level compiler features. [cmacro](https://github.com/eudoxia0/cmacro)
 is another one of my contributions to this movement.
 
+# Features
+
+* Static typing with partial inference.
+* Manual memory management with multiple safety guarantees.
+* Common Lisp Conditions and Restarts for Error Handling.
+* Macros and Common Lisp-style reader macros.
+* Runtime optional.
+
+# Anti-Features
+
+* Garbage Collection.
+* Exceptions.
+
 # Notes
 
 This project was originally called Hylas Lisp. I have been working on it on and
