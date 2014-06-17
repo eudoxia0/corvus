@@ -15,11 +15,11 @@ MACROS_HEAD = src/macros.hpp
 MACROS_SRC = src/macros.cpp
 MACROS = src/macros.o
 
-NORMALIZE = src/normalize.hpp
-NORMALIZE_SRC = src/normalize.cpp
-NORMALIZE = src/normalize.o
+ANNOT = src/annot.hpp
+ANNOT_SRC = src/annot.cpp
+ANNOT = src/annot.o
 
-MODULES = $(AST) $(READER) $(MACROS) $(NORMALIZE)
+MODULES = $(AST) $(READER) $(MACROS) $(ANNOT)
 
 # Compile a module
 CMODULE = $(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -c -o $@ $<
@@ -41,10 +41,13 @@ $(READER): $(READER_SRC) $(READER_HEAD)
 $(MACROS): $(MACROS_SRC) $(MACROS_HEAD)
 	$(CMODULE)
 
-$(NORMALIZE): $(NORMALIZE_SRC) $(NORMALIZE_HEAD)
+$(ANNOT): $(ANNOT_SRC) $(ANNOT_HEAD)
 	$(CMODULE)
 
 all: $(MODULES)
+
+corvus: all
+	$(CXX) src/main.cpp $(MODULES) -o corvus
 
 $(TEST): $(TEST_SRC) all
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(AST) $(READER)
