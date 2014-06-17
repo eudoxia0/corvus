@@ -1,10 +1,52 @@
 # Special Forms
 
+## Functions
+
+`defn`
+`lambda`
+
+## Assignment and Mutation
+
+`set`
+`let`
+
+## Memory Management
+
+`new`
+`realloc`
+`free`
+
+## Macros
+
+`defmacro`
+
+## Conditions
+
+`defcondition`
+`handling`
+
+## Compiler
+
+`def-feature`
+`feature?`
+
 # Language Core
+
+## Mathematical Operations
+
+## Bitwise Operations
+
+# Error Handling
+
+## Algebraic Data Types
+
+## Condition System
+
+## Failure
 
 # Type System
 
-## Basic Types
+## Scalar Types
 
 ### Integers
 
@@ -45,7 +87,7 @@ Specifically: When `new` creates an array of *n* elements (Where *n* is not
 necessarily known at compile time), it allocates enough memory for *n* elements
 of the array's type plus two machine word. The first word is used to store
 length information, the next one stores the array's capacity. The `new` form
-returns a pointer to the beginning of the array, but other forms (Like `resize`
+returns a pointer to the beginning of the array, but other forms (Like `realloc`
 or `size`) can access this hidden metadata or manipulate it.
 
 Because of the design, arrays are compatible with C arrays and can be passed to
@@ -54,6 +96,16 @@ external C functions that take an array as a parameter transparently.
 ### Tuples
 
 ### Records
+
+### Datatypes (Algebraic Data Types)
+
+### Generic Types
+
+### Kinds
+
+## Functions
+
+### Bounded Polymorphism
 
 ## Pointers
 
