@@ -26,8 +26,17 @@ public:
 class FunctionAST : public LambdaAST {
   const char* name;
 public:
-  FunctionAST(const char* name, Bindings args, SExp* ret, SExp* body):
+  FunctionAST(const char* name, Bindings args, SExp* ret, SExp* body) :
     LambdaAST(args, ret, body) {
     this->name = name;
   }
+};
+
+/* Represents a call to a function or a special form. Since all macros have been
+   expanded at this point. */
+class CallAST : public AnnotAST {
+  SExp* fn;
+  SExp* args;
+public:
+  CallAST(SExp* fn, SExp* args) : fn(fn), args(args) { }
 };
