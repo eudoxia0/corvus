@@ -17,16 +17,16 @@ public:
 class LambdaAST : public AnnotAST {
 public:
   Bindings arguments;
-  SExp* ret;
-  SExp* body;
-  LambdaAST(Bindings args, SExp* ret, SExp* body) :
+  AnnotAST* ret;
+  AnnotAST* body;
+  LambdaAST(Bindings args, AnnotAST* ret, AnnotAST* body) :
     arguments(args), ret(ret), body(body) {}
 };
 
 class FunctionAST : public LambdaAST {
   const char* name;
 public:
-  FunctionAST(const char* name, Bindings args, SExp* ret, SExp* body) :
+  FunctionAST(const char* name, Bindings args, AnnotAST* ret, AnnotAST* body) :
     LambdaAST(args, ret, body) {
     this->name = name;
   }
@@ -35,8 +35,18 @@ public:
 /* Represents a call to a function or a special form. Since all macros have been
    expanded at this point. */
 class CallAST : public AnnotAST {
-  SExp* fn;
-  SExp* args;
+  AnnotAST* fn;
+  std::vector<AnnotAST*> args;
 public:
-  CallAST(SExp* fn, SExp* args) : fn(fn), args(args) { }
+  CallAST(AnnotAST* fn, std::vector<AnnotAST*> args) : fn(fn), args(args) { }
 };
+
+class AtomAST: public AnnotAST {
+  Atom atom;
+public:
+  AtomAST(Atom atom) : atom(atom) { }
+};
+
+/* Transforms an unstructured S-expression into a more abstract syntax tree, or
+   'annotated abstract syntax tree'. */
+AnnotAST* annotate(SExp* sexp);
