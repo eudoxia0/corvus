@@ -19,8 +19,8 @@ SExp* concat(SExp* list1, SExp* list2) {
 
 SExp* reverse(SExp* list) {
   if(list) {
-    concat(reverse(rest(list)),
-           cons(first(list), NULL));
+    return concat(reverse(rest(list)),
+                  cons(first(list), NULL));
   } else {
     return NULL;
   }
