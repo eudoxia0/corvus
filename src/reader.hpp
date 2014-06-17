@@ -57,15 +57,19 @@
   reader, unless it is NULL, in which case an error is signaled. */
 
 /* Utilities */
+
+/* Peek at the next character in the stream */
 int peekc(FILE *stream);
+/* Concatenate list1 and list2 */
 SExp* concat(SExp* list1, SExp* list2);
+/* Reverse list */
 SExp* reverse(SExp* list);
 
 /* This constant defines the maximum number of bytes a reader macro can have. By
    comparison, Common Lisp allows only two (Two-character macros are a single
-   character prefixed by a 'dispatching macro character', typically #). This is,
-   arbitrarily, set to six. */
-#define MAX_MACRO_LEN 6
+   character prefixed by a 'dispatching macro character', typically #). This is
+   set arbitrarily. */
+  #define MAX_MACRO_LEN 6
 
 /* This is the prototype of a reader macro function: Takes a stream as its input
    and returns a pointer to a SExp. */
