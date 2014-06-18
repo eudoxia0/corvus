@@ -21,55 +21,52 @@ TEST(consing) {
   pass();
 }
 
-TEST(multiple_consing) {
-  SExp* a = makeSExp("a", IDENTIFIER);
-  SExp* b = makeSExp("b", IDENTIFIER);
-  SExp* c = makeSExp("c", IDENTIFIER);
-  SExp* mcons = cons(a, cons(b, cons(c, NULL)));
-  ASSERT(print(mcons) == "(a b c)");
-  freeSExp(mcons);
+SExp* makeSimpleList(const char* sa, const char* sb, const char* sc) {
+  SExp* a = makeSExp(sa, IDENTIFIER);
+  SExp* b = makeSExp(sb, IDENTIFIER);
+  SExp* c = makeSExp(sc, IDENTIFIER);
+  return cons(a, cons(b, cons(c, NULL)));
+}
+
+void freeAndPass(SExp* sexp) {
+  freeSExp(sexp);
+  /* If we got here, it means we didn't segfault. */
   pass();
+}
+
+TEST(multiple_consing) {
+  SExp* mcons = makeSimpleList("a", "b", "c");
+  ASSERT(print(mcons) == "(a b c)");
+  freeAndPass(mcons);
 }
 
 TEST(concatenating) {
-  SExp* a = makeSExp("a", IDENTIFIER);
-  SExp* b = makeSExp("b", IDENTIFIER);
-  SExp* c = makeSExp("c", IDENTIFIER);
-  SExp* s1 = makeSExp("1", IDENTIFIER);
-  SExp* s2 = makeSExp("2", IDENTIFIER);
-  SExp* s3 = makeSExp("3", IDENTIFIER);
-  SExp* list1 = cons(a, cons(b, cons(c, NULL)));
-  SExp* list2 = cons(s1, cons(s2, cons(s3, NULL)));
+  SExp* list1 = makeSimpleList("a", "b", "c");
+  SExp* list2 = makeSimpleList("1", "2", "3");
   SExp* list = concat(list1, list2);
   ASSERT(print(list) == "(a b c 1 2 3)");
-  freeSExp(list);
-  pass();
+  freeAndPass(list);
 }
 
 TEST(reversing) {
-  SExp* a = makeSExp("a", IDENTIFIER);
-  SExp* b = makeSExp("b", IDENTIFIER);
-  SExp* c = makeSExp("c", IDENTIFIER);
-  SExp* list = cons(a, cons(b, cons(c, NULL)));
+  SExp* list = makeSimpleList("a", "b", "c");
   SExp* reversed = reverse(list);
   ASSERT(print(reversed) == "(c b a)");
-  freeSExp(reversed);
-  pass();
+  freeAndPass(reversed);
 }
 
 TEST(nested_list) {
-  SExp* a = makeSExp("a", IDENTIFIER);
-  SExp* b = makeSExp("b", IDENTIFIER);
-  SExp* c = makeSExp("c", IDENTIFIER);
-  SExp* nest1 = cons(a, cons(b, cons(c, NULL)));
-  SExp* s1 = makeSExp("1", IDENTIFIER);
-  SExp* s2 = makeSExp("1", IDENTIFIER);
-  SExp* s3 = makeSExp("1", IDENTIFIER);
-  SExp* nest2 = cons(cons(s1, cons(s2, cons(s3, NULL))), NULL);
+  SExp* nest1 = makeSimpleList("a", "b", "c");
+  SExp* nest2 = cons(makeSimpleList("1", "1", "1"), NULL);
   SExp* nest = cons(nest1, nest2);
   ASSERT(print(nest) == "((a b c) (1 1 1))");
-  freeSExp(nest);
-  pass();
+  freeAndPass(nest);
+}
+
+TEST(length) {
+  SExp* list = makeSimpleList("a", "b", "c");
+  ASSERT(length(list) == 3);
+  freeAndPass(list);
 }
 
 SUITE(ast) {
@@ -80,6 +77,7 @@ SUITE(ast) {
   RUN_TEST(concatenating);
   RUN_TEST(reversing);
   RUN_TEST(nested_list);
+  RUN_TEST(length);
 }
 
 TEST(read_atom) {
