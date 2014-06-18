@@ -36,13 +36,11 @@ Arrays
 ^^^^^^
 
 Arrays are a kind of 'fat pointer': They point to a region of data but also
-carry length information. This data is hidden before the region they point to:
+carry length information. This data is hidden before the region they point to::
 
-```
-+------+----------+----------------···
-| Size | Capacity | Array contents
-+------+----------+----------------···
-```
+   +------+----------+----------------···
+   | Size | Capacity | Array contents
+   +------+----------+----------------···
 
 Specifically: When `new` creates an array of *n* elements (Where *n* is not
 necessarily known at compile time), it allocates enough memory for *n* elements
@@ -80,6 +78,8 @@ Pointers
 
 Type Specifiers
 ---------------
+
+A type specifier is an expression that represents a type.
 
 Type Construction
 ^^^^^^^^^^^^^^^^^
