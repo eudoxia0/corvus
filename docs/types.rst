@@ -55,6 +55,8 @@ external C functions that take an array as a parameter transparently.
 Tuples
 ^^^^^^
 
+A tuple is an ordered, heterogenous, fixed-size collection of objects.
+
 Records
 ^^^^^^^
 

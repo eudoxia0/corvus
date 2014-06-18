@@ -34,10 +34,10 @@ Functions
 Assignment and Mutation
 =======================
 
-`set`
+`let`
 -----
 
-`let`
+`set`
 -----
 
 Types
