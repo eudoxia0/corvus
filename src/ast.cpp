@@ -53,3 +53,13 @@ void freeSExp(SExp* sexp) {
     delete sexp;
   }
 }
+
+std::vector<SExp*> sexpToVec(SExp* sexp) {
+  SExp* p = sexp;
+  std::vector<SExp*> out;
+  do {
+    out.push_back(first(p));
+    p = rest(p);
+  } while(p != NULL);
+  return out;
+}

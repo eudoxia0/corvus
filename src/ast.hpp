@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include <cassert>
 
 enum SExpType {
@@ -49,3 +50,6 @@ std::string print(SExp* sexp);
 
 /* Free a SExp. */
 void freeSExp(SExp* sexp);
+
+/* Utility: Turn a SExp into a vector. */
+std::vector<SExp*> sexpToVec(SExp* sexp);
