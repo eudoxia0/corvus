@@ -51,6 +51,12 @@ public:
   CallAST(AnnotAST* fn, std::vector<AnnotAST*> args) : fn(fn), args(args) { }
 };
 
+/* Test whether the text of 'atom' equals 'text' */
+int atomeq(SExp* atom, const char* text);
+
+/* Annotate a vector of S-expressions */
+std::vector<AnnotAST*> annotate(std::vector<SExp*> list);
+
 /* Transforms an unstructured S-expression into a more abstract syntax tree, or
    'annotated abstract syntax tree'. */
 AnnotAST* annotate(SExp* sexp);
