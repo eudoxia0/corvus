@@ -15,11 +15,15 @@ MACROS_HEAD = src/macros.hpp
 MACROS_SRC = src/macros.cpp
 MACROS = src/macros.o
 
-ANNOT = src/annot.hpp
+ANNOT_HEAD = src/annot.hpp
 ANNOT_SRC = src/annot.cpp
 ANNOT = src/annot.o
 
-MODULES = $(AST) $(READER) $(MACROS) $(ANNOT)
+TYPES_HEAD = src/types.hpp
+TYPES_SRC = src/types.cpp
+TYPES = src/types.o
+
+MODULES = $(AST) $(READER) $(MACROS) $(ANNOT) $(TYPES)
 
 # Compile a module
 CMODULE = $(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -c -o $@ $<
@@ -42,6 +46,9 @@ $(MACROS): $(MACROS_SRC) $(MACROS_HEAD)
 	$(CMODULE)
 
 $(ANNOT): $(ANNOT_SRC) $(ANNOT_HEAD)
+	$(CMODULE)
+
+$(TYPES): $(TYPES_SRC) $(TYPES_HEAD)
 	$(CMODULE)
 
 all: $(MODULES)
