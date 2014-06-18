@@ -27,6 +27,10 @@ is another one of my contributions to this movement.
 * Garbage Collection.
 * Exceptions.
 
+# Status
+
+Please don't post this on Hacker News yet.
+
 # Notes
 
 This project was originally called Hylas Lisp. I have been working on it on and

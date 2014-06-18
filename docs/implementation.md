@@ -36,3 +36,20 @@ replaced with the function name.
 
 The annotatated identifiers are then used to turn the function into a closure,
 if necessary.
+
+## Variable lifting
+
+(let (x 1
+      y 2)
+  (+ x 1)
+  (let (x 2)
+    (print (+ x y))))
+
+->
+
+(let (x0 1
+      y0 1)
+  (+ x0 1)
+  (let (x1 2)
+    (print (+ x1 y0))))
+ 
