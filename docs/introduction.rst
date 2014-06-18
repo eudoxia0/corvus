@@ -1,10 +1,11 @@
+************
 Introduction
-============
+************
 
 Corvus is a statically-typed, low-level dialect of Lisp.
 
 Features
---------
+========
 
 * Static typing with partial inference.
 * Manual memory management with multiple safety guarantees.
@@ -13,7 +14,7 @@ Features
 * Runtime optional.
 
 Anti-Features
--------------
+=============
 
 The following will never be implemented:
 
@@ -21,4 +22,4 @@ The following will never be implemented:
 * Exceptions.
 
 History
--------
+=======

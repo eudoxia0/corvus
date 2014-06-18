@@ -1,15 +1,20 @@
+######
 Corvus
-******
+######
 
+*************
 Specification
-=============
+*************
 
 .. toctree::
-   :maxdepth: 6
+   :maxdepth: 3
 
    introduction
    syntax
    types
+   special-forms
+   core
 
+************************
 Reference Implementation
-========================
+************************
