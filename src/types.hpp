@@ -1,3 +1,6 @@
+#include <vector>
+#include <utility>
+
 /* The base of all types. */
 struct Type { };
 
@@ -23,9 +26,31 @@ struct Float : Scalar {
   FloatType type;
 };
 
+/* Aggregate types */
 struct Aggregate : Type { };
 
+struct Array : Aggregate {
+  Type base_type;
+};
+
+struct Tuple : Aggregate {
+  std::vector<Type> types;
+};
+
+struct RecordField {
+  char* name;
+  Type type;
+  char* docstring;
+};
+
+struct Record : Aggregate {
+  std::vector<RecordField> fields;
+};
+
+/* Pointers */
 struct Pointer : Type {
   int indirection;
   Type base_type;
 };
+
+/* Type constants */
