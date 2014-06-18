@@ -3,17 +3,26 @@
 #include <vector>
 #include <utility>
 
-/* Utility types */
-typedef std::vector<std::pair<const char*, SExp*> > Bindings;
-
+/* The base class of all annotated ASTs */
 class AnnotAST { };
 
+class AtomAST: public AnnotAST {
+  Atom atom;
+public:
+  AtomAST(Atom atom) : atom(atom) { }
+};
+
+/* We don't use a Map because order of assignment is important */
+typedef std::vector<std::pair<const char*, SExp*> > Bindings;
+
+/* Represents a let: A series of assignments in a new scope */
 class LetAST : public AnnotAST {
   Bindings bindings;
 public:
   LetAST(Bindings bind) : bindings(bind) {}
 };
 
+/* An anonymous function definition */
 class LambdaAST : public AnnotAST {
 public:
   Bindings arguments;
@@ -23,6 +32,7 @@ public:
     arguments(args), ret(ret), body(body) {}
 };
 
+/* A named function definition */
 class FunctionAST : public LambdaAST {
   const char* name;
 public:
@@ -32,19 +42,13 @@ public:
   }
 };
 
-/* Represents a call to a function or a special form. Since all macros have been
-   expanded at this point. */
+/* Represents a call to a function, special form or an expression that returns a
+   function pointer. Since all macros have been expanded at this point the call cannot be to a macro. */
 class CallAST : public AnnotAST {
   AnnotAST* fn;
   std::vector<AnnotAST*> args;
 public:
   CallAST(AnnotAST* fn, std::vector<AnnotAST*> args) : fn(fn), args(args) { }
-};
-
-class AtomAST: public AnnotAST {
-  Atom atom;
-public:
-  AtomAST(Atom atom) : atom(atom) { }
 };
 
 /* Transforms an unstructured S-expression into a more abstract syntax tree, or
