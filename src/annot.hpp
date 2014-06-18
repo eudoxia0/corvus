@@ -9,7 +9,7 @@ class AnnotAST { };
 class AtomAST: public AnnotAST {
   Atom atom;
 public:
-  AtomAST(Atom atom) : atom(atom) { }
+  AtomAST(Atom at) : atom(at) { }
 };
 
 /* We don't use a Map because order of assignment is important */
@@ -28,17 +28,18 @@ public:
   Bindings arguments;
   AnnotAST* ret;
   AnnotAST* body;
-  LambdaAST(Bindings args, AnnotAST* ret, AnnotAST* body) :
-    arguments(args), ret(ret), body(body) {}
+  LambdaAST(Bindings args, AnnotAST* ret_type, AnnotAST* lbody) :
+    arguments(args), ret(ret_type), body(lbody) {}
 };
 
 /* A named function definition */
 class FunctionAST : public LambdaAST {
   const char* name;
 public:
-  FunctionAST(const char* name, Bindings args, AnnotAST* ret, AnnotAST* body) :
-    LambdaAST(args, ret, body) {
-    this->name = name;
+  FunctionAST(const char* fname, Bindings args, AnnotAST* ret_type,
+              AnnotAST* fbody) :
+    LambdaAST(args, ret_type, fbody) {
+    this->name = fname;
   }
 };
 
@@ -48,7 +49,8 @@ class CallAST : public AnnotAST {
   AnnotAST* fn;
   std::vector<AnnotAST*> args;
 public:
-  CallAST(AnnotAST* fn, std::vector<AnnotAST*> args) : fn(fn), args(args) { }
+  CallAST(AnnotAST* fun, std::vector<AnnotAST*> arguments) :
+    fn(fun), args(arguments) { }
 };
 
 /* Test whether the text of 'atom' equals 'text' */
@@ -57,7 +59,7 @@ int atomeq(SExp* atom, const char* text);
 /* Annotate a vector of S-expressions */
 std::vector<AnnotAST*> annotate(std::vector<SExp*> list);
 
-/* */
+/* Annotate a list of S-Expressions */
 AnnotAST* annotateList(SExp* list);
 
 /* Transforms an unstructured S-expression into a more abstract syntax tree, or
