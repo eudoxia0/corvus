@@ -57,6 +57,9 @@ int atomeq(SExp* atom, const char* text);
 /* Annotate a vector of S-expressions */
 std::vector<AnnotAST*> annotate(std::vector<SExp*> list);
 
+/* */
+AnnotAST* annotateList(SExp* list);
+
 /* Transforms an unstructured S-expression into a more abstract syntax tree, or
    'annotated abstract syntax tree'. */
 AnnotAST* annotate(SExp* sexp);

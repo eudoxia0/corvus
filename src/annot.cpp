@@ -5,7 +5,11 @@ int atomeq(SExp* atom, const char* text) {
 }
 
 std::vector<AnnotAST*> annotate(std::vector<SExp*> list) {
-
+  std::vector<AnnotAST*> out;
+  for(size_t i = 0; i < list.size(); i++) {
+    out.push_back(annotate(list[i]));
+  }
+  return out;
 }
 
 AnnotAST* annotateList(SExp* list) {
