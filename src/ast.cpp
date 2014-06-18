@@ -54,12 +54,22 @@ void freeSExp(SExp* sexp) {
   }
 }
 
+size_t length(SExp* list) {
+  SExp* p = list;
+  size_t length = 0;
+  while(p != NULL) {
+    length++;
+    p = rest(p);
+  };
+  return length;
+}
+
 std::vector<SExp*> sexpToVec(SExp* sexp) {
   SExp* p = sexp;
   std::vector<SExp*> out;
-  do {
+  while(p != NULL) {
     out.push_back(first(p));
     p = rest(p);
-  } while(p != NULL);
+  };
   return out;
 }

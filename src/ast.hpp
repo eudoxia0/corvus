@@ -51,5 +51,8 @@ std::string print(SExp* sexp);
 /* Free a SExp. */
 void freeSExp(SExp* sexp);
 
+/* Return the length of a SExp */
+size_t length(SExp* list);
+
 /* Utility: Turn a SExp into a vector. */
 std::vector<SExp*> sexpToVec(SExp* sexp);
