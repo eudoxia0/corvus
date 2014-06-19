@@ -31,6 +31,14 @@ Functions
 `lambda`
 --------
 
+Syntax
+   :code:`(lambda (<arguments>) <body>+)`
+Return Value
+   `(fn <arguments> <ret>)`: A pointer to the function
+Parameters
+   * :code:`<arguments>`: A :ref:`concrete argument list <concrete_arglist>`.
+   * :code:`<body>`: A sequence of expressions.
+
 Assignment and Mutation
 =======================
 

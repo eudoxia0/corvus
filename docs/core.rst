@@ -48,8 +48,8 @@ Return Value
 Parameters
    * :code:`<argument>`: The value to operate on. Must be an integer.
 
-:code:`ones` returns the Hamming weight_ of the argument. :code:`l-ones` counts
+:code:`ones` returns the `Hamming weight`_ of the argument. :code:`l-ones` counts
 the number of most significant zeros. :code:`t-ones` counts the number of least
 significant zeros.
 
-.. _weight: http://en.wikipedia.org/wiki/Hamming_weight
+.. _`Hamming weight`: http://en.wikipedia.org/wiki/Hamming_weight

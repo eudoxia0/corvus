@@ -59,3 +59,22 @@ The scoping rules are as follows:
 * **Functions** are also lexically scoped: If two functions with the same name
   and the same argument list are declared, a call in the innermost scope will
   call the innermost function.
+
+Functions
+=========
+
+Function Arguments
+------------------
+
+.. _concrete_arglist:
+
+Concrete Argument Lists
+^^^^^^^^^^^^^^^^^^^^^^^
+
+A concrete argument list is one that has no type variables, only concrete
+arguments and rest arguments.
+
+Complete Argument List
+^^^^^^^^^^^^^^^^^^^^^^
+
+A complete argument list can have types with type variables.
