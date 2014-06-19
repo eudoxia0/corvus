@@ -19,3 +19,8 @@ Specification
 ************************
 Reference Implementation
 ************************
+
+.. toctree::
+   :maxdepth: 3
+
+   phases
