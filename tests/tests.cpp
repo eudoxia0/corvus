@@ -84,8 +84,9 @@ TEST(ints) {
   SExp* a = makeAtom("1234");
   SExp* b = makeAtom("+1");
   SExp* c = makeAtom("-01234");
-  ASSERT((a->type == INTEGER) && (b->type == INTEGER) &&
-         (c->type == INTEGER));
+  ASSERT(a->type == INTEGER);
+  ASSERT(b->type == INTEGER);
+  ASSERT(c->type == INTEGER);
   freeSExp(a);
   freeSExp(b);
   freeSExp(c);
@@ -95,8 +96,9 @@ TEST(floats) {
   SExp* a = makeAtom("3.14");
   SExp* b = makeAtom("0.16");
   SExp* c = makeAtom("+8.5e78");
-  ASSERT((a->type == FLOAT) && (b->type == FLOAT) &&
-         (c->type == FLOAT));
+  ASSERT(a->type == FLOAT);
+  ASSERT(b->type == FLOAT);
+  ASSERT(c->type == FLOAT);
   freeSExp(a);
   freeSExp(b);
   freeSExp(c);
@@ -106,8 +108,9 @@ TEST(identifiers) {
   SExp* a = makeAtom("a");
   SExp* b = makeAtom("@some-function");
   SExp* c = makeAtom("test?");
-  ASSERT((a->type == IDENTIFIER) && (b->type == IDENTIFIER) &&
-         (c->type == IDENTIFIER));
+  ASSERT(a->type == IDENTIFIER);
+  ASSERT(b->type == IDENTIFIER);
+  ASSERT(c->type == IDENTIFIER);
   freeSExp(a);
   freeSExp(b);
   freeSExp(c);
