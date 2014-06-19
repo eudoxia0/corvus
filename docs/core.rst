@@ -8,16 +8,48 @@ Mathematical Operations
 Bitwise Operations
 ==================
 
-`shl`: Shift the first argument *n* bits to the left, where n is the second
-argument.
-`shr`: Shift the first argument *n* bits to the right, where *n* is the second
-argument. Whether the first argument is a signed or unsigned integer determines
-whether this is logical or arithmetic right-shift, respectively.
-`bit-and`: Bitwise AND.
-`bit-or`: Bitwise OR.
-`bit-xor`. Bitwise XOR.
+Bit-shifting
+------------
 
-`ones`: Return the [Hamming weight](http://en.wikipedia.org/wiki/Hamming_weight)
-of the first argument.
-`l-ones`: Count the number of most significant zeros.
-`t-ones`: Count the number of least significant zeros.
+Syntax
+   :code:`(<shl|shr> <argument> <n>)`
+Return Value
+   `(typeof <argument>)`: The result of the shift.
+Parameters
+   * :code:`<argument>`: The value to be shifted. Any integer type.
+   * :code:`<n>`: The number of bits to :code:`<argument>` argument by.
+
+:code:`shl` shifts :code:`<argument>` *n* bits to the left, :code:`shr` to the
+right. In the case of :code:`shr`, whether :code:`<argument>` is a signed or
+unsigned integer determines whether this is logical or arithmetic right-shift,
+respectively.
+
+Logic
+-----
+
+Syntax
+   :code:`(bit-<and|or|xor> <a> <b>)`
+Return Value
+   `(typeof <a>)`: The result of the operation.
+Parameters
+   * :code:`<a>`, :code:`<b>`: The values to operate on. Must be of the same
+     integer type.
+
+:code:`bit-and`, :code:`bit-or` and :code:`bit-xor` do exactly what their names
+imply.
+
+Bit Counting
+------------
+
+Syntax
+   :code:`(<ones|l-ones|t-ones> <argument>)`
+Return Value
+   `(typeof <argument>)`: The result of the operation.
+Parameters
+   * :code:`<argument>`: The value to operate on. Must be an integer.
+
+:code:`ones` returns the Hamming weight_ of the argument. :code:`l-ones` counts
+the number of most significant zeros. :code:`t-ones` counts the number of least
+significant zeros.
+
+.. _weight: http://en.wikipedia.org/wiki/Hamming_weight

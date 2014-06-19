@@ -18,8 +18,8 @@ Token Types
 The following list shows the regular expressions that correspond to each token
 type:
 
-* Integer: `[+-]?(\d)+`
-* Float: `[+-][0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?`
+* Integer: `[+-]?(\d)+`.
+* Float: `[+-][0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?`.
 
 Identifiers are anything else.
 
@@ -60,6 +60,7 @@ respectively:
   * :code:`{1 3.14}`: A pair of an integer and a float.
 * Brackets: Same as the curly braces macro, only using braces.
   Examples:
+
   * :code:`[1 2 3]`: An array of three integers.
 
 Syntax Conventions
