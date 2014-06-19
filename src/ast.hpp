@@ -59,4 +59,7 @@ size_t length(SExp* list);
 std::vector<SExp*> sexpToVec(SExp* sexp);
 
 /* Determine the atom type of a string of text */
-SExpType classify(const char* str);
+SExpType classify(std::string str);
+
+/* Create an atom from a string, automatically classifying it */
+SExp* makeAtom(std::string val);
