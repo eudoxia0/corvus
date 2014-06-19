@@ -25,12 +25,76 @@ void letBadBindingsError(Atom atom) {
   formError(atom, "Odd number of arguments in bindings.");
 }
 
+LetAST* processLet(Atom atom, SExp* bindings, SExp* body) {
+  
+}
+
+LetAST* processLetForm(Atom atom, SExp* list) {
+  switch(length(list)) {
+    case 0:
+      formError(atom, "No bindings.");
+    case 1:
+      noBodyError(atom);
+    default:
+      /* Process the let */
+      return NULL;
+}
+
+void fnNoNameError(Atom atom) {
+  formError(atom, "No name in function definition.");
+}
+
 void fnNoArgsError(Atom atom) {
   formError(atom, "No argument list in function definition.");
 }
 
 void fnNoRetError(Atom atom) {
   formError(atom, "No return type specifier in function definition.");
+}
+
+FunctionAST* processFnDefinition(Atom atom, SExp* name, SExp* args, SExp* ret,
+                              SExp* body) {
+  return NULL;
+}
+
+AnnotAST* processFunctionForm(Atom atom, SExp* list) {
+  switch(length(list)) {
+    case 0:
+      fnNoNameError(atom);
+    case 1:
+      fnNoArgsError(atom);
+    case 2:
+      noRetError(atom);
+    case 3:
+      noBodyError(atom);
+    default: {
+      /* Process the function definition */
+      SExp* name = first(list);
+      SExp* args = first(rest(list));
+      SExp* ret = first(rest(rest(list)));
+      SExp* body = rest(rest(rest(list)));
+      return processFnDefinition(atom, name, args, ret, body);
+    }
+  }
+}
+
+LambdaAST* processLambdaDefinition(Atom atom, SExp* args, SExp* body) {
+  return NULL;
+}
+
+AnnotAST* processLambdaForm(Atom atom, SExp* list) {
+  switch(length(rest(list))) {
+    case 0:
+      fnNoArgsError(atom);
+    case 1:
+      noBodyError(atom);
+    default: {
+      /* Process the lambda definition */
+      SExp* args = first(list);
+      SExp* body = rest(list);
+      return processLambdaDefinition(atom, args, body);
+    }
+  }
 }
 
 AnnotAST* annotateList(SExp* list) {
@@ -51,31 +115,11 @@ AnnotAST* annotateList(SExp* list) {
        forms represented in the annotated AST: let, defn and lambda. */
     Atom atom = first->content.atom;
     if(atomeq(first, "let")) {
-      if(length(rest(list)) < 2) {
-        formError(atom, "No body.");
-      }
+      return processLetForm(atom, rest(list));
     } else if(atomeq(first, "defn")) {
-      switch(length(rest(list))) {
-        case 0:
-          fnNoArgsError(atom);
-        case 1:
-          fnNoRetError(atom);
-        case 2:
-          noBodyError(atom);
-        default:
-            /* Process the function definition */
-            return NULL;
-        }
+      return processFunctionForm(atom, rest(list));
     } else if(atomeq(first, "lambda")) {
-      switch(length(rest(list))) {
-        case 0:
-          fnNoArgsError(atom);
-        case 1:
-          noBodyError(atom);
-        default:
-            /* Process the lambda definition */
-            return NULL;
-        }
+      return processLambdaForm(atom, rest(list));
     } else {
       return new CallAST(annotate(first), annotate(sexpToVec(rest(list))));
     }
