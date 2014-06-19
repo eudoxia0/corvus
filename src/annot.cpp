@@ -29,7 +29,10 @@ AnnotAST* annotateList(SExp* list) {
        This part of the process involves verifying the syntax of the special
        forms represented in the annotated AST: let, defn and lambda. */
     if(atomeq(first, "let")) {
-      return NULL;
+      if(length(rest(list)) < 2) {
+        // Error
+      }
+      
     } else if(atomeq(first, "defn")) {
       return NULL;
     } else if(atomeq(first, "lambda")) {

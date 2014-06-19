@@ -7,6 +7,10 @@ AST_HEAD = src/ast.hpp
 AST_SRC = src/ast.cpp
 AST = src/ast.o
 
+ERRORS_HEAD = src/errors.hpp
+ERRORS_SRC = src/errors.cpp
+ERRORS = src/errors.o
+
 READER_HEAD = src/reader.hpp
 READER_SRC = src/reader.cpp
 READER = src/reader.o
@@ -23,7 +27,7 @@ ANNOT_HEAD = src/annot.hpp
 ANNOT_SRC = src/annot.cpp
 ANNOT = src/annot.o
 
-MODULES = $(AST) $(READER) $(MACROS) $(ANNOT) $(TYPES)
+MODULES = $(AST) $(ERRORS) $(READER) $(MACROS) $(ANNOT) $(TYPES)
 
 # Compile a module
 CMODULE = $(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -c -o $@ $<
@@ -37,6 +41,9 @@ TEST = test
 default: all
 
 $(AST): $(AST_SRC) $(AST_HEAD)
+	$(CMODULE)
+
+$(ERRORS): $(ERRORS_SRC) $(ERRORS_HEAD)
 	$(CMODULE)
 
 $(READER): $(READER_SRC) $(READER_HEAD)
