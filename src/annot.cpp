@@ -1,4 +1,5 @@
 #include "annot.hpp"
+#include "annot-errors.cpp"
 
 int atomeq(SExp* atom, const char* text) {
   return val(atom) == text;
@@ -12,21 +13,8 @@ std::vector<AnnotAST*> annotate(std::vector<SExp*> list) {
   return out;
 }
 
-void formError(Atom atom, std::string explanation) {
-  throw Error(atom.line, atom.col,
-              "Bad '" + std::string(atom.val) + "' form: " + explanation);
-}
-
-void noBodyError(Atom atom) {
-  formError(atom, "No body.");
-}
-
-void letBadBindingsError(Atom atom) {
-  formError(atom, "Odd number of arguments in bindings.");
-}
-
 LetAST* processLet(Atom atom, SExp* bindings, SExp* body) {
-  
+  return NULL;
 }
 
 LetAST* processLetForm(Atom atom, SExp* list) {
@@ -38,18 +26,6 @@ LetAST* processLetForm(Atom atom, SExp* list) {
     default:
       /* Process the let */
       return NULL;
-}
-
-void fnNoNameError(Atom atom) {
-  formError(atom, "No name in function definition.");
-}
-
-void fnNoArgsError(Atom atom) {
-  formError(atom, "No argument list in function definition.");
-}
-
-void fnNoRetError(Atom atom) {
-  formError(atom, "No return type specifier in function definition.");
 }
 
 FunctionAST* processFnDefinition(Atom atom, SExp* name, SExp* args, SExp* ret,
