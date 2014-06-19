@@ -80,6 +80,21 @@ SUITE(ast) {
   RUN_TEST(length);
 }
 
+TEST(ints) {
+  SExp* a = makeAtom("1234");
+  SExp* b = makeAtom("+1");
+  SExp* c = makeAtom("-01234");
+  ASSERT((a->type == INTEGER) && (b->type == INTEGER) &&
+         (c->type == INTEGER));
+  freeSExp(a);
+  freeSExp(b);
+  freeSExp(c);
+}
+
+SUITE(classifier) {
+  RUN_TEST(ints);
+}
+
 TEST(read_atom) {
   FILE* file = fopen("tests/input.1.txt", "r");
   SExp* atom = readStream(file);
@@ -117,6 +132,7 @@ SUITE(reader) {
 
 int main(int argc, char **argv) {
   RUN_SUITE(ast);
+  RUN_SUITE(classifier);
   RUN_SUITE(reader);
   report();
 }
