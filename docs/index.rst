@@ -15,6 +15,7 @@ Specification
    types
    special-forms
    core
+   modules
 
 ************************
 Reference Implementation

@@ -8,6 +8,9 @@ Reader Macro Expansion
 Reader macro expansion happens at read time, while the source tree is being
 parsed.
 
+Module Expansion
+================
+
 Macroexpansion
 ==============
 
