@@ -59,7 +59,9 @@
 /* Utilities */
 
 /* Peek at the next character in the stream */
-int peekc(FILE *stream);
+int peekc(FILE* stream);
+/* Get the next character in the stream, advancing the cursor */
+char nextchar(FILE* stream);
 /* Concatenate list1 and list2 */
 SExp* concat(SExp* list1, SExp* list2);
 /* Reverse list */

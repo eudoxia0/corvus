@@ -1,9 +1,26 @@
 #include "reader.hpp"
 
-int peekc(FILE *stream) {
+int peekc(FILE* stream) {
     int c = fgetc(stream);
     ungetc(c, stream);
     return c;
+}
+
+/* The cursor: These global variables are increased throughout the execution of
+   the compiler. */
+
+unsigned long curline = 0;
+unsigned long curcol = 0;
+
+char nextchar(FILE* stream) {
+  char c = (char)getc(stream);
+  if(c == '\n') {
+    curline++;
+    curcol = 0;
+  } else {
+    curcol++;
+  }
+  return c;
 }
 
 SExp* concat(SExp* list1, SExp* list2) {
