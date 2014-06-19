@@ -39,7 +39,7 @@ SExp* readStream(FILE* stream) {
     if(isspace(c)) {
       if(completeToken(token_text))
         /* Return the complete token */
-        return makeSExp(token_text, IDENTIFIER);
+        return makeAtom(token_text);
       else {
         c = (char)getc(stream);
         continue;
@@ -54,7 +54,7 @@ SExp* readStream(FILE* stream) {
     }
     if(c == ')') {
       ungetc(c, stream);
-      return makeSExp(token_text, IDENTIFIER);
+      return makeAtom(token_text);
     }
     /* Any character that is not a macro character is a constituent character
        of a token. At this point, a token begins to be accumulated */
@@ -63,7 +63,7 @@ SExp* readStream(FILE* stream) {
   }
   /* End-of-file was reached */
   if(completeToken(token_text))
-    return makeSExp(token_text, IDENTIFIER);
+    return makeAtom(token_text);
   else
     /* EOF was reached before a complete token was read */
     return NULL;
