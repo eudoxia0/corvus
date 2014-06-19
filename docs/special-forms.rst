@@ -113,3 +113,10 @@ Compiler API, Reflection
 
 `feature?`
 ----------
+
+Syntax
+   :code:`(feature? <feature>)`
+Return Value
+   `i1`: Whether :code:`<feature>` is present in the features list.
+Parameters
+   * :code:`<feature>`: A symbol to look up in the feature list.
