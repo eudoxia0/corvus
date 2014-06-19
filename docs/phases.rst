@@ -20,7 +20,7 @@ Annotation
 ==========
 
 The compiler turns the largely unstructured tree of S-expressions into a more
-abstract tree.
+abstract tree, veryfying the syntax of certain special operations.
 
 Type Definition Extraction
 ==========================
@@ -48,3 +48,10 @@ Would become something like::
       (set x0 (+ x0 1))
       (let (x1 2)
         (print (+ x1 y0))))
+
+Closure Analysis
+================
+
+The compiler recurs through the blocks, finding the definitions of lambdas and
+functions, annotating these functions with the variables (If any) that they
+close over. Note that this is not lambda/function lifting.

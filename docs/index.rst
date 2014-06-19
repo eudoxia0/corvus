@@ -11,8 +11,8 @@ Specification
 
    introduction
    syntax
-   types
    evaluation
+   types
    special-forms
    core
 
