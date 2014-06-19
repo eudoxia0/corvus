@@ -45,6 +45,21 @@ Assignment and Mutation
 `let`
 -----
 
+Syntax
+   :code:`(let (<bindings>*) <body>+)`
+Return Value
+   The value of the last expression in :code:`body`.
+Parameters
+   * :code:`<bindings>`: Each binding is a pair with a name and a value. Unlike
+     Common Lisp, bindings don't have to be parenthesized. As such, the number
+     of bindings must be even.
+
+Examples::
+
+  (let (x 1
+        y 3.14)
+    (show x))
+
 `set`
 -----
 
