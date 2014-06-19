@@ -1,7 +1,6 @@
 /* Turn the AST into an annotated AST for function lifting. */
 #include "ast.hpp"
-#include <vector>
-#include <utility>
+#include "types.hpp"
 
 /* The base class of all annotated ASTs */
 class AnnotAST { };
@@ -10,6 +9,7 @@ class AtomAST: public AnnotAST {
   Atom atom;
 public:
   AtomAST(Atom at) : atom(at) { }
+  Type emitType(TypeEnv* env);
 };
 
 /* We don't use a Map because order of assignment is important */
@@ -20,16 +20,18 @@ class LetAST : public AnnotAST {
   Bindings bindings;
 public:
   LetAST(Bindings bind) : bindings(bind) {}
+  Type emitType(TypeEnv* env);
 };
 
 /* An anonymous function definition */
 class LambdaAST : public AnnotAST {
-public:
   Bindings arguments;
   AnnotAST* ret;
   AnnotAST* body;
+public:
   LambdaAST(Bindings args, AnnotAST* ret_type, AnnotAST* lbody) :
     arguments(args), ret(ret_type), body(lbody) {}
+  Type emitType(TypeEnv* env);
 };
 
 /* A named function definition */
@@ -41,6 +43,7 @@ public:
     LambdaAST(args, ret_type, fbody) {
     this->name = fname;
   }
+  Type emitType(TypeEnv* env);
 };
 
 /* Represents a call to a function, special form or an expression that returns a
@@ -51,6 +54,7 @@ class CallAST : public AnnotAST {
 public:
   CallAST(AnnotAST* fun, std::vector<AnnotAST*> arguments) :
     fn(fun), args(arguments) { }
+  Type emitType(TypeEnv* env);
 };
 
 /* Test whether the text of 'atom' equals 'text' */

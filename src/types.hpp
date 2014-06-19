@@ -1,6 +1,5 @@
 #include <vector>
-#include <utility>
-#include <cstdlib>
+#include <map>
 
 /* The base of all types. */
 struct Type { };
@@ -91,3 +90,7 @@ Type HalfFloat = Float(Half);
 Type SingleFloat = Float(Single);
 Type DoubleFloat = Float(Double);
 Type QuadFloat = Float(Quad);*/
+
+struct TypeEnv {
+  std::map<char*, Type> types;
+};
