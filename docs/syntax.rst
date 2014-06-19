@@ -19,7 +19,7 @@ The following list shows the regular expressions that correspond to each token
 type:
 
 * Integer: `[+-]?(\d)+`.
-* Float: `[+-][0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?`.
+* Float: `[+-]?[0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?`.
 
 Identifiers are anything else.
 

@@ -75,7 +75,7 @@ std::vector<SExp*> sexpToVec(SExp* sexp) {
 }
 
 std::regex integerRegex = std::regex("[+-]?(\\d)+");
-std::regex floatRegex = std::regex("[+-][0-9]*\\.?[0-9]+([eE][+-]?[0-9]+)?");
+std::regex floatRegex = std::regex("[+-]?[0-9]*\\.?[0-9]+([eE][+-]?[0-9]+)?");
 
 SExpType classify(std::string str) {
   if(std::regex_match(str, integerRegex)) {
