@@ -1,16 +1,3 @@
-# Implementation
-
-## Reader Macros
-
-Reader macro expansion happens at read time, while the source tree is being
-parsed.
-
-## Macroexpansion
-
-This is the second phase of compilation, before the AST is further
-transformed. The compiler traverses the AST looking for calls to macros and
-performs the macroexpansion process.
-
 ## Blocks
 
 After all macros have been expanded, the compiler tranverses the AST looking for
@@ -36,20 +23,4 @@ replaced with the function name.
 
 The annotatated identifiers are then used to turn the function into a closure,
 if necessary.
-
-## Variable lifting
-
-(let (x 1
-      y 2)
-  (+ x 1)
-  (let (x 2)
-    (print (+ x y))))
-
-->
-
-(let (x0 1
-      y0 1)
-  (+ x0 1)
-  (let (x1 2)
-    (print (+ x1 y0))))
  
