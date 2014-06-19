@@ -36,8 +36,6 @@ struct SExp {
 #define listp(sexp) (sexp->type == LIST)
 #define first(sexp) (sexp->content.list.first)
 #define rest(sexp) (sexp->content.list.rest)
-#define line(sexp) (sexp->content.atom.line)
-#define col(sexp) (sexp->content.atom.col)
 #define val(sexp) (sexp->content.atom.val)
 
 /* Create an atom from a byte array and a SExpType; */

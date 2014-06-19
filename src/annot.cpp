@@ -12,6 +12,18 @@ std::vector<AnnotAST*> annotate(std::vector<SExp*> list) {
   return out;
 }
 
+void letError(Atom atom, std::string explanation) {
+  throw Error(atom.line, atom.col, "Bad 'let' form: " + explanation);
+}
+
+void letNoBody(Atom atom) {
+  letError(atom, "No body.");
+}
+
+void letBadBindings(Atom atom) {
+  letError(atom, "Odd number of arguments in bindings.");
+}
+
 AnnotAST* annotateList(SExp* list) {
   /* Note: If a list makes it this far (when called from 'annotate') it is
      guaranteed to be non-NULL, that is, to have at least one element. */

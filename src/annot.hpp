@@ -1,6 +1,7 @@
 /* Turn the AST into an annotated AST for function lifting. */
 #include "ast.hpp"
 #include "types.hpp"
+#include "errors.hpp"
 
 /* The base class of all annotated ASTs */
 class AnnotAST { };

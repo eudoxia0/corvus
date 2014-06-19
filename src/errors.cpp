@@ -6,7 +6,7 @@ std::string printCursor(long line, long col) {
   return ss.str();
 }
 
-std::string ReaderError::msg() {
+std::string Error::msg() {
   std::string out = printCursor(this->line, this->col);
   return out + this->str;
 }

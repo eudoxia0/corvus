@@ -4,10 +4,11 @@
 
 std::string printCursor(long line, long col);
 
-class ReaderError : public std::exception {
+class Error : public std::exception {
   long line;
   long col;
-  char* str;
+  std::string str;
 public:
+  Error(long l, long c, std::string msg) : line(l), col(c), str(msg) { }
   std::string msg();
 };
