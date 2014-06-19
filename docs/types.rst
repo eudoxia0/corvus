@@ -5,6 +5,9 @@ Types
 Scalar Types
 ============
 
+Scalar types include integers and floating-point numbers. The symbols in this
+section are the type specifiers for these types.
+
 Integers
 --------
 
@@ -52,13 +55,29 @@ or `size`) can access this hidden metadata or manipulate it.
 Because of the design, arrays are compatible with C arrays and can be passed to
 external C functions that take an array as a parameter transparently.
 
+Type specifier
+   :code:`(arr <type>)`
+Examples
+   * :code:`(arr i32)` defines an array of 32-bit integers.
+
 Tuples
 ^^^^^^
 
 A tuple is an ordered, heterogenous, fixed-size collection of objects.
 
+Type specifier
+   :code:`(tup <type>+)`
+Examples
+   * :code:`(tup i8 i8 i8)` defines a tuple of bytes.
+
 Records
 ^^^^^^^
+
+Type specifier
+   :code:`(rec (<name> <type>)+)`
+Examples
+   * :code:`(rec (age i8) (id i64))` defines a record of two fields:
+     :code:`age`, which is a byte, and :code:`id`, a 64-bit integer/
 
 Datatypes
 ^^^^^^^^^
@@ -72,32 +91,32 @@ Kinds
 Functions
 ---------
 
+Type specifier
+   :code:`(fn <arg type>+ <ret type>)`
+Examples
+   * :code:`(fn i32 i32 double)` defines a function that takes two integers and
+     returns a double.
+
 Bounded Polymorphism
 ^^^^^^^^^^^^^^^^^^^^
 
 Pointers
 --------
 
+Type specifier
+   :code:`(<p|pp|ppp|pppp> <type>)`
+Examples
+   * :code:`(p i8)` defines a pointer to a byte.
+   * :code:`(pp double)` defines a pointer to a pointer to a double.
+
 Type Specifiers
 ---------------
 
 A type specifier is an expression that represents a type.
 
-Type Construction
-^^^^^^^^^^^^^^^^^
-
-* `(tup t1 t2 ... tn)`: Create a tuple of types `t1 t2 ... tn`.
-* `(rec (name1 t1) ... (namen tn))`: Create a record type, where each argument
-  is a `name,type` pair.
-* `(fn t1 t2 ... tn ret)`: Create a function pointer type. `t1` to `tn` are the
-  types of the arguments, and `ret` is the return type.
-
 Type Operations
 ^^^^^^^^^^^^^^^
 
-* `([p|pp|ppp|pppp] type)`: Increases the indirection level of `type` by the
-  number of p's in the expression's name. In C terms, `(pp byte)` is equivalent
-  to` char**`.
 * `(base type)`: If `type` is a pointer of any indirection (eg, pointer to
   pointer to ...), return the base type.
 * `(ret fn-type)`: Extract the return type from a function pointer type. For
