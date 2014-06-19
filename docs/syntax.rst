@@ -9,8 +9,32 @@ Corvus' reader algorithm is loosely based on Common Lisp's, as `described
 <http://www.lispworks.com/documentation/HyperSpec/Body/02_b.htm>`_ in the Common
 Lisp Specification.
 
+Tokens
+======
+
+Token Types
+-----------
+
+The following list shows the regular expressions that correspond to each token
+type:
+
+* Integer: `[+-]?(\d)+`
+* Float: `[+-][0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?`
+
+Identifiers are anything else.
+
+Strings are not strictly tokens, as they are implemented as a reader macro.
+
 Included Reader Macros
 ======================
+
+Strings
+-------
+
+Strings are implemented as a reader macro. This encourages users to add new
+string readers that serve different functions. For example, a user might create
+a reader macro that takes a word, the reads the rest of the input until that
+same word is found as a string.
 
 Comments
 --------
