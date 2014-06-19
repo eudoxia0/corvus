@@ -14,13 +14,15 @@ public:
 };
 
 /* We don't use a Map because order of assignment is important */
-typedef std::vector<std::pair<const char*, SExp*> > Bindings;
+typedef std::pair<const char*, AnnotAST*> Binding;
+typedef std::vector<Binding> Bindings;
 
 /* Represents a let: A series of assignments in a new scope */
 class LetAST : public AnnotAST {
   Bindings bindings;
+  AnnotAST* body;
 public:
-  LetAST(Bindings bind) : bindings(bind) {}
+  LetAST(Bindings bind, AnnotAST* lbody) : bindings(bind), body(lbody) {}
   Type emitType(TypeEnv* env);
 };
 

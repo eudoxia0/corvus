@@ -13,6 +13,10 @@ void letBadBindingsError(Atom atom) {
   formError(atom, "Odd number of arguments in bindings.");
 }
 
+void letNonSymBindingError(Atom atom, SExp* sexp) {
+  formError(atom, "Variable names must be symbols. Found " + print(sexp) + ".");
+}
+
 void fnNoNameError(Atom atom) {
   formError(atom, "No name in function definition.");
 }

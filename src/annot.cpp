@@ -14,7 +14,24 @@ std::vector<AnnotAST*> annotate(std::vector<SExp*> list) {
 }
 
 LetAST* processLet(Atom atom, SExp* bindings, SExp* body) {
-  return NULL;
+  if(length(bindings) % 2 != 0) {
+    letBadBindingsError(atom);
+  }
+  Bindings bind;
+  SExp* bindp = bindings;
+  while(bindp != NULL) {
+    SExp* sym = first(bindp);
+    bindp = rest(bindp);
+    /* After the check above, the number of bindings in the let form is
+       guaranteed to be even, so we don't have to check on every iteration. */
+    SExp* value = first(bindp);
+    if(value->type != IDENTIFIER) {
+      letNonSymBindingError(atom, value);
+    }
+    bind.push_back(Binding(val(sym), annotate(value)));
+    bindp = rest(bindp);
+  }
+  return new LetAST(bind, annotate(body));
 }
 
 LetAST* processLetForm(Atom atom, SExp* list) {
@@ -23,13 +40,17 @@ LetAST* processLetForm(Atom atom, SExp* list) {
       formError(atom, "No bindings.");
     case 1:
       noBodyError(atom);
-    default:
+    default: {
       /* Process the let */
-      return NULL;
+      SExp* bindings = first(list);
+      SExp* body = rest(list);
+      return processLet(atom, bindings, body);
+    }
+  }
 }
 
 FunctionAST* processFnDefinition(Atom atom, SExp* name, SExp* args, SExp* ret,
-                              SExp* body) {
+                                 SExp* body) {
   return NULL;
 }
 
@@ -40,7 +61,7 @@ AnnotAST* processFunctionForm(Atom atom, SExp* list) {
     case 1:
       fnNoArgsError(atom);
     case 2:
-      noRetError(atom);
+      fnNoRetError(atom);
     case 3:
       noBodyError(atom);
     default: {
