@@ -12,6 +12,7 @@ Specification
    introduction
    syntax
    types
+   evaluation
    special-forms
    core
 
