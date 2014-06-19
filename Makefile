@@ -1,6 +1,6 @@
 # Compiler options
 INCLUDE = -I src -I ext
-CXXFLAGS = -Wall -pedantic -pedantic-errors -g -O0
+CXXFLAGS = -Wall -pedantic -pedantic-errors -g -O0 -std=c++11
 
 # Modules
 AST_HEAD = src/ast.hpp
@@ -15,13 +15,13 @@ MACROS_HEAD = src/macros.hpp
 MACROS_SRC = src/macros.cpp
 MACROS = src/macros.o
 
-ANNOT_HEAD = src/annot.hpp
-ANNOT_SRC = src/annot.cpp
-ANNOT = src/annot.o
-
 TYPES_HEAD = src/types.hpp
 TYPES_SRC = src/types.cpp
 TYPES = src/types.o
+
+ANNOT_HEAD = src/annot.hpp
+ANNOT_SRC = src/annot.cpp
+ANNOT = src/annot.o
 
 MODULES = $(AST) $(READER) $(MACROS) $(ANNOT) $(TYPES)
 
@@ -61,3 +61,7 @@ $(TEST): $(TEST_SRC) all
 
 clean:
 	rm src/*.o
+
+docs:
+	make -C docs/ html
+	make -C docs/ latexpdf
