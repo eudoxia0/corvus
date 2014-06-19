@@ -91,8 +91,32 @@ TEST(ints) {
   freeSExp(c);
 }
 
+TEST(floats) {
+  SExp* a = makeAtom("3.14");
+  SExp* b = makeAtom("0.16");
+  SExp* c = makeAtom("+8.5e78");
+  ASSERT((a->type == FLOAT) && (b->type == FLOAT) &&
+         (c->type == FLOAT));
+  freeSExp(a);
+  freeSExp(b);
+  freeSExp(c);
+}
+
+TEST(identifiers) {
+  SExp* a = makeAtom("a");
+  SExp* b = makeAtom("@some-function");
+  SExp* c = makeAtom("test?");
+  ASSERT((a->type == IDENTIFIER) && (b->type == IDENTIFIER) &&
+         (c->type == IDENTIFIER));
+  freeSExp(a);
+  freeSExp(b);
+  freeSExp(c);
+}
+
 SUITE(classifier) {
   RUN_TEST(ints);
+  RUN_TEST(floats);
+  RUN_TEST(identifiers);
 }
 
 TEST(read_atom) {
