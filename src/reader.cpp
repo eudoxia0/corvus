@@ -1,9 +1,9 @@
 #include "reader.hpp"
 
-int peekc(FILE* stream) {
-    int c = fgetc(stream);
-    ungetc(c, stream);
-    return c;
+char peekc(FILE* stream) {
+  char c = (char)fgetc(stream);
+  ungetc(c, stream);
+  return c;
 }
 
 /* The cursor: These global variables are increased throughout the execution of
@@ -49,7 +49,7 @@ bool completeToken(std::string tok_text) {
 
 SExp* readStream(FILE* stream) {
   std::string token_text;
-  char c = (char)getc(stream);
+  char c = nextchar(stream);
   while(c != EOF) {
     /* If c is a whitespace character, discard it and re-enter the loop, unless
        we are reading a token, in which case the whitespace terminates it. */
@@ -58,7 +58,7 @@ SExp* readStream(FILE* stream) {
         /* Return the complete token */
         return makeAtom(token_text);
       else {
-        c = (char)getc(stream);
+        c = nextchar(stream);
         continue;
       }
     }
@@ -76,7 +76,7 @@ SExp* readStream(FILE* stream) {
     /* Any character that is not a macro character is a constituent character
        of a token. At this point, a token begins to be accumulated */
     token_text += c;
-    c = (char)getc(stream);
+    c = nextchar(stream);
   }
   /* End-of-file was reached */
   if(completeToken(token_text))
@@ -92,7 +92,7 @@ SExp* readDelimitedSequence(FILE* stream, char delimiter) {
   while(1) {
     char peek = peekc(stream);
     if((peek == delimiter) || (peek == EOF)) {
-      getc(stream);
+      nextchar(stream);
       return reverse(list);
     }
     current = readStream(stream);
