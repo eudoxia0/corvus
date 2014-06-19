@@ -1,9 +1,10 @@
 #include <string>
 #include <vector>
 #include <cassert>
+#include <regex>
 
 enum SExpType {
-  LIST, INTEGER, REAL, STRING, IDENTIFIER
+  LIST, INTEGER, FLOAT, STRING, IDENTIFIER
 };
 
 struct Atom {
@@ -56,3 +57,6 @@ size_t length(SExp* list);
 
 /* Utility: Turn a SExp into a vector. */
 std::vector<SExp*> sexpToVec(SExp* sexp);
+
+/* Determine the atom type of a string of text */
+SExpType classify(const char* str);

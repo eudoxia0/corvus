@@ -73,3 +73,15 @@ std::vector<SExp*> sexpToVec(SExp* sexp) {
   };
   return out;
 }
+
+std::regex integerRegex = std::regex("[+-]?(\\d)+");
+std::regex floatRegex = std::regex("[+-][0-9]*\\.?[0-9]+([eE][+-]?[0-9]+)?");
+
+SExpType classify(const char* str) {
+  if(std::regex_match(str, integerRegex)) {
+    return INTEGER;
+  } else if(std::regex_match(str, floatRegex)) {
+    return FLOAT;
+  }
+  return IDENTIFIER;
+}
