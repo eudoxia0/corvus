@@ -2,6 +2,8 @@
 Macros
 ******
 
+.. _pat_macro:
+
 Pattern Macros
 ==============
 

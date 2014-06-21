@@ -144,7 +144,19 @@ Macros
 ======
 
 `defsyntax`
-----------
+-----------
+
+Syntax
+   :code:`(defsyntax <name> [<case> <template>]+)`
+Return Value
+   `i1`: The truth constant.
+Parameters
+   * :code:`<name>`: The macro name.
+   * :code:`<case>`, :code:`<template>`: Each pair maps a pattern in the source
+     to a particular template.
+
+Defines a pattern macro. For a complete description, see the :ref:`appropriate
+section <pat_macro>`.
 
 Conditions
 ==========
