@@ -19,17 +19,17 @@ transformed. The compiler first looks through the AST, extracting macro
 definitions, then traverses the AST again looking for calls to macros and performs the
 macroexpansion process.
 
-Annotation
-==========
-
-The compiler turns the largely unstructured tree of S-expressions into a more
-abstract tree, veryfying the syntax of certain special operations.
-
 Type Definition Extraction
 ==========================
 
 Since types are global, not scoped, they can be extracted all at once to build a
 type environment before the actual type system is run.
+
+Annotation
+==========
+
+The compiler turns the largely unstructured tree of S-expressions into a more
+abstract tree, veryfying the syntax of certain special operations.
 
 Variable Lifting
 ================
