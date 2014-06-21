@@ -28,13 +28,24 @@ Functions
 `defn`
 ------
 
+Syntax
+   :code:`(defn name (<arguments>) <ret> <docstring>? <body>+)`
+Return Value
+   `i1`: The truth constant.
+Parameters
+   * :code:`<name>`: The function's name.
+   * :code:`<arguments>`: A :ref:`generic argument list <concrete_arglist>`.
+   * :code:`<ret>`: A type specifier of the function's return type.
+   * :code:`<docstring>`: An optional string documenting what the function does.
+   * :code:`<body>`: A sequence of expressions.
+
 `lambda`
 --------
 
 Syntax
    :code:`(lambda (<arguments>) <body>+)`
 Return Value
-   `(fn <arguments> <ret>)`: A pointer to the function
+   `(fn <arguments> <ret>)`: A pointer to the function.
 Parameters
    * :code:`<arguments>`: A :ref:`concrete argument list <concrete_arglist>`.
    * :code:`<body>`: A sequence of expressions.
@@ -54,7 +65,9 @@ Parameters
      Common Lisp, bindings don't have to be parenthesized. As such, the number
      of bindings must be even.
 
-Examples::
+Examples:
+
+::
 
   (let (x 1
         y 3.14)
@@ -78,6 +91,17 @@ Parameters
      present scope, otherwise, a duplicate named type error is signalled.
    * :code:`<specifier>`: A type specifier.
    * :code:`<docstring>`: An optional documentation string describing the type.
+
+Examples:
+
+::
+
+  (type bigint i128)
+
+  (type color
+    (rec (r i8) (g i8) (b i8)))
+
+  (type point (tup double double double))
 
 
 Memory Management
@@ -119,7 +143,7 @@ Parameters
 Macros
 ======
 
-`defmacro`
+`defsyntax`
 ----------
 
 Conditions
@@ -143,3 +167,18 @@ Return Value
    `i1`: Whether :code:`<feature>` is present in the features list.
 Parameters
    * :code:`<feature>`: A symbol to look up in the feature list.
+
+Foreign Function Interface
+==========================
+
+link
+foreign
+
+Inlining
+========
+
+llvm
+inline-llvm
+
+asm
+inline-asm
