@@ -23,11 +23,15 @@ TYPES_HEAD = src/types.hpp
 TYPES_SRC = src/types.cpp
 TYPES = src/types.o
 
+LIFT_TYPES_HEAD = src/lift-types.hpp
+LIFT_TYPES_SRC = src/lift-types.cpp
+LIFT_TYPES = src/lift-types.o
+
 ANNOT_HEAD = src/annot.hpp
 ANNOT_SRC = src/annot.cpp
 ANNOT = src/annot.o
 
-MODULES = $(AST) $(ERRORS) $(READER) $(MACROS) $(ANNOT) $(TYPES)
+MODULES = $(AST) $(ERRORS) $(READER) $(MACROS) $(TYPES) $(LIFT_TYPES) $(ANNOT)
 
 # Compile a module
 CMODULE = $(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -c -o $@ $<
@@ -52,10 +56,13 @@ $(READER): $(READER_SRC) $(READER_HEAD)
 $(MACROS): $(MACROS_SRC) $(MACROS_HEAD)
 	$(CMODULE)
 
+$(TYPES): $(TYPES_SRC) $(TYPES_HEAD)
+	$(CMODULE)
+
 $(ANNOT): $(ANNOT_SRC) $(ANNOT_HEAD)
 	$(CMODULE)
 
-$(TYPES): $(TYPES_SRC) $(TYPES_HEAD)
+$(LIFT_TYPES): $(LIFT_TYPES_SRC) $(LIFT_TYPES_HEAD)
 	$(CMODULE)
 
 all: $(MODULES)
