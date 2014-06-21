@@ -23,3 +23,19 @@ The following will never be implemented:
 
 History
 =======
+
+Notational Conventions
+======================
+
+Specially in syntax definitions, the following rules are used:
+
+* Text in angular brackets represents a variable, eg. `<var>`, `<args>`,
+  `<val>`.
+* The following quantifiers, when found after a variable, represent that the
+  variable:
+  * `+`: Consists of at least one expression.
+  * `*`: Consists of zero or more expressions.
+  * `?`: Is optional.
+* Brackets may be used to group variables that are not other wise delimited. For
+  example, the syntax description `[<var> <val>]+` would describe expressions
+  such as `a 1 b 2 c 3`.
