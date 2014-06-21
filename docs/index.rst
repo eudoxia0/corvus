@@ -15,6 +15,7 @@ Specification
    types
    special-forms
    core
+   macros
    modules
    reader
    printer
