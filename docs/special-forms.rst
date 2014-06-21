@@ -188,6 +188,19 @@ Return Value
 Parameters
    * :code:`<feature>`: A symbol to look up in the feature list.
 
+`disassemble`
+-------------
+
+Syntax
+   :code:`(disassemble <fn>)`
+Return Value
+   `i1`: The truth constant.
+Parameters
+   * :code:`<fn>`: A function.
+
+Print the internal representation of the function :code:`<fn>` to the standard
+output stream.
+
 Foreign Function Interface
 ==========================
 
