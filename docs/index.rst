@@ -16,6 +16,8 @@ Specification
    special-forms
    core
    modules
+   reader
+   printer
 
 ************************
 Reference Implementation

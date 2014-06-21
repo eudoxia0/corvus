@@ -5,6 +5,13 @@ Language Core
 Mathematical Operations
 =======================
 
++ - * / %
+
+Logic
+=====
+
+and or not
+
 Bitwise Operations
 ==================
 
@@ -24,8 +31,8 @@ right. In the case of :code:`shr`, whether :code:`<argument>` is a signed or
 unsigned integer determines whether this is logical or arithmetic right-shift,
 respectively.
 
-Logic
------
+Bitwise Logic
+-------------
 
 Syntax
    :code:`(bit-<and|or|xor> <a> <b>)`
@@ -53,3 +60,19 @@ the number of most significant zeros. :code:`t-ones` counts the number of least
 significant zeros.
 
 .. _`Hamming weight`: http://en.wikipedia.org/wiki/Hamming_weight
+
+Tuple and Array Literals
+========================
+
+Memory
+======
+
+ref
+address
+nth
+access
+
+Printing
+========
+
+show
