@@ -76,6 +76,14 @@ Examples:
 `set`
 -----
 
+Syntax
+   :code:`(set <place> <value>)`
+Return Value
+   `(typeof <value>)`: Returns :code:`<value>`.
+Parameters
+   * :code:`<place>`: A set-able value of any type.
+   * :code:`<value>`: A value, of the same type as :code:`<place>`.
+
 Types
 =====
 
