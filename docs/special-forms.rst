@@ -170,7 +170,7 @@ Conditions
 ==========
 
 :code:`defcondition`
---------------
+--------------------
 
 :code:`handling`
 ----------------
