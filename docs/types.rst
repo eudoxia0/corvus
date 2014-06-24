@@ -33,10 +33,10 @@ Floating-point
 * `quad`: Quadruple precision, 128 bits wide.
 
 Aggregate Types
----------------
+===============
 
 Arrays
-^^^^^^
+------
 
 Arrays are a kind of 'fat pointer': They point to a region of data but also
 carry length information. This data is hidden before the region they point to::
@@ -61,7 +61,7 @@ Examples
    * :code:`(arr i32)` defines an array of 32-bit integers.
 
 Tuples
-^^^^^^
+------
 
 A tuple is an ordered, heterogenous, fixed-size collection of objects.
 
@@ -71,7 +71,7 @@ Examples
    * :code:`(tup i8 i8 i8)` defines a tuple of bytes.
 
 Records
-^^^^^^^
+-------
 
 Type specifier
    :code:`(rec (<name> <type>)+)`
@@ -80,16 +80,16 @@ Examples
      :code:`age`, which is a byte, and :code:`id`, a 64-bit integer/
 
 Datatypes
-^^^^^^^^^
+=========
 
 Generics
-^^^^^^^^
+========
 
 Kinds
-^^^^^
+=====
 
 Functions
----------
+=========
 
 Type specifier
    :code:`(fn <arg type>+ <ret type>)`
@@ -98,10 +98,10 @@ Examples
      returns a double.
 
 Bounded Polymorphism
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 Pointers
---------
+========
 
 Type specifier
    :code:`(<p|pp|ppp|pppp> <type>)`
@@ -110,12 +110,12 @@ Examples
    * :code:`(pp double)` defines a pointer to a pointer to a double.
 
 Type Specifiers
----------------
+===============
 
 A type specifier is an expression that represents a type.
 
 Type Operations
-^^^^^^^^^^^^^^^
+---------------
 
 * `(base type)`: If `type` is a pointer of any indirection (eg, pointer to
   pointer to ...), return the base type.
