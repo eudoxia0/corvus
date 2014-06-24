@@ -18,7 +18,7 @@ is another one of my contributions to this movement.
 
 * Static typing with partial inference.
 * Manual memory management with multiple safety guarantees.
-* Common Lisp Conditions and Restarts for Error Handling.
+* Common Lisp Conditions and Restarts for error handling.
 * Macros and Common Lisp-style reader macros.
 * Runtime optional.
 

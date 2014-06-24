@@ -7,7 +7,7 @@ Specification
 *************
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    introduction
    syntax
@@ -17,6 +17,7 @@ Specification
    core
    macros
    modules
+   conditions
    reader
    printer
 
@@ -25,6 +26,7 @@ Reference Implementation
 ************************
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
-   phases
+   impl/phases
+   impl/conditions

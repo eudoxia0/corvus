@@ -39,7 +39,7 @@ those of C: :code:`/* Comment text */`.
 Multi-line comments can be nested.
 
 Literals
-^^^^^^^^
+--------
 
 Reader macros are defined to create tuple and array literals. These are,
 respectively:
