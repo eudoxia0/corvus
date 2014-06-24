@@ -89,3 +89,7 @@ SExpType classify(std::string str) {
 SExp* makeAtom(std::string val) {
   return makeSExp(val, classify(val));
 }
+
+int atomeq(SExp* atom, const char* text) {
+  return val(atom) == text;
+}

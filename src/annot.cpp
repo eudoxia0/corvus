@@ -1,10 +1,6 @@
 #include "annot.hpp"
 #include "annot-errors.cpp"
 
-int atomeq(SExp* atom, const char* text) {
-  return val(atom) == text;
-}
-
 std::vector<AnnotAST*> annotate(std::vector<SExp*> list) {
   std::vector<AnnotAST*> out;
   for(size_t i = 0; i < list.size(); i++) {

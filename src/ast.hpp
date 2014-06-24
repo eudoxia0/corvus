@@ -34,6 +34,7 @@ struct SExp {
 /* The following macros are here to reduce the verbosity of accessing the
    various nested union members in the SExp structure. */
 #define listp(sexp) (sexp->type == LIST)
+#define atomp(sexp) !(listp(sexp))
 #define first(sexp) (sexp->content.list.first)
 #define rest(sexp) (sexp->content.list.rest)
 #define val(sexp) (sexp->content.atom.val)
@@ -61,3 +62,6 @@ SExpType classify(std::string str);
 
 /* Create an atom from a string, automatically classifying it */
 SExp* makeAtom(std::string val);
+
+/* Test whether the text of 'atom' equals 'text' */
+int atomeq(SExp* atom, const char* text);

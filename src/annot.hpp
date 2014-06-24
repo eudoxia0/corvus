@@ -60,9 +60,6 @@ public:
   Type emitType(TypeEnv* env);
 };
 
-/* Test whether the text of 'atom' equals 'text' */
-int atomeq(SExp* atom, const char* text);
-
 /* Annotate a vector of S-expressions */
 std::vector<AnnotAST*> annotate(std::vector<SExp*> list);
 
