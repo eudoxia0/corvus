@@ -10,8 +10,8 @@ depending on its value.
 Flow Control
 ============
 
-`if`
-----
+:code:`if`
+----------
 
 Syntax
    :code:`(if <cond> <true-branch> <false-branch>)`
@@ -25,8 +25,8 @@ Parameters
 Functions
 =========
 
-`defn`
-------
+:code:`defn`
+------------
 
 Syntax
    :code:`(defn name (<arguments>) <ret> <docstring>? <body>+)`
@@ -39,8 +39,8 @@ Parameters
    * :code:`<docstring>`: An optional string documenting what the function does.
    * :code:`<body>`: A sequence of expressions.
 
-`lambda`
---------
+:code:`lambda`
+--------------
 
 Syntax
    :code:`(lambda (<arguments>) <body>+)`
@@ -53,8 +53,8 @@ Parameters
 Assignment and Mutation
 =======================
 
-`let`
------
+:code:`let`
+-----------
 
 Syntax
    :code:`(let (<bindings>*) <body>+)`
@@ -73,8 +73,8 @@ Examples:
         y 3.14)
     (show x))
 
-`set`
------
+:code:`set`
+-----------
 
 Syntax
    :code:`(set <place> <value>)`
@@ -87,8 +87,8 @@ Parameters
 Types
 =====
 
-`type`
-------
+:code:`type`
+------------
 
 Syntax
    :code:`(type <name> <specifier> <docstring?>)`
@@ -115,8 +115,8 @@ Examples:
 Memory Management
 =================
 
-`new`
------
+:code:`new`
+-----------
 
 Syntax
    :code:`(new <instance> <length?>)`
@@ -127,8 +127,8 @@ Parameters
    * :code:`<length>`: If provided, the length of the array to create with
      copies of `<instance>`.
 
-`realloc`
----------
+:code:`realloc`
+---------------
 
 Syntax
    :code:`(realloc <array> <length>)`
@@ -138,8 +138,8 @@ Parameters
    * :code:`<array>`: The array to resize.
    * :code:`<length>`: The new length of the array.
 
-`free`
-------
+:code:`free`
+------------
 
 Syntax
    :code:`(free <pointer>)`
@@ -151,8 +151,8 @@ Parameters
 Macros
 ======
 
-`defsyntax`
------------
+:code:`defsyntax`
+-----------------
 
 Syntax
    :code:`(defsyntax <name> [<case> <template>]+)`
@@ -169,17 +169,17 @@ section <pat_macro>`.
 Conditions
 ==========
 
-`defcondition`
+:code:`defcondition`
 --------------
 
-`handling`
-----------
+:code:`handling`
+----------------
 
 Compiler API, Reflection
 ========================
 
-`feature?`
-----------
+:code:`feature?`
+----------------
 
 Syntax
    :code:`(feature? <feature>)`
@@ -188,8 +188,8 @@ Return Value
 Parameters
    * :code:`<feature>`: A symbol to look up in the feature list.
 
-`disassemble`
--------------
+:code:`disassemble`
+-------------------
 
 Syntax
    :code:`(disassemble <fn>)`
@@ -204,14 +204,5 @@ output stream.
 Foreign Function Interface
 ==========================
 
-link
-foreign
-
-Inlining
-========
-
-llvm
-inline-llvm
-
-asm
-inline-asm
+:code:`link`
+:code:`foreign`
