@@ -2,17 +2,17 @@
 Types
 *****
 
+Unit
+====
+
+The unit type, represented by the empty form :code:`()`, is a bottom type. It is
+similar in purpose to :code:`void` in C and C-like languages.
+
 Scalar Types
 ============
 
 Scalar types include integers and floating-point numbers. The symbols in this
 section are the type specifiers for these types.
-
-Unit
-----
-
-The unit type, represented by the empty form :code:`()`, is a bottom type. It is
-similar in purpose to :code:`void` in C and C-like languages.
 
 Boolean
 -------
