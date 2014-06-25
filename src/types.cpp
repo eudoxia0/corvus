@@ -1,5 +1,9 @@
 #include "annot.cpp"
 
-Type FunctionAST::emitType(TypeEnv* env) {
-  return Integer(Bool);
+Type emitType(SExp* sexp, TypeEnv* tenv) {
+  if(atom(sexp)) {
+
+  } else {
+
+  }
 }

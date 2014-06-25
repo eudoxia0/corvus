@@ -94,3 +94,7 @@ Type QuadFloat = Float(Quad);*/
 struct TypeEnv {
   std::map<char*, Type> types;
 };
+
+/* Type Specifiers */
+
+Type emitType(SExp* sexp, TypeEnv* tenv);
