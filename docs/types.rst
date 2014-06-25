@@ -8,13 +8,23 @@ Scalar Types
 Scalar types include integers and floating-point numbers. The symbols in this
 section are the type specifiers for these types.
 
+Unit
+----
+
+The unit type, represented by the empty form :code:`()`, is a bottom type. It is
+similar in purpose to :code:`void` in C and C-like languages.
+
+Boolean
+-------
+
+The single boolean type, :code:`bool`, has two values: `true` and `false`.
+
 Integers
 --------
 
 Integer types are denoted by the letter 'i' followed by the integer's
 bit-width. The following integer types are supported:
 
-* `i1`
 * `i8`
 * `i16`
 * `i32`
