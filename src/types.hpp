@@ -1,5 +1,6 @@
 #include <vector>
 #include <map>
+#include "ast.hpp"
 
 /* The base of all types. */
 struct Type { };
@@ -84,11 +85,13 @@ struct Pointer : Type {
 
 struct TypeDef {
   Type type;
-  char* docstring;
+  const char* docstring;
+
+  TypeDef(Type t, const char* doc) : type(t), docstring(doc) { }
 };
 
 struct TypeEnv {
-  std::map<char*, TypeDef> types;
+  std::map<const char*, TypeDef> types;
 };
 
 /* Return a type environment with the basic types. */
