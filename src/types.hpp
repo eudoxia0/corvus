@@ -4,11 +4,14 @@
 /* The base of all types. */
 struct Type { };
 
+struct Unit : Type { };
+
 /* Scalar types: Integers and floats. */
 struct Scalar : Type { };
 
+struct Bool : Type { };
+
 enum IntegerType {
-  Bool = 1,
   Byte = 8,
   Short = 16,
   Int32 = 32,
@@ -79,21 +82,17 @@ struct Pointer : Type {
 
 /* Type constants */
 
-/*Type i1 = Integer(Bool);
-Type i8 = Integer(Byte);
-Type i16 = Integer(Short);
-Type i32 = Integer(Int32);
-Type i64 = Integer(Int64);
-Type i128 = Integer(Int128);
-
-Type HalfFloat = Float(Half);
-Type SingleFloat = Float(Single);
-Type DoubleFloat = Float(Double);
-Type QuadFloat = Float(Quad);*/
+struct TypeDef {
+  Type type;
+  char* docstring;
+};
 
 struct TypeEnv {
-  std::map<char*, Type> types;
+  std::map<char*, TypeDef> types;
 };
+
+/* Return a type environment with the basic types. */
+TypeEnv* createDefaultTEnv();
 
 /* Type Specifiers */
 
