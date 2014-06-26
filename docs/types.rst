@@ -98,6 +98,64 @@ Generics
 Kinds
 =====
 
+Kinds are similar in purpose to the *type classes* in Haskell and *traits* in
+Rust. They provide a way to represent bounded polymorphism.
+
+By default, a type variable represents universal quantification. For example, in
+the following definition of the identity function:
+
+::
+
+  (defn id ((x ?T)) ?T x)
+
+The type of the argument :code:`x` is a type variable that will work for any
+type. In this case, this is precisely what we want, but consider the following:
+
+::
+
+  (defn evenp ((n ?T)) bool
+    (= (% n 2) 0))
+
+This function will be specialized for any type of :code:`n`, but it will only
+work for those types where the operations are defined. We can use kinds to bound
+the set of types that will be accepted by the type variable :code:`?T`. For
+example, if we wish to limit this function to the integers, we can use the
+built-in kind :code:`Integer`.
+
+::
+
+  (defn evenp ((n (?T Integer))) bool
+    (= (% n 2) 0))
+
+Defining Kinds
+--------------
+
+Logi Operations
+^^^^^^^^^^^^^^^
+
+Logic operations allow us to create a kind that includes types based on what
+they *are*.
+
+For example, some of the basic kinds defined in the Prelude are defined like
+this:
+
+::
+
+  (type Integer (or i8 i16 i32 i64 i128))
+
+  (type Float (or Half Single Double Quad))
+
+  (type Number (or Integer Float))
+
+
+Defined Functions
+^^^^^^^^^^^^^^^^^
+
+In contrast to logic operations, this mechanism resembles the type classes of
+Haskell more closely, allowing us to create a kind that includes types on the
+basis of what operations are allowed on those types.
+
+
 Functions
 =========
 
@@ -127,7 +185,7 @@ A type specifier is an expression that represents a type.
 Type Operations
 ---------------
 
-* `(base type)`: If `type` is a pointer of any indirection (eg, pointer to
-  pointer to ...), return the base type.
-* `(ret fn-type)`: Extract the return type from a function pointer type. For
-  example, `(ret (fn i32 i32 (p i8)))` is `i8`.
+* :code:`(base <type>)`: If `type` is a pointer of any indirection (eg, pointer
+  to pointer to ...), return the base type.
+* :code:`(ret <fn-type>)`: Extract the return type from a function pointer
+  type. For example, `(ret (fn i32 i32 (p i8)))` is `i8`.
