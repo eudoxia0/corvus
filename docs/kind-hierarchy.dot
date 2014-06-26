@@ -1,0 +1,46 @@
+digraph hierarchy {
+  node [style=filled, shape=box];
+
+  subgraph cluster_T {
+    label = "T";
+
+    "bool";
+
+    subgraph cluster_Scalar {
+      label = "Scalar";      
+
+      subgraph cluster_Number {
+        label = "Number";
+
+        subgraph cluster_Integer {
+          label = "Integer";
+          node [fillcolor=yellow];
+
+          "i8";
+          "i16";
+          "i32";
+          "i64";
+          "i128";
+        }
+
+        subgraph cluster_Float {
+          label = "Float";
+          node [fillcolor=red];
+
+          "half";
+          "single";
+          "double";
+          "quad";
+        }
+      }
+    }
+
+    subgraph cluster_Aggregate {
+      label = "Aggregate";
+
+      "Array";
+      "Tuple";
+      "Record";
+    }
+  }
+}
