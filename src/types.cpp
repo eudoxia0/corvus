@@ -23,6 +23,30 @@ Type emitType(SExp* sexp, TypeEnv* tenv) {
       /* A list. Check whether the first element is an atom and that it is a
          member of the set of allowed type specifiers. Otherwise, signal an
          error. */
+      SExp* exp = first(sexp);
+      SExp* args = rest(sexp);
+      if(!(atomp(sexp) && (exp->type == IDENTIFIER))) {
+        // Error
+      }
+      /* Is the expression a type constructor? */
+      if(atomeq(sexp, "arr")) {
+        Type base_type = emitType(first(args), tenv);
+        return Array(base_type);
+      } else if(atomeq(sexp, "tup")) {
+
+      } else if(atomeq(sexp, "rec")) {
+
+      } else if(atomeq(sexp, "fn")) {
+
+      } else if(atomeq(sexp, "p") || atomeq(sexp, "pp") ||
+                atomeq(sexp, "ppp") || atomeq(sexp, "pppp")) {
+        size_t indirection = strlen(val(sexp));
+
+      }
+      /* Is the expression a type operation? */
+      else if(atomeq(sexp, "base")) {
+
+      }
     }
   }
   /* The null form is the unit type. */
