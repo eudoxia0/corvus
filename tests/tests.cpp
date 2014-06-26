@@ -122,6 +122,24 @@ SUITE(classifier) {
   RUN_TEST(identifiers);
 }
 
+TEST(iterate) {
+  SExp* list = makeSimpleList("a", "b", "c");
+  SExp* last = NULL;
+  iter(list, [&last](SExp* elem) { last = elem; });
+  ASSERT(print(last) == "c");
+}
+
+TEST(map) {
+  SExp* list = makeSimpleList("a", "b", "c");
+  SExp* newlist = mapcar(list, [](SExp* elem) { return makeSExp("1", IDENTIFIER); });
+  ASSERT(print(newlist) == "(1 1 1)");
+}
+
+SUITE(iteration) {
+  RUN_TEST(iterate);
+  RUN_TEST(map);
+}
+
 TEST(read_atom) {
   FILE* file = fopen("tests/input.1.txt", "r");
   SExp* atom = readStream(file);
@@ -160,6 +178,7 @@ SUITE(reader) {
 int main(int argc, char **argv) {
   RUN_SUITE(ast);
   RUN_SUITE(classifier);
+  RUN_SUITE(iteration);
   RUN_SUITE(reader);
   report();
 }
