@@ -9,7 +9,6 @@ void findTypes(SExp* sexp, TypeEnv* tenv) {
         Type def = emitType(rest(rest(sexp)), tenv);
         tenv->types.insert(std::make_pair(name, TypeDef(def, "")));
         /* TODO: Validation, docstring */
-        sexp = makeSExp("true", IDENTIFIER);
       } else {
         /* Otherwise, loop over the elements of the list, finding
            their types. */
