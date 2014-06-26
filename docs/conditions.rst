@@ -23,21 +23,10 @@ The following exceptions require an operating system to provide signals and
 manage memory.
 
 :code:`MemoryError`
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 Attempting to dereference invalid memory will raise this exception. The
 definition of invalid memory is up to the memory manager and operating system.
 Additionally, this conditioned is signalled by the `SIGSEGV` standard C
 signal. If the operating system does not raise this signal, the behaviour is
 undefined.
-
-Condition Hierarchy
-===================
-
-.. graphviz::
-
-   digraph hierarchy {
-      node[fillcolor=gold, style=filled, shape=box];
-      "Condition" -> "SystemError" -> "MemoryError";
-      "Condition" -> "ArithmeticError" -> "DivisionByZero";
-   }
