@@ -16,9 +16,9 @@ Flow Control
 Syntax
    :code:`(if <cond> <true-branch> <false-branch>)`
 Return Value
-   `i1`: The value of the chosen branch.
+   The value of the chosen branch.
 Parameters
-   * :code:`<cond>`: The condition to test. Type: `i1`.
+   * :code:`<cond>`: The condition to test. Type: `bool`.
    * :code:`<true-branch>`, `<false-branch`>: The condition branches. Must be of
      the same type.
 
@@ -31,7 +31,7 @@ Functions
 Syntax
    :code:`(defn name (<arguments>) <ret> <docstring>? <body>+)`
 Return Value
-   `i1`: The truth constant.
+   `()`: Unit.
 Parameters
    * :code:`<name>`: The function's name.
    * :code:`<arguments>`: A :ref:`generic argument list <concrete_arglist>`.
@@ -93,7 +93,7 @@ Types
 Syntax
    :code:`(type <name> <specifier> <docstring?>)`
 Return Value
-   `i1`: Truth constant.
+   `()`: Unit.
 Parameters
    * :code:`<name>`: The name of the type to define. This must be unique in the
      present scope, otherwise, a duplicate named type error is signalled.
@@ -144,7 +144,7 @@ Parameters
 Syntax
    :code:`(free <pointer>)`
 Return Value
-   `i1`: The truth constant.
+   `()`: Unit.
 Parameters
    * :code:`<pointer>`: The pointer to deallocate.
 
@@ -157,7 +157,7 @@ Macros
 Syntax
    :code:`(defsyntax <name> [<case> <template>]+)`
 Return Value
-   `i1`: The truth constant.
+   `()`: Unit.
 Parameters
    * :code:`<name>`: The macro name.
    * :code:`<case>`, :code:`<template>`: Each pair maps a pattern in the source
@@ -184,7 +184,7 @@ Compiler API, Reflection
 Syntax
    :code:`(feature? <feature>)`
 Return Value
-   `i1`: Whether :code:`<feature>` is present in the features list.
+   `bool`: Whether :code:`<feature>` is present in the features list.
 Parameters
    * :code:`<feature>`: A symbol to look up in the feature list.
 
@@ -194,7 +194,7 @@ Parameters
 Syntax
    :code:`(disassemble <fn>)`
 Return Value
-   `i1`: The truth constant.
+   `()`: Unit.
 Parameters
    * :code:`<fn>`: A function.
 
