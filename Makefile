@@ -68,7 +68,7 @@ $(LIFT_TYPES): $(LIFT_TYPES_SRC) $(LIFT_TYPES_HEAD)
 all: $(MODULES)
 
 corvus: all
-	$(CXX) src/main.cpp $(MODULES) -o corvus
+	$(CXX) $(CXXFLAGS) src/main.cpp $(MODULES) -o corvus
 
 $(TEST): $(TEST_SRC) all
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(AST) $(READER)

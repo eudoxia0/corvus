@@ -91,5 +91,5 @@ SExp* makeAtom(std::string val) {
 }
 
 int atomeq(SExp* atom, const char* text) {
-  return val(atom) == text;
+  return strcmp(val(atom), text) == 0;
 }
