@@ -71,3 +71,5 @@ int atomeq(SExp* atom, const char* text);
 /* Iteration utilities */
 
 void iter(SExp* list, std::function<void(SExp*)> fn);
+
+SExp* mapcar(SExp* list, std::function<SExp*(SExp*)> fn);

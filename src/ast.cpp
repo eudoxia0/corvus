@@ -99,3 +99,11 @@ void iter(SExp* list, std::function<void(SExp*)> fn) {
     p = rest(p);
   }
 }
+
+SExp* mapcar(SExp* list, std::function<SExp*(SExp*)> fn) {
+  if(list) {
+    return cons(fn(first(list)), mapcar(rest(list), fn));
+  } else {
+    return NULL;
+  }
+}
