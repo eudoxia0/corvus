@@ -13,8 +13,10 @@ Specification
    syntax
    evaluation
    types
+   memory
    special-forms
    core
+   prelude
    macros
    modules
    conditions
