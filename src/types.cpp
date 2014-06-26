@@ -2,12 +2,16 @@
 
 TypeEnv* createDefaultTEnv() {
   TypeEnv* tenv = new TypeEnv();
-  tenv->types.find("bool")->second = TypeDef(Bool(), "");
-  tenv->types.find("i8")->second = TypeDef(Integer(Byte), "");
-  tenv->types.find("i16")->second = TypeDef(Integer(Short), "");
-  tenv->types.find("i32")->second = TypeDef(Integer(Int32), "");
-  tenv->types.find("i64")->second = TypeDef(Integer(Int64), "");
-  tenv->types.find("i128")->second = TypeDef(Integer(Int128), "");
+  tenv->types.insert(std::make_pair("bool", TypeDef(Bool(), "")));
+  tenv->types.insert(std::make_pair("i8", TypeDef(Integer(Byte), "")));
+  tenv->types.insert(std::make_pair("i16", TypeDef(Integer(Short), "")));
+  tenv->types.insert(std::make_pair("i32", TypeDef(Integer(Int32), "")));
+  tenv->types.insert(std::make_pair("i64", TypeDef(Integer(Int64), "")));
+  tenv->types.insert(std::make_pair("i128", TypeDef(Integer(Int128), "")));
+  tenv->types.insert(std::make_pair("half", TypeDef(Float(Half), "")));
+  tenv->types.insert(std::make_pair("single", TypeDef(Float(Single), "")));
+  tenv->types.insert(std::make_pair("double", TypeDef(Float(Double), "")));
+  tenv->types.insert(std::make_pair("quad", TypeDef(Float(Quad), "")));
   return tenv;
 }
 
