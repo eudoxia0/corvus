@@ -3,6 +3,7 @@
 #include <vector>
 #include <cassert>
 #include <regex>
+#include <functional>
 
 enum SExpType {
   LIST, INTEGER, FLOAT, STRING, IDENTIFIER
@@ -66,3 +67,7 @@ SExp* makeAtom(std::string val);
 
 /* Test whether the text of 'atom' equals 'text' */
 int atomeq(SExp* atom, const char* text);
+
+/* Iteration utilities */
+
+void iter(SExp* list, std::function<void(SExp*)> fn);

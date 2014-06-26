@@ -43,10 +43,8 @@ void freeSExp(SExp* sexp) {
   if(sexp) {
     if(listp(sexp)) {
       /* Recur */
-      if(first(sexp))
-        freeSExp(first(sexp));
-      if(rest(sexp))
-        freeSExp(rest(sexp));
+      freeSExp(first(sexp));
+      freeSExp(rest(sexp));
     } else {
       delete val(sexp);
     }
@@ -92,4 +90,12 @@ SExp* makeAtom(std::string val) {
 
 int atomeq(SExp* atom, const char* text) {
   return strcmp(val(atom), text) == 0;
+}
+
+void iter(SExp* list, std::function<void(SExp*)> fn) {
+  SExp* p = list;
+  while(p != NULL) {
+    fn(first(p));
+    p = rest(p);
+  }
 }
