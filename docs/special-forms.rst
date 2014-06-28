@@ -111,6 +111,16 @@ Examples:
 
   (type point (tup double double double))
 
+:code:`variant?`
+----------------
+
+Syntax
+   :code:`(variant? <obj> <variant-name>)`
+Return Value
+   :code:`bool`: Whether the variant of :code:`<obj>` is :code:`<variant-name>`.
+Parameters
+   * :code:`<obj>`: An instance of an algebraic data type.
+   * :code:`<variant-name>`: The name of a variant member of the ADT.
 
 Memory Management
 =================
