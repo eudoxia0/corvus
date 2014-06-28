@@ -34,8 +34,8 @@ Please don't post this on Hacker News yet.
 * **Reader:** A basic Lisp reader and a classifier of the different types of
   atoms (Integers, floats, identifiers) has been implemented. Reader macros and
   string readers have not.
-* **Type System:** The basis is there, but type definition extraction and type
-  specifier parsing are not. May or may not have type inference.
+* **Type System:** The basis is there, but type specifier parsing is not. May or
+  may not have type inference.
 * **Compiler:** Various phases, almost none of which have been implemented yet.
 * **LLVM Backend:** Nope.
 * **Other, optional backends:** None. It may be useful to provide a non-LLVM
