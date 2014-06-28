@@ -17,6 +17,7 @@ Specification
    special-forms
    core
    prelude
+   pattern-matching
    macros
    modules
    conditions
@@ -32,3 +33,4 @@ Reference Implementation
 
    impl/phases
    impl/conditions
+   impl/macros
