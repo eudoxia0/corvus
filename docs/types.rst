@@ -25,22 +25,22 @@ Integers
 Integer types are denoted by the letter 'i' followed by the integer's
 bit-width. The following integer types are supported:
 
-* `i8`
-* `i16`
-* `i32`
-* `i64`
-* `i128`
+* :code:`i8`
+* :code:`i16`
+* :code:`i32`
+* :code:`i64`
+* :code:`i128`
 
-The symbol `word` is aliased to the integer type that represents a machine
-word. In 64-bit systems, this is usually `i64`.
+The symbol :code:`word` is aliased to the integer type that represents a machine
+word. In 64-bit systems, this is usually :code:`i64`.
 
 Floating-point
 --------------
 
-* `half`: Half precision, 16 bits wide.
-* `single`: Single precision, 32 bits wide.
-* `double`: Double precision, 64 bits wide.
-* `quad`: Quadruple precision, 128 bits wide.
+* :code:`half`: Half precision, 16 bits wide.
+* :code:`single`: Single precision, 32 bits wide.
+* :code:`double`: Double precision, 64 bits wide.
+* :code:`quad`: Quadruple precision, 128 bits wide.
 
 Aggregate Types
 ===============
@@ -91,6 +91,27 @@ Examples
 
 Datatypes
 =========
+
+Datatypes, also known as sum types or algebraic data types, are a kind of
+"top-down" variant of object-orientation. Instead of defining classes and then
+subclasses, the programmer defines a datatype that has multiple variants. For
+example, an alternate boolean type may be defined as:
+
+::
+
+  (type Bool (datatype Truth Falsehood))
+
+Datatypes, however, can be used for more than enumerations. For example:
+
+::
+
+  (type Point (tup double double))
+
+  (type Shape
+   (datatype
+     (Square (bottom-left Point) (upper-right Point))
+     (Circle (center Point) (radius double))))
+
 
 Generics
 ========
