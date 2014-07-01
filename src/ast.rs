@@ -44,4 +44,17 @@ mod ast {
     pub fn atomFromStr(str : String, line: i64, col: i64) -> SExp {
         Atom(line, col, classify(str))
     }
+
+    #[test]
+    fn test() {
+        let a = Atom(0, 0, Integer(12));
+        let b = Atom(0, 0, Real(3.14));
+        let c = Atom(0, 0, Ident(String::from_str("derp")));
+        let result_a = format!("{}", print(Nil));
+        let result_b = format!("{}", print(a));
+        let result_c = format!("{}", print(List(vec![b, c])));
+        assert!(result_a == String::from_str("()"));
+        assert!(result_b == String::from_str("12"));
+        assert!(result_c == String::from_str("( 3.14 derp)"));
+    }
 }
