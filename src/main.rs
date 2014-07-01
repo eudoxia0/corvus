@@ -1,5 +1,4 @@
-mod ast;
-mod reader;
+extern crate ast;
 
 fn main() {
 
