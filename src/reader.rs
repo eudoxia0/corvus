@@ -68,4 +68,16 @@ mod reader {
        are a single character prefixed by a 'dispatching macro character',
        typically #). This is set arbitrarily. */
     static max_macro_len : i8 = 6;
+
+    /* A helper function for readStream. A token is complete if it has at least
+       one byte. */
+    fn completeToken(tok: String) -> bool { false }
+
+    /* For information on the reader algorithm, check the Reader chapter of the
+       documentation. */
+    fn readStream(reader: Reader) -> SExp { }
+
+    /* A simple function to facilitate reading delimited sequences. It is used
+       to read nested S-expressions, as well as array and tuple literals. */
+    fn readDelimitedSequence(reader: Reader, delimiter: char) -> SExp { }
 }
