@@ -42,7 +42,7 @@ CLINK = $(CXX) $(CXXFLAGS) -shared
 TEST_SRC = tests/tests.cpp
 TEST = test
 
-default: all
+default: corvus
 
 $(AST): $(AST_SRC) $(AST_HEAD)
 	$(CMODULE)
@@ -68,7 +68,7 @@ $(LIFT_TYPES): $(LIFT_TYPES_SRC) $(LIFT_TYPES_HEAD)
 all: $(MODULES)
 
 corvus: all
-	$(CXX) $(CXXFLAGS) src/main.cpp $(MODULES) -o corvus
+	rustc src/main.rs -o $@
 
 $(TEST): $(TEST_SRC) all
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -o $@ $< $(AST) $(READER)
