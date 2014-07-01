@@ -1,15 +1,19 @@
 # Options
-RUSTLIB = rustc --crate-type=lib
+RUSTLIB = rustc -L . --crate-type=lib
 
 # Crates
 AST = src/ast.rs
+READER = src/reader.rs
 
 default: corvus
 
 ast: $(AST)
 	$(RUSTLIB) $?
 
-corvus: ast
+reader: $(READER)
+	$(RUSTLIB) $?
+
+corvus: ast reader
 	rustc src/main.rs -L . -o $@
 
 clean:

@@ -51,33 +51,36 @@ The S-Expression returned by the reader macro function is then recorded by the
 reader, unless it is NULL, in which case an error is signaled.
 */
 
-mod reader {
-    use std::io;
+extern crate ast;
+use std::io;
 
-    struct Reader {
-        line: i64,
-        col: i64,
-        buf: io::BufferedReader<Box<io::Reader>>
-    }
+struct Reader {
+    line: i64,
+    col: i64,
+    buf: io::BufferedReader<Box<io::Reader>>
+}
 
-    /* Get the next character in the stream, advancing the cursor */
-    fn nextchar(reader: Reader) -> char { 'a' }
+/* Get the next character in the stream, advancing the cursor */
+fn nextchar(reader: Reader) -> char { 'a' }
 
-    /* This constant defines the maximum number of bytes a reader macro can
-       have. By comparison, Common Lisp allows only two (Two-character macros
-       are a single character prefixed by a 'dispatching macro character',
-       typically #). This is set arbitrarily. */
-    static max_macro_len : i8 = 6;
+/* This constant defines the maximum number of bytes a reader macro can have. By
+   comparison, Common Lisp allows only two (Two-character macros are a single
+   character prefixed by a 'dispatching macro character', typically #). This is
+   set arbitrarily. */
+static max_macro_len : i8 = 6;
 
-    /* A helper function for readStream. A token is complete if it has at least
-       one byte. */
-    fn completeToken(tok: String) -> bool { false }
+/* A helper function for readStream. A token is complete if it has at least one
+   byte. */
+fn completeToken(tok: String) -> bool { false }
 
-    /* For information on the reader algorithm, check the Reader chapter of the
-       documentation. */
-    fn readStream(reader: Reader) -> SExp { }
+/* For information on the reader algorithm, check the Reader chapter of the
+   documentation. */
+pub fn readStream(reader: Reader) -> ast::SExp {
+    ast::Nil
+}
 
-    /* A simple function to facilitate reading delimited sequences. It is used
-       to read nested S-expressions, as well as array and tuple literals. */
-    fn readDelimitedSequence(reader: Reader, delimiter: char) -> SExp { }
+/* A simple function to facilitate reading delimited sequences. It is used to
+   read nested S-expressions, as well as array and tuple literals. */
+fn readDelimitedSequence(reader: Reader, delimiter: char) -> ast::SExp {
+    ast::Nil
 }
