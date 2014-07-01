@@ -52,5 +52,20 @@ reader, unless it is NULL, in which case an error is signaled.
 */
 
 mod reader {
-    /* Nothing here, for now */
+    use std::io;
+
+    struct Reader {
+        line: i64,
+        col: i64,
+        buf: io::BufferedReader<Box<io::Reader>>
+    }
+
+    /* Get the next character in the stream, advancing the cursor */
+    fn nextchar(reader: Reader) -> char { 'a' }
+
+    /* This constant defines the maximum number of bytes a reader macro can
+       have. By comparison, Common Lisp allows only two (Two-character macros
+       are a single character prefixed by a 'dispatching macro character',
+       typically #). This is set arbitrarily. */
+    static max_macro_len : i8 = 6;
 }
