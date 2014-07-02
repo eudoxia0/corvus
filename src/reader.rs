@@ -52,12 +52,44 @@ reader, unless it is NULL, in which case an error is signaled.
 */
 
 extern crate ast;
+use std::io::{BufferedReader, File};
 use std::io;
+
+enum Stream {
+    StdStream(BufferedReader<io::stdio::StdReader>),
+    FileStream(BufferedReader<io::File>)
+}
 
 struct Reader {
     line: i64,
     col: i64,
-    buf: io::BufferedReader<Box<io::Reader>>
+    buf: Stream
+}
+
+/* Create a new Reader from stdin */
+pub fn stdinReader() -> Reader {
+    Reader {
+        line: 0,
+        col: 0,
+        buf: StdStream(io::stdin())
+    }
+}
+
+pub fn fileReader(pathname: &str) -> Reader {
+    let handle = File::open(&Path::new(pathname));
+    match handle {
+        Ok(file) => {
+            let mut buf = BufferedReader::new(file);
+            Reader {
+                line: 0,
+                col: 0,
+                buf: FileStream(buf),
+            }
+        },
+        Err(why) => fail!("Failed to open file {} ({}).",
+                          pathname,
+                          why.desc)
+    }
 }
 
 /* Get the next character in the stream, advancing the cursor */
