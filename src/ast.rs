@@ -11,7 +11,7 @@ pub enum SExp {
     Nil
 }
 
-fn printAtom(val: AtomValue) -> String {
+fn print_atom(val: AtomValue) -> String {
     match val {
         Integer(int) => int.to_str(),
         Real(real) => real.to_str(),
@@ -20,7 +20,7 @@ fn printAtom(val: AtomValue) -> String {
     }
 }
 
-fn printList(list : Vec<SExp>) -> String {
+fn print_list(list : Vec<SExp>) -> String {
     let mut out = String::from_str("(");
     for elem in list.move_iter() {
         out = format!("{} {}", out, print(elem));
@@ -30,8 +30,8 @@ fn printList(list : Vec<SExp>) -> String {
 
 pub fn print(sexp : SExp) -> String {
     match sexp {
-        Atom(_, _, val) => printAtom(val),
-        List(list) => printList(list),
+        Atom(_, _, val) => print_atom(val),
+        List(list) => print_list(list),
         Nil => String::from_str("()")
     }
 }
@@ -40,7 +40,7 @@ pub fn classify(str: String) -> AtomValue {
     Ident(str)
 }
 
-pub fn atomFromStr(str : String, line: i64, col: i64) -> SExp {
+pub fn atom_from_str(str : String, line: i64, col: i64) -> SExp {
     Atom(line, col, classify(str))
 }
 
