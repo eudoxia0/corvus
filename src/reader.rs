@@ -60,14 +60,14 @@ enum Stream {
     FileStream(BufferedReader<io::File>)
 }
 
-struct Reader {
+pub struct Reader {
     line: i64,
     col: i64,
     buf: Stream
 }
 
 /* Create a new Reader from stdin */
-pub fn stdinReader() -> Reader {
+pub fn stdin_reader() -> Reader {
     Reader {
         line: 0,
         col: 0,
@@ -75,11 +75,11 @@ pub fn stdinReader() -> Reader {
     }
 }
 
-pub fn fileReader(pathname: &str) -> Reader {
+pub fn file_reader(pathname: &str) -> Reader {
     let handle = File::open(&Path::new(pathname));
     match handle {
         Ok(file) => {
-            let mut buf = BufferedReader::new(file);
+            let buf = BufferedReader::new(file);
             Reader {
                 line: 0,
                 col: 0,
@@ -93,7 +93,22 @@ pub fn fileReader(pathname: &str) -> Reader {
 }
 
 /* Get the next character in the stream, advancing the cursor */
-fn nextchar(reader: Reader) -> char { 'a' }
+fn nextchar(mut reader: Reader) -> (Option<char>, Reader) {
+    let res = match reader.buf {
+        StdStream(ref mut buf) => buf.read_char(),
+        FileStream(ref mut buf) => buf.read_char()
+    };
+    reader.col = reader.col + 1;
+    match res {
+        Ok(c) => {
+            if c == '\n' {
+                reader.line = reader.line + 1
+            }
+            (Some(c), reader)
+        },
+        Err(_) => (None, reader)
+    }
+}
 
 /* This constant defines the maximum number of bytes a reader macro can have. By
    comparison, Common Lisp allows only two (Two-character macros are a single
@@ -103,16 +118,79 @@ static max_macro_len : i8 = 6;
 
 /* A helper function for readStream. A token is complete if it has at least one
    byte. */
-fn completeToken(tok: String) -> bool { false }
+fn complete_token(tok: &String) -> bool {
+    tok.len() > 0
+}
 
 /* For information on the reader algorithm, check the Reader chapter of the
    documentation. */
-pub fn readStream(reader: Reader) -> ast::SExp {
-    ast::Nil
+pub fn read_stream(mut reader: Reader) -> ast::SExp {
+    let mut token_text = String::new();
+    let mut c;
+    loop {
+        /* This is probably not very idiomatic: Read the next char */
+        match nextchar(reader) {
+            (opt, newreader) => {
+                c = opt;
+                reader = newreader;
+            }
+        }
+        /* Match the char */
+        match c {
+            /* What kind of character is it? */
+            Some(c) => {
+                /* If c is a whitespace character, discard it and re-enter the
+                   loop, unless we are reading a token, in which case the
+                   whitespace terminates it. */
+                if c.is_whitespace() {
+                    if complete_token(&token_text) {
+                        let line = reader.line;
+                        let col = reader.col;
+                        return ast::atom_from_str(token_text, line, col);
+                    } else {
+                        continue;
+                    }
+                }
+
+                /* If c is a dispatching or non-dispatching macro character, its
+                   associated function is called */
+                /* Until I implement reader macros satisfactorily, we'll cheat
+                   and directly implement the 'macros' for parentheses and
+                   quotes. */
+                if c == '(' {
+                    return read_delim_sequence(reader, ')');
+                };
+
+                /* Any character that is not a macro character is a constituent
+                   character of a token. At this point, a token begins to be
+                   accumulated */
+                token_text.push_char(c);
+
+                /* Handle terminating macro characters */
+                if c == ')' {
+                    let line = reader.line;
+                    let col = reader.col;
+                    return ast::atom_from_str(token_text, line, col);
+                };
+            },
+            None => {
+                /* EOF */
+                break;
+            }
+        }
+    }
+    if complete_token(&token_text) {
+        let line = reader.line;
+        let col = reader.col;
+        ast::atom_from_str(token_text, line, col)
+    } else {
+        ast::Nil
+    }
 }
 
 /* A simple function to facilitate reading delimited sequences. It is used to
    read nested S-expressions, as well as array and tuple literals. */
-fn readDelimitedSequence(reader: Reader, delimiter: char) -> ast::SExp {
+fn read_delim_sequence(mut reader: Reader, delimiter: char) -> ast::SExp {
+    /* Read until finding a token that ends with a closing parenthesis */
     ast::Nil
 }
