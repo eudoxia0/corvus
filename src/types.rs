@@ -1,4 +1,7 @@
 extern crate collections;
+
+extern crate ast;
+
 use collections::treemap;
 
 enum IntegerType {
@@ -41,3 +44,10 @@ struct TypeDef {
 struct TypeEnv {
     types: treemap::TreeMap<String, TypeDef>
 }
+
+/* Return a type environment with the basic types. */
+pub fn createDefaultTEnv() -> TypeEnv { }
+
+/* Parse type specifiers */
+pub fn emitType(sexp: ast::SExp, tenv: &TypeEnv) -> Type { }
+
