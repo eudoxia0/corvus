@@ -1,8 +1,7 @@
 extern crate collections;
-
 extern crate ast;
 
-use collections::treemap;
+use std::collections::HashMap;
 
 enum IntegerType {
     Byte = 8,
@@ -37,17 +36,61 @@ enum Type {
 }
 
 struct TypeDef {
-    definition: Type,
-    docstring: String
+    def: Type,
+    doc: String
 }
 
 struct TypeEnv {
-    types: treemap::TreeMap<String, TypeDef>
+    types: HashMap<String, TypeDef>
 }
 
 /* Return a type environment with the basic types. */
-pub fn createDefaultTEnv() -> TypeEnv { }
+pub fn createDefaultTEnv() -> TypeEnv {
+    let mut tenv = HashMap::new();
+    tenv.insert(String::from_str("bool"),
+                TypeDef { def: Bool, doc: String::from_str("") });
+    tenv.insert(String::from_str("i8"),
+                TypeDef { def: Integer(Byte), doc: String::from_str("") });
+    tenv.insert(String::from_str("i16"),
+                TypeDef { def: Integer(Short), doc: String::from_str("") });
+    tenv.insert(String::from_str("i32"),
+                TypeDef { def: Integer(Int32), doc: String::from_str("") });
+    tenv.insert(String::from_str("i64"),
+                TypeDef { def: Integer(Int64), doc: String::from_str("") });
+    tenv.insert(String::from_str("i128"),
+                TypeDef { def: Integer(Int128), doc: String::from_str("") });
+    tenv.insert(String::from_str("single"),
+                TypeDef { def: Float(Single), doc: String::from_str("") });
+    tenv.insert(String::from_str("double"),
+                TypeDef { def: Float(Double), doc: String::from_str("") });
+    tenv.insert(String::from_str("quad"),
+                TypeDef { def: Float(Quad), doc: String::from_str("") });
+    TypeEnv { types: tenv }
+}
 
 /* Parse type specifiers */
-pub fn emitType(sexp: ast::SExp, tenv: &TypeEnv) -> Type { }
+pub fn emitType(sexp: ast::SExp, tenv: &mut TypeEnv) -> Type {
+    match sexp {
+        ast::Atom(_,_,val) => {
+            /* A named type. Look it up in the type environment. */
+            match val {
+                ast::Ident(name) => {
+                    match tenv.types.find(&name) {
+                        Some(t) => t.def,
+                        None => fail!("No typed named {}.", name)
+                    }
+                },
+                _ => fail!("Named types must be identifiers.")
+            }
+        },
+        ast::List(vec) => {
+            /* A type expression */
+            Unit
+        },
+        ast::Nil => Unit
+    }
+}
 
+/* The public interface to the type lifter: Takes an S-expression and returns a
+   type environment. */
+//pub fn extractTypes(sexp: ast::SExp, tenv: &TypeEnv) -> ast::SExp { }
