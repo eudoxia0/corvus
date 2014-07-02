@@ -37,7 +37,6 @@ word. In 64-bit systems, this is usually :code:`i64`.
 Floating-point
 --------------
 
-* :code:`half`: Half precision, 16 bits wide.
 * :code:`single`: Single precision, 32 bits wide.
 * :code:`double`: Double precision, 64 bits wide.
 * :code:`quad`: Quadruple precision, 128 bits wide.
