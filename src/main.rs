@@ -1,9 +1,10 @@
+extern crate ast;
 extern crate reader;
 
 fn main() {
     loop {
         print!("> ");
-        let input = reader::readStream(reader::stdinReader());
-        print!("\n");
+        let input = reader::read_stream(reader::stdin_reader());
+        print!("{}\n", ast::print(input));
     }
 }
