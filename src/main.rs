@@ -1,5 +1,9 @@
-extern crate ast;
+extern crate reader;
 
 fn main() {
-    let derp = ast::Integer(10);
+    loop {
+        print!("> ");
+        let input = reader::readStream(reader::stdinReader());
+        print!("\n");
+    }
 }
