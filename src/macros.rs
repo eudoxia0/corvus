@@ -1,15 +1,18 @@
 extern crate collections;
 extern crate ast;
 
-use collections::treemap;
+use ast::SExp;
+use std::collections::HashMap;
+
+/* Definitions */
 
 /* Each macro case associates a pattern with a template. When finding a macro
    invocation, the pattern matcher goes through every case in the macro, trying
    to match the input to the template. If it succeeds, the template is expanded
    using the variables bound during pattern matching. */
 struct MacroCase {
-    pattern: ast::SExp;
-    template: ast::SExp
+    pattern: SExp;
+    template: SExp
 }
 
 struct Macro {
@@ -17,7 +20,28 @@ struct Macro {
 }
 
 struct MacroTable {
-    macros: treemap::TreeMap<String, Macro>
+    macros: HashMap<String, Macro>
 }
 
-pub fn extractMacrosAndMacroExpand(sexp: SExp) -> SExp { sexp }
+/* Macro extraction */
+
+/* Macro expansion */
+
+/* Weave the bindings into the template */
+fn expand_macro_case(template: SExp, bindings: &Vec<SExp>) -> SExp {
+  pattern
+}
+
+/* Try to expand a macro invocation. If it doesn't match any patterns, fail. */
+fn expand_macro(pattern: SExp, macro: Macro) -> SExp {
+
+}
+
+/* Tranverse an expression, looking for macro invocations and expanding them */
+fn macroexpand(sexp: SExp, table: &MacroTable) -> SExp {
+
+}
+
+/* Public interface */
+
+pub fn extract_and_expand(sexp: SExp) -> SExp { sexp }
