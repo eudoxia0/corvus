@@ -52,6 +52,9 @@ Would become something like::
       (let (x1 2)
         (print (+ x1 y0))))
 
+This allows us to hold in memory a single symbol table, rather than having to
+recur or search through a nested one.
+
 Closure Analysis
 ================
 
