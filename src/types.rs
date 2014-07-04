@@ -1,6 +1,7 @@
 extern crate collections;
 extern crate ast;
 
+use ast::SExp;
 use std::collections::HashMap;
 
 enum IntegerType {
@@ -69,7 +70,7 @@ pub fn createDefaultTEnv() -> TypeEnv {
 }
 
 /* Parse type specifiers */
-pub fn emitType(sexp: ast::SExp, tenv: &mut TypeEnv) -> Type {
+pub fn emitType(sexp: SExp, tenv: &mut TypeEnv) -> Type {
     match sexp {
         ast::Atom(_,_,val) => {
             /* A named type. Look it up in the type environment. */
@@ -93,4 +94,4 @@ pub fn emitType(sexp: ast::SExp, tenv: &mut TypeEnv) -> Type {
 
 /* The public interface to the type lifter: Takes an S-expression and returns a
    type environment. */
-//pub fn extractTypes(sexp: ast::SExp, tenv: &TypeEnv) -> ast::SExp { }
+//pub fn extractTypes(sexp: SExp, tenv: &TypeEnv) -> SExp { }

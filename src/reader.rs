@@ -52,8 +52,10 @@ reader, unless it is NULL, in which case an error is signaled.
 */
 
 extern crate ast;
+
 use std::io::{BufferedReader, File};
 use std::io;
+use ast::SExp;
 
 enum Stream {
     StdStream(BufferedReader<io::stdio::StdReader>),
@@ -124,7 +126,7 @@ fn complete_token(tok: &String) -> bool {
 
 /* For information on the reader algorithm, check the Reader chapter of the
    documentation. */
-pub fn read_stream(mut reader: Reader) -> ast::SExp {
+pub fn read_stream(mut reader: Reader) -> SExp {
     let mut token_text = String::new();
     let mut c;
     loop {
@@ -190,7 +192,7 @@ pub fn read_stream(mut reader: Reader) -> ast::SExp {
 
 /* A simple function to facilitate reading delimited sequences. It is used to
    read nested S-expressions, as well as array and tuple literals. */
-fn read_delim_sequence(mut reader: Reader, delimiter: char) -> ast::SExp {
+fn read_delim_sequence(mut reader: Reader, delimiter: char) -> SExp {
     /* Read until finding a token that ends with a closing parenthesis */
     ast::Nil
 }
