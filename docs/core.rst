@@ -64,6 +64,42 @@ significant zeros.
 Tuple and Array Literals
 ========================
 
+Memory Management
+=================
+
+:code:`new`
+-----------
+
+Syntax
+   :code:`(new <instance> <length?>)`
+Return Value
+   `(p T)`: A pointer to the heap-allocated `<instance>`.
+Parameters
+   * :code:`<instance>`: The object to store in the heap.
+   * :code:`<length>`: If provided, the length of the array to create with
+     copies of `<instance>`.
+
+:code:`realloc`
+---------------
+
+Syntax
+   :code:`(realloc <array> <length>)`
+Return Value
+   `(p T)`: A pointer to the new array.
+Parameters
+   * :code:`<array>`: The array to resize.
+   * :code:`<length>`: The new length of the array.
+
+:code:`free`
+------------
+
+Syntax
+   :code:`(free <pointer>)`
+Return Value
+   `()`: Unit.
+Parameters
+   * :code:`<pointer>`: The pointer to deallocate.
+
 Memory
 ======
 

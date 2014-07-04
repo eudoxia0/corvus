@@ -122,41 +122,21 @@ Parameters
    * :code:`<obj>`: An instance of an algebraic data type.
    * :code:`<variant-name>`: The name of a variant member of the ADT.
 
-Memory Management
-=================
+Accessing Type Fields
+=====================
 
-:code:`new`
------------
-
-Syntax
-   :code:`(new <instance> <length?>)`
-Return Value
-   `(p T)`: A pointer to the heap-allocated `<instance>`.
-Parameters
-   * :code:`<instance>`: The object to store in the heap.
-   * :code:`<length>`: If provided, the length of the array to create with
-     copies of `<instance>`.
-
-:code:`realloc`
----------------
+:code:`get-variant`
+-------------------
 
 Syntax
-   :code:`(realloc <array> <length>)`
+   :code:`(get-variant <obj> <variant-name> <field-name>)`
 Return Value
-   `(p T)`: A pointer to the new array.
+   The value of the object's variant.
 Parameters
-   * :code:`<array>`: The array to resize.
-   * :code:`<length>`: The new length of the array.
+   * :code:`<obj>`: An instance of a datatype.
+   * :code:`<variant-name>`: The name of the variant.
+   * :code:`<field-name>`: The name of the field to access.
 
-:code:`free`
-------------
-
-Syntax
-   :code:`(free <pointer>)`
-Return Value
-   `()`: Unit.
-Parameters
-   * :code:`<pointer>`: The pointer to deallocate.
 
 Macros
 ======
