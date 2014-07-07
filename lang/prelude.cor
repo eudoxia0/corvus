@@ -1,3 +1,13 @@
+(defmod prelude (corvus)
+  (export Integer
+          Float
+          Number
+          Scalar
+          Option))
+(w/mod prelude)
+
+;;; Basic Kinds
+
 (type Integer (or i8 i16 i32 i64 i128))
 
 (type Float (or Half Single Double Quad))
@@ -5,3 +15,11 @@
 (type Number (or Integer Float))
 
 (type Scalar (or Number bool))
+
+;;; Option type
+
+(type Option
+  (abstract (type ?T)
+    (datatype
+      (Some ?T)
+      (None))))
