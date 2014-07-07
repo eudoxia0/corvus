@@ -65,8 +65,8 @@ Name Conflicts
 Standard Modules
 ================
 
-:code:`core`
-------------
+:code:`corvus`
+--------------
 
 The core module contains the entire language: Special forms, the language
 core, and any global symbols.
@@ -81,7 +81,7 @@ useful, but are not implemented in the compiler itself.
 ------------
 
 The main module is the module that the compiler defaults to. This module
-inherits from :code:`core` and :code:`prelude`.
+inherits from :code:`corvus` and :code:`prelude`.
 
 Implementation-Specific Modules
 -------------------------------
