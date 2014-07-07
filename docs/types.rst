@@ -2,6 +2,11 @@
 Types
 *****
 
+A *type* is a set of objects which share their structural implementation. An
+object belongs to a single type. Corvus has no 'type objects': Types may only be
+represented by :ref:`type specifiers <type-spec>` and manipulated by certain
+special forms.
+
 Unit
 ====
 
@@ -12,7 +17,7 @@ Scalar Types
 ============
 
 Scalar types include integers and floating-point numbers. The symbols in this
-section are the type specifiers for these types.
+section are the :ref:`type specifier <type-spec>` for these types.
 
 Boolean
 -------
@@ -150,8 +155,8 @@ built-in kind :code:`Integer`.
 Defining Kinds
 --------------
 
-Logi Operations
-^^^^^^^^^^^^^^^
+Logic Operations
+^^^^^^^^^^^^^^^^
 
 Logic operations allow us to create a kind that includes types based on what
 they *are*.
@@ -159,13 +164,10 @@ they *are*.
 For example, some of the basic kinds defined in the Prelude are defined like
 this:
 
-::
-
-  (type Integer (or i8 i16 i32 i64 i128))
-
-  (type Float (or Half Single Double Quad))
-
-  (type Number (or Integer Float))
+.. literalinclude:: ../lang/prelude.cor
+   :language: lisp
+   :lines: 11-17
+   :linenos:
 
 
 Defined Functions
@@ -196,6 +198,8 @@ Type specifier
 Examples
    * :code:`(p i8)` defines a pointer to a byte.
    * :code:`(pp double)` defines a pointer to a pointer to a double.
+
+.. _type-spec:
 
 Type Specifiers
 ===============
