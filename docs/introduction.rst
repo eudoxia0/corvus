@@ -16,7 +16,7 @@ Features
 Anti-Features
 =============
 
-The following will never be implemented:
+The following will never be required:
 
 * Garbage Collection.
 * Exceptions.
@@ -29,13 +29,13 @@ Notational Conventions
 
 Specially in syntax definitions, the following rules are used:
 
-* Text in angular brackets represents a variable, eg. `<var>`, `<args>`,
-  `<val>`.
+* Text in angular brackets represents a variable, eg. :code:`<var>`,
+  :code:`<args>`, :code:`<val>`.
 * The following quantifiers, when found after a variable, represent that the
   variable:
-  * `+`: Consists of at least one expression.
-  * `*`: Consists of zero or more expressions.
-  * `?`: Is optional.
+  * :code:`+`: Consists of at least one expression.
+  * :code:`*`: Consists of zero or more expressions.
+  * :code:`?`: Is optional.
 * Brackets may be used to group variables that are not other wise delimited. For
-  example, the syntax description `[<var> <val>]+` would describe expressions
-  such as `a 1 b 2 c 3`.
+  example, the syntax description :code:`[<var> <val>]+` would describe
+  expressions such as :code:`a 1 b 2 c 3`.
