@@ -55,6 +55,28 @@ author's name; or a list, where the first element is the author's name, the
 second the author's email [#f1]_, and the third optional argument is a
 description of the author's role in the project.
 
+:code:`version`
+^^^^^^^^^^^^^^^
+Syntax
+  * :code:`(version <version-string>)`
+Required?
+  Yes
+
+The version is a string with arbitrary formatting that specifies the current
+version of the project.
+
+:code:`license`
+^^^^^^^^^^^^^^^
+Syntax
+  * :code:`(license <license-string>)`
+Required?
+  Yes
+
+The license is a string with the name of the license used by the
+project. Additional details, like the full text of the license, may exist
+somewhere else in the repository, but this string must hold the name of the
+license (ie, not a reference like "See LICENSE.txt").
+
 .. rubric:: Footnotes
 
 .. [#f1] If the project's version control system uses another similarly
