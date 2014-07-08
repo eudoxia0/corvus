@@ -77,9 +77,25 @@ project. Additional details, like the full text of the license, may exist
 somewhere else in the repository, but this string must hold the name of the
 license (ie, not a reference like "See LICENSE.txt").
 
+:code:`tags`
+^^^^^^^^^^^^
+Syntax
+  * :code:`(tags <tag>+)`
+Required?
+  No
+
+The tags property allows the system developers to categorize their project with
+custom tags that are more specific than the supported categories.
+
 .. rubric:: Footnotes
 
 .. [#f1] If the project's version control system uses another similarly
          ubiquitous contact information for each author, that may be used as
          well. This may become useful in a future where email has be superseded
          or abandoned.
+
+Files and Directories
+---------------------
+
+The :code:`components` property of a :code:`defsystem` form contains a list of
+*targets*. A target is can be a file, or a directory of other files and targets.
