@@ -55,7 +55,7 @@ extern crate ast;
 
 use std::io::{BufferedReader, File};
 use std::io;
-use ast::SExp;
+use ast::{SExp, atom_from_str, Nil};
 
 enum Stream {
     StdStream(BufferedReader<io::stdio::StdReader>),
@@ -141,9 +141,9 @@ pub fn read_stream(reader: &mut Reader) -> SExp {
                    whitespace terminates it. */
                 if c.is_whitespace() {
                     if complete_token(&token_text) {
-                        return ast::atom_from_str(token_text,
-                                                  reader.line,
-                                                  reader.col);
+                        return atom_from_str(token_text,
+                                             reader.line,
+                                             reader.col);
                     } else {
                         continue;
                     }
@@ -165,9 +165,9 @@ pub fn read_stream(reader: &mut Reader) -> SExp {
 
                 /* Handle terminating macro characters */
                 if c == ')' {
-                    return ast::atom_from_str(token_text,
-                                              reader.line,
-                                              reader.col);
+                    return atom_from_str(token_text,
+                                         reader.line,
+                                         reader.col);
                 };
             },
             None => {
@@ -177,9 +177,9 @@ pub fn read_stream(reader: &mut Reader) -> SExp {
         }
     }
     if complete_token(&token_text) {
-        ast::atom_from_str(token_text, reader.line, reader.col)
+        atom_from_str(token_text, reader.line, reader.col)
     } else {
-        ast::Nil
+        Nil
     }
 }
 
@@ -187,5 +187,5 @@ pub fn read_stream(reader: &mut Reader) -> SExp {
    read nested S-expressions, as well as array and tuple literals. */
 fn read_delim_sequence(reader: &mut Reader, delimiter: char) -> SExp {
     /* Read until finding a token that ends with a closing parenthesis */
-    ast::Nil
+    Nil
 }

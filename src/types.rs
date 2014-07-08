@@ -1,7 +1,7 @@
 extern crate collections;
 extern crate ast;
 
-use ast::SExp;
+use ast::{SExp, Atom, Ident, List, Nil};
 use std::collections::HashMap;
 
 enum IntegerType {
@@ -72,23 +72,23 @@ pub fn createDefaultTEnv() -> TypeEnv {
 /* Parse type specifiers */
 pub fn emitType(sexp: SExp, tenv: &mut TypeEnv) -> Type {
     match sexp {
-        ast::Atom(_,_,val) => {
+        Atom(_,_,val) => {
             /* A named type. Look it up in the type environment. */
             match val {
-                ast::Ident(name) => {
+                Ident(name) => {
                     match tenv.types.find(&name) {
-                        Some(t) => t.def,
+                        Some(ref mut t) => t.def,
                         None => fail!("No typed named {}.", name)
                     }
                 },
                 _ => fail!("Named types must be identifiers.")
             }
         },
-        ast::List(vec) => {
+        List(vec) => {
             /* A type expression */
             Unit
         },
-        ast::Nil => Unit
+        Nil => Unit
     }
 }
 
