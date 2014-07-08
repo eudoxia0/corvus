@@ -4,7 +4,8 @@ extern crate reader;
 fn main() {
     loop {
         print!("> ");
-        let input = reader::read_stream(reader::stdin_reader());
+        let mut reader = reader::stdin_reader();
+        let input = reader::read_stream(&mut reader);
         print!("{}\n", ast::print(input));
     }
 }
