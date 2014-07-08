@@ -35,7 +35,8 @@ Return Value
 Parameters
    * :code:`<name>`: The function's name.
    * :code:`<arguments>`: A :ref:`generic argument list <concrete_arglist>`.
-   * :code:`<ret>`: A type specifier of the function's return type.
+   * :code:`<ret>`: A :ref:`type specifier <type-spec>` of the function's
+     return type.
    * :code:`<docstring>`: An optional string documenting what the function does.
    * :code:`<body>`: A sequence of expressions.
 
@@ -97,7 +98,7 @@ Return Value
 Parameters
    * :code:`<name>`: The name of the type to define. This must be unique in the
      present scope, otherwise, a duplicate named type error is signalled.
-   * :code:`<specifier>`: A type specifier.
+   * :code:`<specifier>`: A :ref:`type specifier <type-spec>`.
    * :code:`<docstring>`: An optional documentation string describing the type.
 
 Examples:
@@ -121,6 +122,53 @@ Return Value
 Parameters
    * :code:`<obj>`: An instance of an algebraic data type.
    * :code:`<variant-name>`: The name of a variant member of the ADT.
+
+Instantiating Types
+-------------------
+
+The general way of creating instances of types is a form where the first element
+is the type's :ref:`specifier <type-spec>` and the rest the components of the
+type. For example:
+
+::
+
+  (i32 1)
+
+  (single (double (quad 3.14))) ;; Gradually drop precision
+
+  (type color (tup i8 i8 i8))
+
+  (color 0 0 0) ;; Black
+
+Datatypes
+^^^^^^^^^
+
+To create an instance of a datatype, the first argument must be the datatype's
+:ref:`specifier <type-spec>`, and the second the name of the variant, followed
+by the arguments to that variant.
+
+Abstract datatypes are similarly instantiated. For example, the option type:
+
+::
+
+  (if (some-condition an-integer)
+      ((Option i32) Some an-integer)
+      ((Option i32) None))
+
+Syntax
+^^^^^^
+
+The formal syntax is:
+
+::
+
+  (<scalar> <value>)
+
+  (<tuple> <tup-element>+)
+
+  (<record> (<field-name> <field-value>)+)
+
+  (<datatype> <variant-name> <variant-value>)
 
 Accessing Type Fields
 =====================
