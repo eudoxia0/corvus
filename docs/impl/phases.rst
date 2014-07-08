@@ -11,13 +11,16 @@ parsed.
 Module Expansion
 ================
 
+The compiler goes through the code, extracting :code:`defmod` and :code:`w/mod`
+forms and applying the necessary transformations to symbols.
+
 Macroexpansion
 ==============
 
 This is the second phase of compilation, before the AST is further
 transformed. The compiler first looks through the AST, extracting macro
-definitions, then traverses the AST again looking for calls to macros and performs the
-macroexpansion process.
+definitions, then traverses the AST again looking for calls to macros and
+performs the macroexpansion process.
 
 Type Definition Extraction
 ==========================
