@@ -47,3 +47,39 @@ forms span multiple lines, two approaches are taken:
 
 Structuring Projects
 ====================
+
+Directory Tree
+--------------
+
+For standalone applications:
+
+::
+
+  app/
+    bin/
+      executable-1.cor
+      executable-2.cor
+    src/
+      ...
+    t/
+      ...
+  app.csd
+  README.*
+
+For libraries:
+
+::
+
+  app/
+    src/
+      ...
+    t/
+      ...
+  app.csd
+  README.*
+
+Sources
+-------
+
+Tests
+-----
