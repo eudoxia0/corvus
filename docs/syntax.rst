@@ -11,8 +11,8 @@ Token Types
 The following list shows the regular expressions that correspond to each token
 type:
 
-* Integer: `[+-]?(\d)+`.
-* Float: `[+-]?[0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?`.
+* Integer: :code:`[+-]?(\d)+`.
+* Float: :code:`[+-]?[0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?`.
 
 Identifiers are anything else.
 
@@ -33,8 +33,8 @@ Comments
 --------
 
 Two reader macros are defined to read comments. Single line comments begin with
-the semicolon (';') character, and end with a newline. Multi-line comments are
-those of C: :code:`/* Comment text */`.
+the semicolon (:code:`;`) character, and end with a newline. Multi-line comments
+are those of C: :code:`/* Comment text */`.
 
 Multi-line comments can be nested.
 
@@ -55,10 +55,3 @@ respectively:
   Examples:
 
   * :code:`[1 2 3]`: An array of three integers.
-
-Syntax Conventions
-==================
-
-Indentation
------------
-
