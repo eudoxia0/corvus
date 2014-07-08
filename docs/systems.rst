@@ -99,3 +99,59 @@ Files and Directories
 
 The :code:`components` property of a :code:`defsystem` form contains a list of
 *targets*. A target is can be a file, or a directory of other files and targets.
+
+Categories
+==========
+
+* :code:`language`
+
+  * Any ISO 639 code. No edition specified.
+
+* :code:`environment`: The type of environment in which the application runs.
+
+  * :code:`web`
+  * :code:`console`
+  * :code:`graphical`
+  * :code:`daemon`
+
+* :code:`framework`
+* :code:`library`
+* :code:`application`
+* :code:`extension`: Language extensions.
+* :code:`net`: Networking.
+
+  * :code:`p2p`: Peer-to-peer networking.
+  * :code:`irc`: Internet relay chat.
+  * :code:`mail`: E-mail.
+  * :code:`im`: Instant messaging.
+
+* :code:`cad`: Computer-aided design.
+* :code:`sci`: Science.
+
+  * :code:`bio`: Biology.
+
+    * :code:`synbio`: Synthetic biology.
+    * :code:`molbio`: Molecular biology.
+
+  * :code:`astro`: Astronomy.
+
+* :code:`parallel`: Support for parallel computing and HPC.
+
+System Trees
+============
+
+A *system tree* is a collection of systems on the filesystem. Both repository
+servers and clients hold a tree of systems. It looks roughly like this:
+
+::
+
+   systems/
+     system-a
+       0.1/
+         ...
+       0.5/
+         ...
+
+That is, different versions of systems are stored each in a folder. The contents
+of the :code:`systems/` directory is not required to recognize the addition of a
+package immediately.
