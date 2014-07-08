@@ -95,7 +95,7 @@ pub fn file_reader(pathname: &str) -> Reader {
 }
 
 /* Get the next character in the stream, advancing the cursor */
-fn nextchar(mut reader: Reader) -> (Option<char>, Reader) {
+fn nextchar(reader: &mut Reader) -> Option<char> {
     let res = match reader.buf {
         StdStream(ref mut buf) => buf.read_char(),
         FileStream(ref mut buf) => buf.read_char()
@@ -106,9 +106,9 @@ fn nextchar(mut reader: Reader) -> (Option<char>, Reader) {
             if c == '\n' {
                 reader.line = reader.line + 1
             }
-            (Some(c), reader)
+            Some(c)
         },
-        Err(_) => (None, reader)
+        Err(_) => None
     }
 }
 
@@ -126,17 +126,12 @@ fn complete_token(tok: &String) -> bool {
 
 /* For information on the reader algorithm, check the Reader chapter of the
    documentation. */
-pub fn read_stream(mut reader: Reader) -> SExp {
+pub fn read_stream(reader: &mut Reader) -> SExp {
     let mut token_text = String::new();
     let mut c;
     loop {
         /* This is probably not very idiomatic: Read the next char */
-        match nextchar(reader) {
-            (opt, newreader) => {
-                c = opt;
-                reader = newreader;
-            }
-        }
+        c = nextchar(reader);
         /* Match the char */
         match c {
             /* What kind of character is it? */
@@ -146,9 +141,9 @@ pub fn read_stream(mut reader: Reader) -> SExp {
                    whitespace terminates it. */
                 if c.is_whitespace() {
                     if complete_token(&token_text) {
-                        let line = reader.line;
-                        let col = reader.col;
-                        return ast::atom_from_str(token_text, line, col);
+                        return ast::atom_from_str(token_text,
+                                                  reader.line,
+                                                  reader.col);
                     } else {
                         continue;
                     }
@@ -170,9 +165,9 @@ pub fn read_stream(mut reader: Reader) -> SExp {
 
                 /* Handle terminating macro characters */
                 if c == ')' {
-                    let line = reader.line;
-                    let col = reader.col;
-                    return ast::atom_from_str(token_text, line, col);
+                    return ast::atom_from_str(token_text,
+                                              reader.line,
+                                              reader.col);
                 };
             },
             None => {
@@ -182,9 +177,7 @@ pub fn read_stream(mut reader: Reader) -> SExp {
         }
     }
     if complete_token(&token_text) {
-        let line = reader.line;
-        let col = reader.col;
-        ast::atom_from_str(token_text, line, col)
+        ast::atom_from_str(token_text, reader.line, reader.col)
     } else {
         ast::Nil
     }
@@ -192,7 +185,7 @@ pub fn read_stream(mut reader: Reader) -> SExp {
 
 /* A simple function to facilitate reading delimited sequences. It is used to
    read nested S-expressions, as well as array and tuple literals. */
-fn read_delim_sequence(mut reader: Reader, delimiter: char) -> SExp {
+fn read_delim_sequence(reader: &mut Reader, delimiter: char) -> SExp {
     /* Read until finding a token that ends with a closing parenthesis */
     ast::Nil
 }
