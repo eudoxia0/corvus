@@ -1,7 +1,9 @@
 extern crate collections;
+extern crate list;
 extern crate ast;
 
-use ast::{SExp, Atom, Ident, Cons, Nil};
+use list::{Value, Cons, Nil};
+use ast::{SExp, Atom, Ident};
 use std::collections::HashMap;
 use std::collections::dlist::DList;
 
@@ -108,9 +110,9 @@ pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
             /* A type expression */
             emit_exp(*first, *rest, tenv)
         },
-        Atom(_,_,val) => {
+        Value(atom) => {
             /* A named type. Look it up in the type environment. */
-            match val {
+            match atom.val {
                 Ident(name) => {
                     match tenv.types.find(&name) {
                         Some(ref mut t) => /*t.def*/ Unit,

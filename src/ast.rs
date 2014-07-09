@@ -10,9 +10,9 @@ pub enum AtomValue {
 }
 
 pub struct Atom {
-    line: i64,
-    col: i64,
-    val: AtomValue
+    pub line: i64,
+    pub col: i64,
+    pub val: AtomValue
 }
 
 pub type SExp = List<Atom>;
