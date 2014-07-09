@@ -12,3 +12,25 @@ pub fn mapcar<a>(list: List<a>, fun: |List<a>| -> List<a>) -> List<a> {
         _ => Nil
     }
 }
+
+pub fn assoc<T: Eq, U>(key: T, list: List<(T, U)>) -> Option<U> {
+    match list {
+        Cons(first, rest) => {
+            match *first {
+                Value(pair) => {
+                    match *pair {
+                        (pair_key, pair_val) => {
+                            if key == pair_key {
+                                Some(pair_val)
+                            } else {
+                                assoc(key, *rest)
+                            }
+                        }
+                    }
+                },
+                _ => None
+            }
+        },
+        _ => None
+    }
+}
