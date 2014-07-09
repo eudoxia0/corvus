@@ -51,11 +51,13 @@ The S-Expression returned by the reader macro function is then recorded by the
 reader, unless it is NULL, in which case an error is signaled.
 */
 
+extern crate list;
 extern crate ast;
 
 use std::io::{BufferedReader, File};
 use std::io;
-use ast::{SExp, atom_from_str, Nil};
+use list::Nil;
+use ast::{SExp, atom_from_str};
 
 enum Stream {
     StdStream(BufferedReader<io::stdio::StdReader>),

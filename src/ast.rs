@@ -15,7 +15,7 @@ pub struct Atom {
     val: AtomValue
 }
 
-type SExp = List<Atom>;
+pub type SExp = List<Atom>;
 
 pub fn mapcar(list: SExp, fun: |SExp| -> SExp) -> SExp {
     match list {
