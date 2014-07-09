@@ -13,14 +13,14 @@ pub enum AST {
     Nil 
 }
 
-fn annotate_list(elems: Vec<SExp>) -> AST {
+fn annotate_list(first: SExp, rest: SExp) -> AST {
     Nil
 }
 
 fn annotate(sexp: SExp) -> AST {
     match sexp {
         ast::Atom(l, c, v) => Atom(l, c, v),
-        ast::List(vec) => annotate_list(vec),
+        ast::Cons(first, rest) => annotate_list(*first, *rest),
         ast::Nil => Nil
     }
 }

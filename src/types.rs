@@ -1,7 +1,7 @@
 extern crate collections;
 extern crate ast;
 
-use ast::{SExp, Atom, Ident, List, Nil};
+use ast::{SExp, Atom, Ident, Cons, Nil};
 use std::collections::HashMap;
 use std::collections::dlist::DList;
 
@@ -96,17 +96,17 @@ pub fn create_default_tenv() -> TypeEnv {
     TypeEnv { types: tenv }
 }
 
-fn emit_exp(args: DList<SExp>, tenv: &mut TypeEnv) -> Type {
-    let ty = args.front();
+fn emit_exp(op: SExp, args: SExp, tenv: &mut TypeEnv) -> Type {
+    let type_cons = emit_type(op, tenv);
     Unit
 }
 
 /* Parse type specifiers */
 pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
     match sexp {
-        List(list) => {
+        Cons(first, rest) => {
             /* A type expression */
-            emit_exp(list, tenv)
+            emit_exp(*first, *rest, tenv)
         },
         Atom(_,_,val) => {
             /* A named type. Look it up in the type environment. */
