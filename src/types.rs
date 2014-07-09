@@ -3,6 +3,7 @@ extern crate ast;
 
 use ast::{SExp, Atom, Ident, List, Nil};
 use std::collections::HashMap;
+use std::collections::dlist::DList;
 
 enum IntegerType {
     Byte = 8,
@@ -72,7 +73,7 @@ struct TypeEnv {
 }
 
 /* Return a type environment with the basic types. */
-pub fn createDefaultTEnv() -> TypeEnv {
+pub fn create_default_tenv() -> TypeEnv {
     let mut tenv = HashMap::new();
     tenv.insert(String::from_str("bool"),
                 TypeDef { def: Bool, doc: String::from_str("") });
@@ -95,24 +96,29 @@ pub fn createDefaultTEnv() -> TypeEnv {
     TypeEnv { types: tenv }
 }
 
+fn emit_exp(args: DList<SExp>, tenv: &mut TypeEnv) -> Type {
+    let ty = args.front();
+    Unit
+}
+
 /* Parse type specifiers */
-pub fn emitType(sexp: SExp, tenv: &mut TypeEnv) -> Type {
+pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
     match sexp {
+        List(list) => {
+            /* A type expression */
+            emit_exp(list, tenv)
+        },
         Atom(_,_,val) => {
             /* A named type. Look it up in the type environment. */
             match val {
                 Ident(name) => {
                     match tenv.types.find(&name) {
-                        Some(ref mut t) => t.def,
+                        Some(ref mut t) => /*t.def*/ Unit,
                         None => fail!("No typed named {}.", name)
                     }
                 },
                 _ => fail!("Named types must be identifiers.")
             }
-        },
-        List(vec) => {
-            /* A type expression */
-            Unit
         },
         Nil => Unit
     }
@@ -120,4 +126,4 @@ pub fn emitType(sexp: SExp, tenv: &mut TypeEnv) -> Type {
 
 /* The public interface to the type lifter: Takes an S-expression and returns a
    type environment. */
-//pub fn extractTypes(sexp: SExp, tenv: &TypeEnv) -> SExp { }
+pub fn extract_types(sexp: SExp, tenv: &mut TypeEnv) -> SExp { sexp }
