@@ -2,11 +2,12 @@ extern crate collections;
 extern crate list;
 extern crate ast;
 
-use list::{Value, Cons, Nil};
+use list::{List, Value, Cons, Nil};
 use ast::{SExp, Atom, Ident};
 use std::collections::HashMap;
 use std::collections::dlist::DList;
 
+/* Integer types */
 enum IntegerType {
     Byte = 8,
     Short = 16,
@@ -15,12 +16,14 @@ enum IntegerType {
     Int128 = 128
 }
 
+/* Floating-point types */
 enum FloatType {
     Single = 32,
     Double = 64,
     Quad = 128
 }
 
+/* Represents an argument to a function or the field of a record */
 struct TypeField {
     name: String,
     definition: Box<Type>,
@@ -33,16 +36,25 @@ struct Variant {
     definition: Box<Type>
 }
 
+/* The definition of a kind */
 enum KindDef {
-    Or(Vec<KindDef>),
-    And(Vec<KindDef>),
+    /* The set of all types: Universal quantification */
+    U,
+    /* Logical operations */
+    Or(List<KindDef>),
+    And(List<KindDef>),
     Not(Box<KindDef>),
-    Defines(String, Vec<Type>, Box<Type>),
+    /* Whether a function is defined for a given type */
+    Defines(String, List<Type>, Box<Type>),
+    /* A base type */
     BaseType(Box<Type>),
 }
 
+/* A type variable */
 struct TypeVar {
+    /* The variable's name (Including the question mark) */
     name: String,
+    /* The kind the variable belongs to. By default, the Universal set (U). */
     kind: KindDef,
 }
 
@@ -54,22 +66,24 @@ enum Type {
     Float(FloatType),
     /* Aggregate types */
     Array(Box<Type>),
-    Tuple(Vec<Type>),
-    Record(Vec<TypeField>),
-    Datatype(Vec<Variant>),
-    Function(Vec<TypeField>, TypeField),
+    Tuple(List<Type>),
+    Record(List<TypeField>),
+    Datatype(List<Variant>),
+    Function(List<TypeField>, TypeField),
     /* Pointers */
     Pointer(Box<Type>, i32),
     /* Generics and kinds */
-    Generic(Vec<TypeVar>, SExp),
+    Generic(List<TypeVar>, SExp),
     Kind(KindDef),
 }
 
+/* A type definition: A type plus an optional docstring */
 struct TypeDef {
     def: Type,
     doc: String
 }
 
+/* A type environment associates names with type definitions */
 struct TypeEnv {
     types: HashMap<String, TypeDef>
 }
