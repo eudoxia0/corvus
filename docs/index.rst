@@ -9,22 +9,22 @@ Specification
 .. toctree::
    :maxdepth: 2
 
-   introduction
-   syntax
-   evaluation
-   types
-   memory
-   special-forms
-   core
-   prelude
-   pattern-matching
-   macros
-   modules
-   conditions
-   reader
-   printer
-   style
-   systems
+   spec/introduction
+   spec/syntax
+   spec/evaluation
+   spec/types
+   spec/memory
+   spec/special-forms
+   spec/core
+   spec/prelude
+   spec/pattern-matching
+   spec/macros
+   spec/modules
+   spec/conditions
+   spec/reader
+   spec/printer
+   spec/style
+   spec/systems
 
 ************************
 Reference Implementation
