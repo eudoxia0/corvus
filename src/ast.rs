@@ -1,3 +1,5 @@
+extern crate collections;
+
 pub enum AtomValue {
     Integer(i64),
     Real(f64),
@@ -7,8 +9,17 @@ pub enum AtomValue {
 
 pub enum SExp {
     Atom(i64, i64, AtomValue),
-    List(Vec<SExp>),
+    Cons(Box<SExp>, Box<SExp>),
     Nil
+}
+
+pub fn mapcar(list: SExp, fun: |SExp| -> SExp) -> SExp {
+    match list {
+        Cons(first, rest) => {
+            Cons(box fun(*first), box mapcar(*rest, fun))
+        },
+        _ => Nil
+    }
 }
 
 fn print_atom(val: AtomValue) -> String {
@@ -20,18 +31,18 @@ fn print_atom(val: AtomValue) -> String {
     }
 }
 
-fn print_list(list : Vec<SExp>) -> String {
-    let mut out = String::from_str("(");
-    for elem in list.move_iter() {
-        out = format!("{} {}", out, print(elem));
-    }
-    format!("{})", out)
-}
-
 pub fn print(sexp : SExp) -> String {
     match sexp {
         Atom(_, _, val) => print_atom(val),
-        List(list) => print_list(list),
+        Cons(first, rest) => {
+            let mut out = format!("({}", print(*first));
+            mapcar(*rest, |elem: SExp| -> SExp {
+                out = format!("{} {}", out, print(elem));
+                Nil
+            });
+            out = format!("{})", out);
+            out
+        },
         Nil => String::from_str("()")
     }
 }
@@ -48,11 +59,11 @@ pub fn atom_from_str(str : String, line: i64, col: i64) -> SExp {
 fn test() {
     let a = Atom(0, 0, Integer(12));
     let b = Atom(0, 0, Real(3.14));
-    let c = Atom(0, 0, Ident(String::from_str("derp")));
+    let c = Atom(0, 0, Ident(String::from_str("test")));
     let result_a = format!("{}", print(Nil));
     let result_b = format!("{}", print(a));
-    let result_c = format!("{}", print(List(vec![b, c])));
+    let result_c = format!("{}", print(Cons(box b, box Cons(box c, box Nil))));
     assert!(result_a == String::from_str("()"));
     assert!(result_b == String::from_str("12"));
-    assert!(result_c == String::from_str("( 3.14 derp)"));
+    assert!(result_c == String::from_str("(3.14 test)"));
 }
