@@ -2,6 +2,7 @@
 RUSTLIB = rustc -L . --crate-type=lib
 
 # Crates
+LIST = src/list.rs
 AST = src/ast.rs
 READER = src/reader.rs
 MODULES = src/modules.rs
@@ -10,9 +11,12 @@ TYPES = src/types.rs
 ANNOT = src/annot.rs
 LIFT_VARS = src/lift-vars.rs
 
-CRATES = ast reader modules macros types annot lift-vars
+CRATES = list ast reader modules macros types annot lift-vars
 
 default: corvus
+
+list: $(LIST)
+	$(RUSTLIB) $?
 
 ast: $(AST)
 	$(RUSTLIB) $?
