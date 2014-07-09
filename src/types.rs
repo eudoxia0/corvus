@@ -24,16 +24,34 @@ struct TypeField {
     docstring: String
 }
 
+/* Represents a variant of a datatype */
+struct Variant {
+    name: String,
+    definition: Box<Type>
+}
+
 enum Type {
+    /* Scalar types */
     Unit,
     Bool,
     Integer(IntegerType),
     Float(FloatType),
+    /* Aggregate types */
     Array(Box<Type>),
     Tuple(Vec<Type>),
     Record(Vec<TypeField>),
+    Datatype(Vec<Variant>),
     Function(Vec<TypeField>, TypeField),
-    Pointer(Box<Type>, i32)
+    /* Pointers */
+    Pointer(Box<Type>, i32),
+    /* Generics and kinds */
+    Generic(Vec<TypeVar>, SExp),
+    Kind(SExp)
+}
+
+struct TypeVar {
+    name: String,
+    kind: Type,
 }
 
 struct TypeDef {
