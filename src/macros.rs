@@ -11,7 +11,7 @@ use std::collections::HashMap;
    to match the input to the template. If it succeeds, the template is expanded
    using the variables bound during pattern matching. */
 struct MacroCase {
-    pattern: SExp;
+    pattern: SExp,
     template: SExp
 }
 
@@ -29,17 +29,17 @@ struct MacroTable {
 
 /* Weave the bindings into the template */
 fn expand_macro_case(template: SExp, bindings: &Vec<SExp>) -> SExp {
-  pattern
+  template
 }
 
 /* Try to expand a macro invocation. If it doesn't match any patterns, fail. */
 fn expand_macro(pattern: SExp, macro: Macro) -> SExp {
-
+    pattern
 }
 
 /* Tranverse an expression, looking for macro invocations and expanding them */
 fn macroexpand(sexp: SExp, table: &MacroTable) -> SExp {
-
+    sexp
 }
 
 /* Public interface */
