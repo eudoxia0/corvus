@@ -1,4 +1,6 @@
-extern crate collections;
+extern crate list;
+
+use list::{List, Value, Cons, Nil, mapcar};
 
 pub enum AtomValue {
     Integer(i64),
@@ -7,11 +9,13 @@ pub enum AtomValue {
     Ident(String)
 }
 
-pub enum SExp {
-    Atom(i64, i64, AtomValue),
-    Cons(Box<SExp>, Box<SExp>),
-    Nil
+pub struct Atom {
+    line: i64,
+    col: i64,
+    val: AtomValue
 }
+
+type SExp = List<Atom>;
 
 pub fn mapcar(list: SExp, fun: |SExp| -> SExp) -> SExp {
     match list {
@@ -22,8 +26,8 @@ pub fn mapcar(list: SExp, fun: |SExp| -> SExp) -> SExp {
     }
 }
 
-fn print_atom(val: AtomValue) -> String {
-    match val {
+fn print_atom(atom: Atom) -> String {
+    match atom.val {
         Integer(int) => int.to_str(),
         Real(real) => real.to_str(),
         Str(str) => str,
@@ -33,7 +37,7 @@ fn print_atom(val: AtomValue) -> String {
 
 pub fn print(sexp : SExp) -> String {
     match sexp {
-        Atom(_, _, val) => print_atom(val),
+        Value(atom) => print_atom(atom),
         Cons(first, rest) => {
             let mut out = format!("({}", print(*first));
             mapcar(*rest, |elem: SExp| -> SExp {
@@ -52,14 +56,14 @@ pub fn classify(str: String) -> AtomValue {
 }
 
 pub fn atom_from_str(str : String, line: i64, col: i64) -> SExp {
-    Atom(line, col, classify(str))
+    Value(Atom { line: line, col: col, val: classify(str) })
 }
 
 #[test]
 fn test() {
-    let a = Atom(0, 0, Integer(12));
-    let b = Atom(0, 0, Real(3.14));
-    let c = Atom(0, 0, Ident(String::from_str("test")));
+    let a = Value(Atom { val: Integer(12) });
+    let b = Value(Atom { val: Real(3.14) });
+    let c = Value(Atom { val: Ident(String::from_str("test")) });
     let result_a = format!("{}", print(Nil));
     let result_b = format!("{}", print(a));
     let result_c = format!("{}", print(Cons(box b, box Cons(box c, box Nil))));
