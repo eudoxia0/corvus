@@ -29,6 +29,8 @@ is another one of my contributions to this movement.
 
 # Status
 
+See the [Trello board](https://trello.com/b/1W0DdGwx/corvus).
+
 Please don't post this on Hacker News yet.
 
 * **Reader:** A basic Lisp reader and a classifier of the different types of
