@@ -37,7 +37,7 @@ fn print_atom(atom: Atom) -> String {
 
 pub fn print(sexp : SExp) -> String {
     match sexp {
-        Value(atom) => print_atom(atom),
+        Value(atom) => print_atom(*atom),
         Cons(first, rest) => {
             let mut out = format!("({}", print(*first));
             mapcar(*rest, |elem: SExp| -> SExp {
@@ -56,14 +56,14 @@ pub fn classify(str: String) -> AtomValue {
 }
 
 pub fn atom_from_str(str : String, line: i64, col: i64) -> SExp {
-    Value(Atom { line: line, col: col, val: classify(str) })
+    Value(box Atom { line: line, col: col, val: classify(str) })
 }
 
 #[test]
 fn test() {
-    let a = Value(Atom { val: Integer(12) });
-    let b = Value(Atom { val: Real(3.14) });
-    let c = Value(Atom { val: Ident(String::from_str("test")) });
+    let a = Value(box Atom { val: Integer(12) });
+    let b = Value(box Atom { val: Real(3.14) });
+    let c = Value(box Atom { val: Ident(String::from_str("test")) });
     let result_a = format!("{}", print(Nil));
     let result_b = format!("{}", print(a));
     let result_c = format!("{}", print(Cons(box b, box Cons(box c, box Nil))));

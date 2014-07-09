@@ -1,5 +1,5 @@
 pub enum List<a> {
-    Value(a),
+    Value(Box<a>),
     Cons(Box<List<a>>, Box<List<a>>),
     Nil
 }
