@@ -166,7 +166,7 @@ they *are*.
 For example, some of the basic kinds defined in the Prelude are defined like
 this:
 
-.. literalinclude:: ../lang/prelude.cor
+.. literalinclude:: ../../lang/prelude.cor
    :language: lisp
    :lines: 11-17
    :linenos:

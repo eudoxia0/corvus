@@ -26,7 +26,7 @@ Hierarchy of Built-in Kinds
 Option Type
 ===========
 
-.. literalinclude:: ../lang/prelude.cor
+.. literalinclude:: ../../lang/prelude.cor
    :language: lisp
    :lines: 21-25
    :linenos:
