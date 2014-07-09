@@ -30,6 +30,19 @@ struct Variant {
     definition: Box<Type>
 }
 
+enum KindDef {
+    Or(Vec<KindDef>),
+    And(Vec<KindDef>),
+    Not(Box<KindDef>),
+    Defines(String, Vec<Type>, Box<Type>),
+    BaseType(Box<Type>),
+}
+
+struct TypeVar {
+    name: String,
+    kind: KindDef,
+}
+
 enum Type {
     /* Scalar types */
     Unit,
@@ -46,12 +59,7 @@ enum Type {
     Pointer(Box<Type>, i32),
     /* Generics and kinds */
     Generic(Vec<TypeVar>, SExp),
-    Kind(SExp)
-}
-
-struct TypeVar {
-    name: String,
-    kind: Type,
+    Kind(KindDef),
 }
 
 struct TypeDef {
