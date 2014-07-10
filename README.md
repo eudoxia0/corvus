@@ -33,17 +33,6 @@ See the [Trello board](https://trello.com/b/1W0DdGwx/corvus).
 
 Please don't post this on Hacker News yet.
 
-* **Reader:** A basic Lisp reader and a classifier of the different types of
-  atoms (Integers, floats, identifiers) has been implemented. Reader macros and
-  string readers have not.
-* **Type System:** The basis is there, but type specifier parsing is not. May or
-  may not have type inference.
-* **Compiler:** Various phases, almost none of which have been implemented yet.
-* **LLVM Backend:** Nope.
-* **Other, optional backends:** None. It may be useful to provide a non-LLVM
-  backend for bootstraping something small. However, for most purposes,
-  statically cross-compiling the LLVM IR should be enough.
-
 # Notes
 
 This project was originally called Hylas Lisp. I have been working on it on and
