@@ -1,10 +1,12 @@
+extern crate list;
 extern crate ast;
 
+use list::{List};
 use ast::SExp;
 
 struct Module {
-    imports: Vec<String>,
-    exports: Vec<String>
+    imports: List<String>,
+    exports: List<String>
 }
 
 /* Public interface */
