@@ -129,7 +129,7 @@ pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
             match atom.val {
                 Ident(name) => {
                     match tenv.types.find(&name) {
-                        Some(ref mut t) => /*t.def*/ Unit,
+                        Some(ref mut t) => t.def,
                         None => fail!("No typed named {}.", name)
                     }
                 },
@@ -140,6 +140,57 @@ pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
     }
 }
 
+fn define_type(args: SExp, tenv: &mut TypeEnv) {
+    match args {
+        Cons(type_name, rest) => {
+             match *rest {
+                 Cons(definition, rest) => {
+                     match *type_name {
+                         Value(atom) => {
+                             match atom.val {
+                                Ident(name) => {
+                                    let def = emit_type(*definition, tenv);
+                                    let doc = String::from_str("");
+                                    let typedef = TypeDef { def: def, doc: doc };
+                                    tenv.insert(name, typedef);
+                                },
+                                _ => fail!("Bad type definition.")
+                             }
+                         },
+                         _ => fail!("Bad type definition.")
+                     }
+                 }
+                 _ => fail!("Bad type definition.")
+             }
+        }
+        _ => fail!("Bad type definition.")
+    }
+}
+
 /* The public interface to the type lifter: Takes an S-expression and returns a
    type environment. */
-pub fn extract_types(sexp: SExp, tenv: &mut TypeEnv) -> SExp { sexp }
+pub fn extract_types(sexp: SExp, tenv: &mut TypeEnv) -> SExp {
+    match sexp {
+        Cons(fun, args) => {
+            /* Is the first element of the expression the symbol type? */
+            match *fun {
+                Value(atom) => {
+                    match atom.val {
+                        Ident(name) => {
+                            if name == String::from_str("type") {
+                                /* Process the type definition. */
+                                define_type(*args, tenv);
+                                Value(atom);
+                            } else {
+                                Value(atom)
+                            }
+                        },
+                        _ => atom
+                    }
+                },
+                _ => fun
+            }
+        },
+        _ => sexp
+    }
+}
