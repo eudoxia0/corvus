@@ -128,7 +128,7 @@ pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
             /* A named type. Look it up in the type environment. */
             match atom.val {
                 Ident(name) => {
-                    match tenv.types.find(&name) {
+                    match tenv.types.find_mut(&name) {
                         Some(ref mut t) => t.def,
                         None => fail!("No typed named {}.", name)
                     }
@@ -152,7 +152,7 @@ fn define_type(args: SExp, tenv: &mut TypeEnv) {
                                     let def = emit_type(*definition, tenv);
                                     let doc = String::from_str("");
                                     let typedef = TypeDef { def: def, doc: doc };
-                                    tenv.insert(name, typedef);
+                                    tenv.types.insert(name, typedef);
                                 },
                                 _ => fail!("Bad type definition.")
                              }
@@ -180,15 +180,13 @@ pub fn extract_types(sexp: SExp, tenv: &mut TypeEnv) -> SExp {
                             if name == String::from_str("type") {
                                 /* Process the type definition. */
                                 define_type(*args, tenv);
-                                Value(atom);
-                            } else {
-                                Value(atom)
                             }
+                            Value(atom)    
                         },
-                        _ => atom
+                        _ => Value(atom)
                     }
                 },
-                _ => fun
+                _ => Cons(fun, args)
             }
         },
         _ => sexp
