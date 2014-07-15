@@ -40,14 +40,8 @@ struct Variant {
 enum KindDef {
     /* The set of all types: Universal quantification */
     U,
-    /* Logical operations */
-    Or(List<KindDef>),
-    And(List<KindDef>),
-    Not(Box<KindDef>),
     /* Whether a function is defined for a given type */
     Defines(String, List<Type>, Box<Type>),
-    /* A base type */
-    BaseType(Box<Type>),
 }
 
 /* A type variable */
@@ -77,10 +71,35 @@ enum Type {
     Kind(KindDef),
 }
 
+impl Clone for Type {
+    fn clone(&self) -> Type {
+        match *self {
+            // Scalars
+            Unit => Unit,
+            Bool => Bool,
+            Integer(t) => Integer(t),
+            Float(t) => Float(t),
+            // Aggregates
+            Array(ref base) => Array(base.clone()),
+            // Pointers
+            Pointer(ref base, depth) => Pointer(base.clone(), depth),
+            // To-do
+            _ => Unit
+        }
+    }
+}
+
 /* A type definition: A type plus an optional docstring */
 struct TypeDef {
     def: Type,
     doc: String
+}
+
+impl Clone for TypeDef {
+    fn clone(&self) -> TypeDef {
+        TypeDef { def: self.def.clone(),
+                  doc: self.doc.clone() }
+    }
 }
 
 /* A type environment associates names with type definitions */
@@ -113,7 +132,7 @@ pub fn create_default_tenv() -> TypeEnv {
 }
 
 fn emit_exp(op: SExp, args: SExp, tenv: &mut TypeEnv) -> Type {
-    let type_cons = emit_type(op, tenv);
+    let type_constructor = emit_type(op, tenv);
     Unit
 }
 
@@ -128,7 +147,7 @@ pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
             /* A named type. Look it up in the type environment. */
             match atom.val {
                 Ident(name) => {
-                    match tenv.types.find_mut(&name) {
+                    match tenv.types.find_copy(&name) {
                         Some(t) => t.def,
                         None => fail!("No typed named {}.", name)
                     }
@@ -167,28 +186,27 @@ fn define_type(args: SExp, tenv: &mut TypeEnv) {
     }
 }
 
-/* The public interface to the type lifter: Takes an S-expression and returns a
+/* The public interface to the type lifter: Takes an S-expression and fills a
    type environment. */
-pub fn extract_types(sexp: SExp, tenv: &mut TypeEnv) -> SExp {
+pub fn extract_types(sexp: SExp, tenv: &mut TypeEnv)  {
     match sexp {
         Cons(fun, args) => {
             // Is the first element of the expression the symbol type?
             match *fun {
-                Value(ref mut atom) => {
+                Value(atom) => {
                     match atom.val {
-                        Ident(ref mut name) => {
-                            if *name == String::from_str("type") {
+                        Ident(name) => {
+                            if name == String::from_str("type") {
                                 // Process the type definition.
                                 define_type(*args, tenv);
                             };
                         },
                         _ => ()
                     }
-                    Value(*atom)
                 },
-                _ => Cons(fun, args)
+                _ => ()
             }
         },
-        _ => sexp
+        _ => ()
     }
 }
