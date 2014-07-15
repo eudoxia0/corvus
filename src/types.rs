@@ -129,7 +129,7 @@ pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
             match atom.val {
                 Ident(name) => {
                     match tenv.types.find_mut(&name) {
-                        Some(ref mut t) => t.def,
+                        Some(t) => t.def,
                         None => fail!("No typed named {}.", name)
                     }
                 },
@@ -172,19 +172,19 @@ fn define_type(args: SExp, tenv: &mut TypeEnv) {
 pub fn extract_types(sexp: SExp, tenv: &mut TypeEnv) -> SExp {
     match sexp {
         Cons(fun, args) => {
-            /* Is the first element of the expression the symbol type? */
+            // Is the first element of the expression the symbol type?
             match *fun {
-                Value(atom) => {
+                Value(ref mut atom) => {
                     match atom.val {
-                        Ident(name) => {
-                            if name == String::from_str("type") {
-                                /* Process the type definition. */
+                        Ident(ref mut name) => {
+                            if *name == String::from_str("type") {
+                                // Process the type definition.
                                 define_type(*args, tenv);
-                            }
-                            Value(atom)    
+                            };
                         },
-                        _ => Value(atom)
+                        _ => ()
                     }
+                    Value(*atom)
                 },
                 _ => Cons(fun, args)
             }
