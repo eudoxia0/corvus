@@ -1,8 +1,42 @@
+#![feature(macro_rules)]
+
 pub enum List<a> {
     Value(Box<a>),
     Cons(Box<List<a>>, Box<List<a>>),
     Nil
 }
+
+pub fn car<a>(list: List<a>) -> List<a> {
+    match list {
+        Cons(first, rest) => *first,
+        _ => Nil
+    }
+}
+
+pub fn cdr<a>(list: List<a>) -> List<a> {
+    match list {
+        Cons(first, rest) => *rest,
+        _ => Nil
+    }
+}
+
+macro_rules! destructure(
+    ($exp:expr, $a:ident, $b:ident, $c:ident, $body:block) => {
+        let $a = car($exp);
+        let $b = car(cdr($exp));
+        let $c = car(cdr(cdr($exp)));
+        $body
+    };
+    ($exp:expr, $a:ident, $b:ident, $body:block) => {
+        let $a = car($exp);
+        let $b = car(cdr($exp));
+        $body
+    };
+    ($exp:expr, $a:ident, $body:block) => {
+        let $a = car($exp);
+        $body
+    };
+)
 
 pub fn mapcar<a>(list: List<a>, fun: |List<a>| -> List<a>) -> List<a> {
     match list {

@@ -132,7 +132,6 @@ pub fn read_stream(reader: &mut Reader) -> SExp {
     let mut token_text = String::new();
     let mut c;
     loop {
-        /* This is probably not very idiomatic: Read the next char */
         c = nextchar(reader);
         /* Match the char */
         match c {

@@ -1,15 +1,17 @@
 # Options
 RUSTLIB = rustc -L . --crate-type=lib
 
+SRC = compiler/
+
 # Crates
-LIST = src/list.rs
-AST = src/ast.rs
-READER = src/reader.rs
-MODULES = src/modules.rs
-MACROS = src/macros.rs
-TYPES = src/types.rs
-ANNOT = src/annot.rs
-LIFT_VARS = src/lift-vars.rs
+LIST = $(SRC)/list.rs
+AST = $(SRC)/ast.rs
+READER = $(SRC)/reader.rs
+MODULES = $(SRC)/modules.rs
+MACROS = $(SRC)/macros.rs
+TYPES = $(SRC)/types.rs
+ANNOT = $(SRC)/annot.rs
+LIFT_VARS = $(SRC)/lift-vars.rs
 
 CRATES = list ast reader modules macros types annot lift-vars
 
@@ -40,7 +42,7 @@ lift-vars: $(LIFT_VARS)
 	$(RUSTLIB) $?
 
 corvus: $(CRATES)
-	rustc src/main.rs -L . -o $@
+	rustc $(SRC)/main.rs -L . -o $@
 
 clean:
 	rm *.rlib
