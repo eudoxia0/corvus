@@ -26,6 +26,17 @@ Specification
    spec/style
    spec/systems
 
+****************
+Standard Library
+****************
+
+.. toctree::
+   :maxdepth: 2
+
+   stdlib/introduction
+   stdlib/collections
+   stdlib/os
+
 ************************
 Reference Implementation
 ************************
