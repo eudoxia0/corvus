@@ -1,7 +1,7 @@
 # Options
 RUSTLIB = rustc -L . --crate-type=lib
 
-SRC = compiler/
+SRC = compiler
 
 # Crates
 LIST = $(SRC)/list.rs
