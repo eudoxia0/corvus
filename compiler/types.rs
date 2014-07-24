@@ -2,10 +2,9 @@ extern crate collections;
 extern crate list;
 extern crate ast;
 
-use list::{List, Value, Cons, Nil, car, cdr};
+use list::{List, Value, Cons, Nil};
 use ast::{SExp, Atom, Ident};
 use std::collections::HashMap;
-use std::collections::dlist::DList;
 
 /* Integer types */
 enum IntegerType {
@@ -160,16 +159,30 @@ pub fn emit_type(sexp: SExp, tenv: &mut TypeEnv) -> Type {
 }
 
 fn define_type(args: SExp, tenv: &mut TypeEnv) {
-    /* Syntax */
-    let name = car(args);
-    let def = car(cdr(args));
-    let doc = car(cdr(cdr(args)));
-    /* Validation */
-    /* Objects */
-    let definition = emit_type(def, tenv);
-    let docstring = String::from_str("");
-    let typedef = TypeDef { def: definition, doc: docstring };
-    tenv.types.insert(String::from_str("typename"), typedef);
+    match args {
+        Cons(type_name, rest) => {
+            match *rest {
+                Cons(definition, rest) => {
+                    match *type_name {
+                        Value(atom) => {
+                            match atom.val {
+                                Ident(name) => {
+                                    let def = emit_type(*definition, tenv);
+                                    let doc = String::from_str("");
+                                    let typedef = TypeDef { def: def, doc: doc };
+                                    tenv.types.insert(name, typedef);
+                                },
+                                _ => fail!("Bad type definition.")
+                            }
+                        },
+                        _ => fail!("Bad type definition.")
+                    }
+                }
+                _ => fail!("Bad type definition.")
+            }
+        }
+        _ => fail!("Bad type definition.")
+    }
 }
 
 /* The public interface to the type lifter: Takes an S-expression and fills a
