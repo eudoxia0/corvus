@@ -17,15 +17,6 @@ pub struct Atom {
 
 pub type SExp = List<Atom>;
 
-pub fn mapcar(list: SExp, fun: |SExp| -> SExp) -> SExp {
-    match list {
-        Cons(first, rest) => {
-            Cons(box fun(*first), box mapcar(*rest, fun))
-        },
-        _ => Nil
-    }
-}
-
 fn print_atom(atom: Atom) -> String {
     match atom.val {
         Integer(int) => int.to_str(),
