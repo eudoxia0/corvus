@@ -1,6 +1,9 @@
 (in-package :cl-user)
 (defpackage :corvus.types
-  (:use :cl :trivial-types))
+  (:use :cl :trivial-types)
+  (:import-from :corvus.parser
+                :<sexp>
+                :<atom>))
 (in-package :corvus.types)
 
 (defclass <type> () ())
@@ -77,3 +80,52 @@
   ((variants :initarg :variants
              :reader variants
              :type (proper-list <variant>))))
+
+;;;; Type Environment
+
+(defclass <type-env> ()
+  ((types :initarg :types
+          :accessor types
+          :type hash-table
+          :initform (make-hash-table :test #'equal))))
+
+(defun create-default-tenv ()
+  (let ((tenv (make-instance '<type-env>)))
+    (setf (gethash "bool" (types tenv))
+          (make-instance '<bool>)
+          (gethash "i8" (types tenv))
+          (make-instance '<i8>)
+          (gethash "i16" (types tenv))
+          (make-instance '<i16>)
+          (gethash "i32" (types tenv))
+          (make-instance '<i32>)
+          (gethash "i64" (types tenv))
+          (make-instance '<i64>)
+          (gethash "i128" (types tenv))
+          (make-instance '<i128>)
+          (gethash "single" (types tenv))
+          (make-instance '<single>)
+          (gethash "double" (types tenv))
+          (make-instance '<double>)
+          (gethash "quad" (types tenv))
+          (make-instance '<quad>))
+    tenv))
+
+;;;; Type Specifiers
+
+(defun emit-atom (atom tenv)
+  (declare (type <atom> atom)
+           (type <type-env> tenv))
+  (make-instance '<unit>))
+
+(defun emit-list (first args tenv)
+  (declare (type <sexp> first args)
+           (type <type-env> tenv))
+  (make-instance '<unit>))
+
+(defun emit-type (ast tenv)
+  (declare (type <sexp> ast)
+           (type <type-env> tenv))
+  (if (typep ast '<atom>)
+      (emit-atom ast tenv)
+      (emit-list (first ast) (rest ast) tenv)))
