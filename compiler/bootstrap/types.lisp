@@ -1,6 +1,6 @@
 (in-package :cl-user)
 (defpackage :corvus.types
-  (:use :cl))
+  (:use :cl :trivial-types))
 (in-package :corvus.types)
 
 (defclass <type> () ())
@@ -51,3 +51,29 @@
 
 (defclass <array> (<aggregate>)
   ((base-type :initarg :base-type :reader base-type :type <type>)))
+
+;;; Tuples
+
+(defclass <tuple> (<aggregate>)
+  ((types :initarg :types :reader types :type (proper-list <type>))))
+
+;;; Records
+
+(defclass <type-field> ()
+  ((name :initarg :name :reader name :type string)
+   (base-type :initarg :base-type :reader base-type :type <type>)
+   (docstring :initarg :docstring :reader docstring :type string)))
+
+(defclass <record> (<aggregate>)
+  ((fields :initarg :fields :reader fields :type (proper-list <type-field>))))
+
+;;; Datatypes
+
+(defclass <variant> ()
+  ((name :initarg :name :reader name :type string)
+   (base-type :initarg :base-type :reader base-type :type <type>)))
+
+(defclass <datatype> (<aggregate>)
+  ((variants :initarg :variants
+             :reader variants
+             :type (proper-list <variant>))))
