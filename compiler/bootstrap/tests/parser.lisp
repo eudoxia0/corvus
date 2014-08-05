@@ -8,10 +8,10 @@
 (in-suite parser)
 
 (test identifier
-  (is (typep (parse-string "test") '<identifier>))
-  (is (typep (parse-string "a123") '<identifier>))
-  (is (typep (parse-string "@test") '<identifier>))
-  (is (typep (parse-string "3test3") '<identifier>))
-  (is (typep (parse-string "test-test-test") '<identifier>)))
+  (is-true (typep (parse-string "test") '<identifier>))
+  (is-true (typep (parse-string "a123") '<identifier>))
+  (is-true (typep (parse-string "@test") '<identifier>))
+  (is-true (typep (parse-string "3test3") '<identifier>))
+  (is-true (typep (parse-string "test-test-test") '<identifier>)))
 
 (run! 'parser)

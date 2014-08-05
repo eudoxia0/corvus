@@ -32,10 +32,10 @@
   '(or <atom> list))
 
 (defparameter +integer-scanner+
-  (cl-ppcre:create-scanner "[+-]?(\\d)+."))
+  (cl-ppcre:create-scanner "^([+-]?(\\d)+)$"))
 
 (defparameter +float-scanner+
-  (cl-ppcre:create-scanner "[+-]?[0-9]*\.?[0-9]+([eE][+-]?[0-9]+)?"))
+  (cl-ppcre:create-scanner "^([+-]?[0-9]*\\.?[0-9]+([eE][+-]?[0-9]+)?)$"))
 
 (defun integer-str-p (str)
   (if (cl-ppcre:scan +integer-scanner+ str) t))
