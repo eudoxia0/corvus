@@ -8,14 +8,12 @@
   :author "Fernando Borretti"
   :license "MIT"
   :depends-on (:cl-ppcre :esrap)
-  :components ((:module "compiler"
+  :components ((:module "compiler/bootstrap"
+                :serial t
                 :components
-                ((:module "bootstrap"
-                  :serial t
-                  :components
-                  ((:file "parser")
-                   (:file "util")
-                   (:file "modules")
-                   (:file "macros")
-                   (:file "types"))))))
+                ((:file "parser")
+                 (:file "util")
+                 (:file "modules")
+                 (:file "macros")
+                 (:file "types"))))
   :description "Bootstrapping Corvus from Common Lisp")

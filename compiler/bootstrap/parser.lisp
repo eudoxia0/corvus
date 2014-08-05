@@ -3,6 +3,10 @@
   (:use :cl :esrap)
   (:export :<token>
            :<atom>
+           :<integer>
+           :<float>
+           :<string>
+           :<identifier>
            :val
            :line
            :col
