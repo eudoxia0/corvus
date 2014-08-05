@@ -11,9 +11,11 @@
   :components ((:module "compiler"
                 :components
                 ((:module "bootstrap"
+                  :serial t
                   :components
                   ((:file "parser")
-                   (:file "macros")
+                   (:file "util")
                    (:file "modules")
+                   (:file "macros")
                    (:file "types"))))))
   :description "Bootstrapping Corvus from Common Lisp")
