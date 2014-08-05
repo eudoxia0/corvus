@@ -7,6 +7,12 @@
 
 ;;;; Scalar types
 
+(defclass <unit> (<type>) ())
+(defclass <bool> (<type>) ())
+
+(defclass <true-literal> (<bool>) ())
+(defclass <false-literal> (<bool>) ())
+
 ;;; Integer types
 
 (defclass <integer> (<type>) ())
@@ -36,3 +42,12 @@
   (:method ((float <single>)) 32)
   (:method ((float <double>)) 64)
   (:method ((float <quad>)) 128))
+
+;;;; Aggregate Types
+
+(defclass <aggregate> (<type>) ())
+
+;;; Arrays
+
+(defclass <array> (<aggregate>)
+  ((base-type :initarg :base-type :reader base-type :type <type>)))
