@@ -7,7 +7,7 @@
   :version "0.1"
   :author "Fernando Borretti"
   :license "MIT"
-  :depends-on (:cl-ppcre :esrap)
+  :depends-on (:cl-ppcre :esrap :trivial-types)
   :components ((:module "compiler/bootstrap"
                 :serial t
                 :components
