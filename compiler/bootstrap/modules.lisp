@@ -1,6 +1,7 @@
 (in-package :cl-user)
 (defpackage :corvus.modules
-  (:use :cl :corvus.util))
+  (:use :cl :corvus.util :corvus.parser)
+  (:export :modularize))
 (in-package :corvus.modules)
 
 ;;; Data structures
@@ -43,6 +44,12 @@
   (if (and (typep atom '<identifier>)
            (not (has-prefix (val atom))))
       ;; No prefix, add that of the current module
-      (add-prefix atom current-prefix))
+      (add-prefix atom current-prefix)
       ;; If it has a prefix or isn't an identifier, leave it as-is
-      atom)
+      atom))
+
+(defun modularize (tree current-prefix)
+  (if (typep tree '<atom>)
+      (modularize-atom tree current-prefix)
+      (cons (modularize (first tree) current-prefix)
+            (modularize (rest tree) current-prefix))))
