@@ -46,7 +46,7 @@
 (defrule whitespace (+ (or #\space #\tab #\newline))
   (:constant nil))
 
-(defrule valid-char (not (or whitespace #\( #\))))
+(defrule valid-char (not (or whitespace #\( #\) #\[ #\] #\{ #\})))
 
 (defrule atom (+ valid-char)
   (:lambda (list)
