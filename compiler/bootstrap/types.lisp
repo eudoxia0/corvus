@@ -24,7 +24,7 @@
            :<aggregate>
            :<array>
            :<tuple>
-           :<type-field>
+           :<field>
            :<record>
            :<variant>
            :<datatype>
@@ -90,7 +90,7 @@
 
 ;;; Records
 
-(defclass <type-field> ()
+(defclass <field> ()
   ((name :initarg :name :reader name :type string)
    (base-type :initarg :base-type :reader base-type :type <type>)
    (docstring :initarg :docstring :reader docstring :type string)))
@@ -155,6 +155,18 @@ the look up the name in the type environment."
          it
          (error "No type named ~A in environment." text))))
 
+(defun parse-type-field (field tenv)
+  (let ((name (val (first field)))
+        (base-type (emit-type (second field)
+                              tenv))
+        (docstring (aif (third field)
+                        (val it)
+                        "")))
+    (make-instance '<field>
+                   :name name
+                   :base-type base-type
+                   :docstring docstring)))
+
 (defun emit-list (first args tenv)
   "Emit the type specified by a list. For example, `(tup i8 i8 i8)` is a list
 that specifiers a triple of octets."
@@ -168,6 +180,12 @@ that specifiers a triple of octets."
        (make-instance '<tuple> 
                       :types (mapcar #'(lambda (spec) (emit-type spec tenv))
                                      args)))
+      ((equal fn "rec")
+       ;; Loop for the fields in `args`, turning each into a `<type-field>`.
+       (make-instance '<record>
+                      :fields (mapcar #'(lambda (field)
+                                          (parse-type-field field tenv))
+                                      args)))
       (t
        (error "No type specifier '~A'." fn)))))
 
