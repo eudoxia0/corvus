@@ -61,12 +61,18 @@
           '<identifier>))
        :val text))))
 
+(defrule string-char (not #\"))
+
+(defrule string (and #\" (* string-char) #\")
+  (:destructure (open text close)
+    (make-instance '<string> :val (text text))))
+
 (defrule list (and #\( sexp (* sexp) (? whitespace) #\))
  (:destructure (p1 car cdr w p2)
-   (declare (ignore p1 p2 w))
+   (declare (ignore p1 w p2))
    (cons car cdr)))
 
-(defrule sexp (and (? whitespace) (or list atom) (? whitespace))
+(defrule sexp (and (? whitespace) (or list string atom) (? whitespace))
   (:destructure (left-ws text right-ws &bounds start end)
     (declare (ignore left-ws right-ws))
     (first (list text))))
