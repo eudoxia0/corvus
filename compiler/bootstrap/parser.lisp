@@ -76,12 +76,14 @@
 (defrule array-literal (and #\[ sexp (* sexp) (? whitespace) #\])
   (:destructure (b1 car cdr w b2)
     (declare (ignore b1 w b2))
-    (cons "array" (cons car cdr))))
+    (cons (make-instance '<identifier> :val "array")
+          (cons car cdr))))
 
 (defrule tuple-literal (and #\{ sexp (* sexp) (? whitespace) #\})
   (:destructure (cb1 car cdr w cb2)
     (declare (ignore cb1 w cb2))
-    (cons "tup" (cons car cdr))))
+    (cons (make-instance '<identifier> :val "tup")
+          (cons car cdr))))
 
 (defrule sexp (and (? whitespace)
                    (or list array-literal tuple-literal string atom)
