@@ -11,8 +11,8 @@
   :components ((:module "compiler/bootstrap"
                 :serial t
                 :components
-                ((:file "parser")
-                 (:file "util")
+                ((:file "util")
+                 (:file "parser")
                  (:file "modules")
                  (:file "macros")
                  (:file "types"))))

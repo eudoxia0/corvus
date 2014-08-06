@@ -96,4 +96,4 @@
   (parse 'sexp string))
 
 (defun parse-file (pathname)
-  (parse-string (uiop:read-file-string pathname)))
+  (parse-string (corvus.util:slurp-file pathname)))
