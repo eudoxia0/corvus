@@ -3,8 +3,7 @@
   (:use :cl :fiveam :corvus.parser))
 (in-package :corvus-test.parser)
 
-(def-suite parser
-  :description "Testing the parser")
+(def-suite parser)
 (in-suite parser)
 
 (test integer
