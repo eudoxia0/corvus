@@ -33,7 +33,8 @@
            :emit-type))
 (in-package :corvus.types)
 
-(defclass <type> () ())
+(defclass <type> () ()
+  (:documentation "The superclass of all types."))
 
 ;;;; Scalar types
 
@@ -101,12 +102,14 @@
 
 (defclass <variant> ()
   ((name :initarg :name :reader name :type string)
-   (base-type :initarg :base-type :reader base-type :type <type>)))
+   (base-type :initarg :base-type :reader base-type :type <type>))
+  (:documentation "A variant of an ADT."))
 
 (defclass <datatype> (<aggregate>)
   ((variants :initarg :variants
              :reader variants
-             :type (proper-list <variant>))))
+             :type (proper-list <variant>)))
+  (:documentation "An Algebraic Data Type."))
 
 ;;;; Type Environment
 
@@ -114,9 +117,11 @@
   ((types :initarg :types
           :accessor types
           :type hash-table
-          :initform (make-hash-table :test #'equal))))
+          :initform (make-hash-table :test #'equal)))
+  (:documentation "A type environment associates names with type definitions."))
 
 (defun create-default-tenv ()
+  "Return a type environment with the basic types."
   (let ((tenv (make-instance '<type-env>)))
     (setf (gethash "bool" (types tenv))
           (make-instance '<bool>)
@@ -141,6 +146,8 @@
 ;;;; Type Specifiers
 
 (defun emit-atom (atom tenv)
+  "Emit the type specified by an atom: First validate that it is an identifier,
+the look up the name in the type environment."
   (declare (type <atom> atom)
            (type <type-env> tenv))
   (let ((text (val atom)))
@@ -149,11 +156,14 @@
          (error "No type named ~A in environment." text))))
 
 (defun emit-list (first args tenv)
+  "Emit the type specified by a list. For example, `(tup i8 i8 i8)` is a list
+that specifiers a triple of octets."
   (declare (type <sexp> first args)
            (type <type-env> tenv))
   (make-instance '<unit>))
 
 (defun emit-type (ast tenv)
+  "Return the type specified by the type specifier `ast`."
   (declare (type <sexp> ast)
            (type <type-env> tenv))
   (if (null ast)

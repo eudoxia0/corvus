@@ -5,6 +5,11 @@
 
 ;;; Data structures
 
+;;; Each macro case associates a pattern with a template. When finding a macro
+;;; invocation, the pattern matcher goes through every case in the macro, trying
+;;; to match the input to the template. If it succeeds, the template is expanded
+;;; using the variables bound during pattern matching.
+
 (defclass <macro-case> ()
   ((pattern :initarg :pattern
             :reader pattern
