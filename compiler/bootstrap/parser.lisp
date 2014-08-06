@@ -65,6 +65,7 @@
 
 (defrule string (and #\" (* string-char) #\")
   (:destructure (open text close)
+    (declare (ignore open close))
     (make-instance '<string> :val (text text))))
 
 (defrule list (and #\( sexp (* sexp) (? whitespace) #\))
@@ -79,13 +80,13 @@
 
 (defrule tuple-literal (and #\{ sexp (* sexp) (? whitespace) #\})
   (:destructure (cb1 car cdr w cb2)
-    (declare (ignore b1 w b2))
+    (declare (ignore cb1 w cb2))
     (cons "tup" (cons car cdr))))
 
 (defrule sexp (and (? whitespace)
                    (or list array-literal tuple-literal string atom)
                    (? whitespace))
-  (:destructure (left-ws text right-ws &bounds start end)
+  (:destructure (left-ws text right-ws)
     (declare (ignore left-ws right-ws))
     (first (list text))))
 
