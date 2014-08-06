@@ -160,7 +160,16 @@ the look up the name in the type environment."
 that specifiers a triple of octets."
   (declare (type <sexp> first args)
            (type <type-env> tenv))
-  (make-instance '<unit>))
+  (let ((fn (val first))) ;; TODO: Validate that it is in fact a token
+    (cond
+      ((equal fn "array")
+       (make-instance '<array> :base-type (emit-type (first args) tenv)))
+      ((equal fn "tup")
+       (make-instance '<tuple> 
+                      :types (mapcar #'(lambda (spec) (emit-type spec tenv))
+                                     args)))
+      (t
+       (error "No type specifier '~A'." fn)))))
 
 (defun emit-type (ast tenv)
   "Return the type specified by the type specifier `ast`."

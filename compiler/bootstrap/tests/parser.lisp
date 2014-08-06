@@ -41,6 +41,7 @@
                 (tree-to-string (rest tree))))))
 
 (test list
+  (is-true (null (parse-string "()")))
   (is-true (typep (parse-string "(1 2 3)") 'list))
   (is (equal (length (parse-string "(1 2 3)"))
              3))
