@@ -12,6 +12,7 @@
                 :serial t
                 :components
                 ((:file "parser")
+                 (:file "modules")
                  (:file "macros")
                  (:file "types"))))
   :description "Bootstrapping Corvus from Common Lisp")
