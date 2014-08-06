@@ -2,3 +2,4 @@ test
 corvus
 docs/_build
 *.o
+*.rlib
