@@ -72,7 +72,19 @@
    (declare (ignore p1 w p2))
    (cons car cdr)))
 
-(defrule sexp (and (? whitespace) (or list string atom) (? whitespace))
+(defrule array-literal (and #\[ sexp (* sexp) (? whitespace) #\])
+  (:destructure (b1 car cdr w b2)
+    (declare (ignore b1 w b2))
+    (cons "array" (cons car cdr))))
+
+(defrule tuple-literal (and #\{ sexp (* sexp) (? whitespace) #\})
+  (:destructure (cb1 car cdr w cb2)
+    (declare (ignore b1 w b2))
+    (cons "tup" (cons car cdr))))
+
+(defrule sexp (and (? whitespace)
+                   (or list array-literal tuple-literal string atom)
+                   (? whitespace))
   (:destructure (left-ws text right-ws &bounds start end)
     (declare (ignore left-ws right-ws))
     (first (list text))))
