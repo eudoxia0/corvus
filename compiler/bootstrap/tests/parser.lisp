@@ -34,4 +34,20 @@
   (is-true (typep (parse-string "3test3") '<identifier>))
   (is-true (typep (parse-string "test-test-test") '<identifier>)))
 
+(defun tree-to-string (tree)
+  (if tree
+      (if (atom tree)
+          (val tree)
+          (cons (tree-to-string (first tree))
+                (tree-to-string (rest tree))))))
+
+(test list
+  (is-true (typep (parse-string "(1 2 3)") 'list))
+  (is (equal (length (parse-string "(1 2 3)"))
+             3))
+  (is (equal (tree-to-string (parse-string "(1 2 3)"))
+             (list "1" "2" "3")))
+  (is (equal (tree-to-string (parse-string "(if cond (f 1) (g 2))"))
+             (list "if" "cond" (list "f" "1") (list "g" "2")))))
+
 (run! 'parser)
