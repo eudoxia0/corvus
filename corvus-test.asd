@@ -11,5 +11,6 @@
   :components ((:module "compiler/bootstrap/tests"
                 :serial t
                 :components
-                ((:file "parser"))))
+                ((:file "parser")
+                 (:file "types"))))
   :description "Bootstrapping Corvus from Common Lisp")

@@ -1,9 +1,36 @@
 (in-package :cl-user)
 (defpackage :corvus.types
-  (:use :cl :trivial-types)
+  (:use :cl :trivial-types :anaphora)
   (:import-from :corvus.parser
                 :<sexp>
-                :<atom>))
+                :<atom>
+                :val)
+  (:export :<type>
+           :<unit>
+           :<bool>
+           :<true-literal>
+           :<false-literal>
+           :<integer>
+           :<i8>
+           :<i16>
+           :<i32>
+           :<i64>
+           :<i128>
+           :<float>
+           :<single>
+           :<double>
+           :<quad>
+           :width
+           :<aggregate>
+           :<array>
+           :<tuple>
+           :<type-field>
+           :<record>
+           :<variant>
+           :<datatype>
+           :<type-env>
+           :create-default-tenv
+           :emit-type))
 (in-package :corvus.types)
 
 (defclass <type> () ())
@@ -116,7 +143,10 @@
 (defun emit-atom (atom tenv)
   (declare (type <atom> atom)
            (type <type-env> tenv))
-  (make-instance '<unit>))
+  (let ((text (val atom)))
+    (aif (gethash text (types tenv))
+         it
+         (error "No type named ~A in environment." text))))
 
 (defun emit-list (first args tenv)
   (declare (type <sexp> first args)
@@ -126,6 +156,8 @@
 (defun emit-type (ast tenv)
   (declare (type <sexp> ast)
            (type <type-env> tenv))
-  (if (typep ast '<atom>)
-      (emit-atom ast tenv)
-      (emit-list (first ast) (rest ast) tenv)))
+  (if (null ast)
+      (make-instance '<unit>)
+      (if (typep ast '<atom>)
+          (emit-atom ast tenv)
+          (emit-list (first ast) (rest ast) tenv))))
