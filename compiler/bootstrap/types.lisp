@@ -29,6 +29,10 @@
            :<variant>
            :<datatype>
            :<type-env>
+           :base-type
+           :types
+           :name
+           :docstring
            :create-default-tenv
            :emit-type))
 (in-package :corvus.types)
