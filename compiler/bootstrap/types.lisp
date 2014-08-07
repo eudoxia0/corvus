@@ -171,6 +171,15 @@ the look up the name in the type environment."
                    :base-type base-type
                    :docstring docstring)))
 
+(defun parse-variant (field tenv)
+  (let ((name (val (first field)))
+        (base-type (aif (second field)
+                        (emit-type it tenv)
+                        nil)))
+    (make-instance '<variant>
+                   :name name
+                   :base-type base-type)))
+
 (defun emit-list (first args tenv)
   "Emit the type specified by a list. For example, `(tup i8 i8 i8)` is a list
 that specifiers a triple of octets."
@@ -190,6 +199,11 @@ that specifiers a triple of octets."
                       :fields (mapcar #'(lambda (field)
                                           (parse-type-field field tenv))
                                       args)))
+      ((equal fn "data")
+       (make-instance '<datatype>
+                      :variants (mapcar #'(lambda (field)
+                                            (parse-variant field tenv))
+                                        args)))
       (t
        (error "No type specifier '~A'." fn)))))
 
