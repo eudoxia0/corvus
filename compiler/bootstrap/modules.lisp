@@ -24,10 +24,14 @@
              (equal (val (first form)) name))
         (return-from find-subform (rest form)))))
 
-(defun process-module-definitions (tree env)
-  nil)
+(defun define-module (name body env)
+  (loop for option in body do
+    (let ((first (first option)))
+      (unless (typep first '<identifier>)
+        ;; TODO: Emit an error
+        nil))))
 
-;;; Appending module prefixes to an AST
+;;; Modularizing: Appending module prefixes to an AST
 
 (defun has-prefix (string)
   "Return `T` if the string has module prefix."
@@ -49,7 +53,10 @@
       atom))
 
 (defun modularize (tree current-prefix)
-  (if (typep tree '<atom>)
-      (modularize-atom tree current-prefix)
-      (cons (modularize (first tree) current-prefix)
-            (modularize (rest tree) current-prefix))))
+  (if tree
+      (if (typep tree '<atom>)
+          (modularize-atom tree current-prefix)
+          (cons (modularize (first tree) current-prefix)
+                (modularize (rest tree) current-prefix)))
+      ;;; The null form is returned as-is
+      nil))
