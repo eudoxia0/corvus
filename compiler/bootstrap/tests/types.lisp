@@ -35,4 +35,12 @@
                               (create-default-tenv)))
                   '<bool>)))
 
+(test emit-datatype
+  (is-true (typep (corvus.types::parse-variant (parse-string "(Nil)")
+                                               (create-default-tenv))
+                  '<variant>))
+  (is-true (typep (corvus.types::parse-variant (parse-string "(Byte i8)")
+                                               (create-default-tenv))
+                  '<variant>)))
+
 (run! 'types)
