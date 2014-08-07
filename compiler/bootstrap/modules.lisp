@@ -1,6 +1,6 @@
 (in-package :cl-user)
 (defpackage :corvus.modules
-  (:use :cl :corvus.util :corvus.parser)
+  (:use :cl :anaphora :corvus.util :corvus.parser)
   (:export :modularize))
 (in-package :corvus.modules)
 
@@ -12,6 +12,12 @@
 
 (defclass <module-env> ()
   ((modules :initarg :modules :accessor modules)))
+
+(defmethod get-module ((name string) (env <module-env>))
+  (gethash name (modules env)))
+
+(defmethod external-symbol-p ((name string) (mod <module>))
+  (member name (exports mod) :test #'equal))
 
 ;;; Module definition
 
@@ -60,3 +66,42 @@
                 (modularize (rest tree) current-prefix)))
       ;;; The null form is returned as-is
       nil))
+
+;;; Validate modules
+
+(defun prefix (string)
+  "Get the prefix from a string.
+
+  \"module:symbol\" => \"module\""
+  (if (has-prefix string)
+      (subseq string 0 (position #\: string))))
+
+(defun name (string)
+  "Get the name from a prefixed string."
+  (if (has-prefix string)
+      (subseq string (1+ (position #\: string)))
+      string))
+
+(defun validate-ident (atom env)
+  "Assumption: This is called after modularization, when all symbols have
+prefixes."
+  (let* ((text (val atom))
+         (prefix (prefix text))
+         (name (name text)))
+    (aif (get-module prefix env)
+             ;; The module exists. Is the symbol external to it?
+             (if (external-symbol-p name it)
+                 ;; The symbol is external in an existing module
+                 atom
+                 nil ;; TODO: Error: Symbol not external
+                 )
+             nil ;; TODO: Error: Module doesn't exist
+             )))
+
+(defun validate-tree (tree env)
+  (if (typep tree '<atom>)
+      (if (typep tree '<identifier>)
+          (validate-ident tree env)
+          tree)
+      (cons (validate-tree (first tree) env)
+            (validate-tree (rest tree) env))))
