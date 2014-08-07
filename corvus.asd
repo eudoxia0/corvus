@@ -15,5 +15,6 @@
                  (:file "parser")
                  (:file "modules")
                  (:file "macros")
-                 (:file "types"))))
+                 (:file "types")
+                 (:file "inference"))))
   :description "Bootstrapping Corvus from Common Lisp")
