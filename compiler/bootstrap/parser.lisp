@@ -12,7 +12,8 @@
            :col
            :<sexp>
            :parse-string
-           :parse-file))
+           :parse-file
+           :tree-to-string))
 (in-package :corvus.parser)
 
 (defclass <atom> ()
@@ -97,3 +98,13 @@
 
 (defun parse-file (pathname)
   (parse-string (corvus.util:slurp-file pathname)))
+
+;;; Utilities
+
+(defun tree-to-string (tree)
+  "Convert an S-expression into a tree of strings."
+  (if tree
+      (if (atom tree)
+          (val tree)
+          (cons (tree-to-string (first tree))
+                (tree-to-string (rest tree))))))

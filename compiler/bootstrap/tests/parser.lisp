@@ -33,13 +33,6 @@
   (is-true (typep (parse-string "3test3") '<identifier>))
   (is-true (typep (parse-string "test-test-test") '<identifier>)))
 
-(defun tree-to-string (tree)
-  (if tree
-      (if (atom tree)
-          (val tree)
-          (cons (tree-to-string (first tree))
-                (tree-to-string (rest tree))))))
-
 (test list
   (is-true (null (parse-string "()")))
   (is-true (typep (parse-string "(1 2 3)") 'list))
