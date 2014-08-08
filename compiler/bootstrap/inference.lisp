@@ -6,6 +6,19 @@
 
 (in-package :corvus.types)
 
+;;; Environment
+
+(defun env-empty () (list))
+
+(defun env-update (var val env)
+  (cons (cons var val) env))
+
+(defun env-append (env-a env-b)
+  (append env-a env-b))
+
+(defun env-val (var env)
+  (cdr (assoc var env :test #'equal)))
+
 ;;; Type variables
 
 (defparameter *var-count* 0
