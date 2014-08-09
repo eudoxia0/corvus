@@ -35,3 +35,32 @@
 
 (defmethod variable< ((x <tvar>) (y <tvar>))
   (< (n x) (n y)))
+
+;;; Unification
+
+(defun deref (var env)
+  "Return the value of `var`, if it is bound in `env`. Otherwise, return `var`."
+  (if (typep var '<tvar>)
+      (aif (env-val var env)
+           (deref it env)
+           var)
+      var))
+
+(defun unify% (x y env)
+  (cond ((equal x y)
+         env)
+        ((and (typep x '<variable>)
+              (or (not (typep y '<variable>))
+                  (variable< y x)))
+         (env-update x y env))
+        ((typep y '<variable>)
+         ;; If y is a variable, bind y to x
+         (env-update y x env))
+        ((and (consp x) (consp y))
+         (unify (rest x) (rest y)
+                (unify (first x) (first y) env)))
+        (t
+         (error "Unification error"))))
+
+(defun unify (x y env)
+  (unify% (deref x env) (deref y env) env))
