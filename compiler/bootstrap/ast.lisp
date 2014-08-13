@@ -8,11 +8,6 @@
 
 ;;; Built-in syntactic sugar
 
-(defun make-begin-expression (body)
-  (cons (make-instance 'corvus.parser:<identifier>
-                       :val "begin")
-        body))
-
 (defun desugar-bodies (expr)
   "Recur through the expression, desugaring the bodies of 'let's and 'lambda'."
   (if (atom expr)
@@ -26,17 +21,17 @@
              (list first
                    (second expr)
                    (if (> (length body) 1)
-                       (make-begin-expression body)
-                       body))))
+                       (cons (make-instance 'corvus.parser:<identifier>
+                                            :val "begin")
+                             body)
+                   body))))
           (t
            (cons (desugar-bodies (first expr))
                  (desugar-bodies (rest expr))))))))
 
 (defun desugar-bindings (expr)
   "Recur through an expression, looking for 'let' expressions with multiple
-bindings, turning them into recursive single-binding 'let' expressions. This
-assumes that a 'let' has a single-element body, and MUST happen after
-body-desugaring."
+bindings, turning them into recursive single-binding 'let' expressions."
   (if (atom expr)
       expr
       (let ((first (first expr))
@@ -50,7 +45,7 @@ body-desugaring."
                  (list first                   ;; let
                        (list (first bindings)) ;; ((var0 val0))
                        (append
-                        (list first
+                        (list first            ;; let
                               (rest bindings)) ;; ((var1 val1) ... (varn valn))
                         body))
                  expr))
@@ -68,7 +63,7 @@ body-desugaring."
 
   * The body of a 'let' or 'lambda' expression is converted into a 'begin'
     expression."
-  (desugar-bodies expr))
+  (desugar-bodies (desugar-bindings expr)))
 
 ;;; AST definitions
 

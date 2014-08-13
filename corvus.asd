@@ -13,6 +13,7 @@
                 :components
                 ((:file "util")
                  (:file "parser")
+                 (:file "ast")
                  (:file "modules")
                  (:file "macros")
                  (:file "types")
