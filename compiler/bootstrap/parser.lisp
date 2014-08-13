@@ -3,10 +3,11 @@
   (:use :cl :esrap)
   (:export :<token>
            :<atom>
+           :<identifier>
+           :<constant>
            :<integer>
            :<float>
            :<string>
-           :<identifier>
            :val
            :line
            :col
@@ -24,10 +25,11 @@
 (defmethod print-object ((atom <atom>) stream)
   (format stream "~A" (val atom)))
 
-(defclass <integer> (<atom>) ())
-(defclass <float> (<atom>) ())
-(defclass <string> (<atom>) ())
 (defclass <identifier> (<atom>) ())
+(defclass <constant> (<atom>) ())
+(defclass <integer> (<constant>) ())
+(defclass <float> (<constant>) ())
+(defclass <string> (<constant>) ())
 
 (deftype <sexp> ()
   '(or <atom> list))
