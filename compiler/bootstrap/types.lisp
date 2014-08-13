@@ -4,7 +4,8 @@
   (:import-from :corvus.parser
                 :<sexp>
                 :<atom>
-                :val)
+                :val
+                :ident-equal)
   (:export :<type>
            :<unit>
            :<bool>

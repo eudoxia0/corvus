@@ -14,7 +14,8 @@
            :<sexp>
            :parse-string
            :parse-file
-           :tree-to-string))
+           :tree-to-string
+           :ident-equal))
 (in-package :corvus.parser)
 
 (defclass <atom> ()
@@ -110,3 +111,7 @@
           (val tree)
           (cons (tree-to-string (first tree))
                 (tree-to-string (rest tree))))))
+
+(defun ident-equal (token str)
+  (and (typep token '<identifier>)
+       (equal (val token) str)))

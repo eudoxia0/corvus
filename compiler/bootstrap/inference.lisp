@@ -143,6 +143,9 @@ defined by a let)."
        ;; TODO: Return the type of a function with this name
        nil))
 
+(defmethod algorithm-j (p (f list) e)
+  "Since there are method for all subclasses of <atom>, this will work for lists.")
+
 (defun infer (f)
   "Infer the type of 'f'."
   (declare (type <sexp> f))
