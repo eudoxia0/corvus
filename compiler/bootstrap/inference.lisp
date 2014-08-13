@@ -64,3 +64,52 @@
 
 (defun unify (x y env)
   (unify% (deref x env) (deref y env) env))
+
+;;; Substitution
+
+(defun subs (x env)
+  "Recursively replace every variable with its value in the expression."
+  (cond ((typep x '<tvar>)
+         (let ((y (deref x env)))
+           (if (typep y '<tvar>)
+               y
+               (subs y env))))
+        ((listp x)
+         (cons (subs (first x) env)
+               (subs (rest x) env)))
+        (t
+         x)))
+
+;;; Generics
+
+;; The prefix, in the context of the following functions, refers to an
+;; environment
+
+(defun genericp (var prefix)
+  "Recurs through the prefix, checking whether var is generic (ie was not
+defined by a let)."
+  (cond ((null prefix)
+         t)
+        ((and (equal (cadar prefix) var)
+              (not (equal (caar prefix) 'let)))
+         nil)
+        (t
+         (genericp var (rest prefix)))))
+
+(defun new (x env success prefix)
+  (cond ((and (typep x '<tvar>)
+              (genericp x prefix))
+         (aif (env-val x env)
+              (funcall success it env)
+              (let ((var (make-instance '<tvar>)))
+                (funcall success var (env-update x var env)))))
+        ((listp x)
+         (new (first x) env (lambda (a env)
+                              (new (rest x) env
+                                   (lambda (b env)
+                                     (funcall success (cons a b) env))
+                                   prefix))
+              prefix))))
+
+(defun instance (x prefix)
+  (new x (env-empty) (lambda (a env) (declare (ignore env)) a) prefix))
