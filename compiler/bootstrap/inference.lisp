@@ -113,3 +113,29 @@ defined by a let)."
 
 (defun instance (x prefix)
   (new x (env-empty) (lambda (a env) (declare (ignore env)) a) prefix))
+
+;;;
+
+(defgeneric constant-type (constant)
+  (:method ((int corvus.parser:<integer>))
+    (make-instance '<i64>))
+  (:method ((float corvus.parser:<float>))
+    (make-instance '<double>))
+  (:method ((str corvus.parser:<string>))
+    (make-instance '<array>
+                   :base-type (make-instance '<i8>))))
+
+;;; The actual type inference machinery
+
+(defgeneric algorithm-j (p f e)
+  (:documentation "Robert Milner's Algorithm J."))
+
+(defmethod algorithm-j (p (f corvus.parser:<constant>) e)
+  (instance (constant-type f) (env-empty)))
+
+(defun infer (f)
+  "Infer the type of 'f'."
+  (declare (type <sexp> f))
+  (let ((e (env-empty))
+        (term (algorithm-j (env-empty) f)))
+    (subs term e)))
