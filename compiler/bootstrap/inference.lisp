@@ -134,17 +134,38 @@ defined by a let)."
   (instance (constant-type f) (env-empty)))
 
 (defmethod algorithm-j (p (f corvus.parser:<identifier>) e)
-  (aif (env-val f p)
-       (let ((kind (first it))
-             (type (second it)))
-         (if (eq kind 'let)
-             (instance type p)
-             type))
-       ;; TODO: Return the type of a function with this name
-       nil))
+  (cond
+    ((equal (val f) "true")
+     (make-instance '<true-literal>))
+    ((equal (val f) "false")
+     (make-instance '<false-literal>))
+    (t
+     (aif (env-val f p)
+          (let ((kind (first it))
+                (type (second it)))
+            (if (eq kind 'let)
+                (instance type p)
+                type))
+          ;; TODO: Return the type of a function with this name
+          nil))))
 
 (defmethod algorithm-j (p (f list) e)
-  "Since there are method for all subclasses of <atom>, this will work for lists.")
+  "Since there are method for all subclasses of <atom>, this will work for lists."
+  (cond
+    ((null f)
+     ;; The empty list represents the unit type.
+     (make-instance '<unit>))
+    ((ident-equal (first f) "if")
+     (let ((cond         (algorithm-j p (second f) e))
+           (true-branch  (algorithm-j p (third f) e))
+           (false-branhc (algorithm-j p (fourth f) e)))
+       (setf e (unify ;; Both branches must be of the same type
+                      true-branch
+                      false-branch
+                      ;; And the condition must be boolean
+                      (unify cond (make-instance '<bool>) e)))
+       ;; The type of an if expression is that of its branches
+       true-branch))))
 
 (defun infer (f)
   "Infer the type of 'f'."
