@@ -32,6 +32,32 @@
            (cons (desugar-bodies (first expr))
                  (desugar-bodies (rest expr))))))))
 
+(defun desugar-bindings (expr)
+  "Recur through an expression, looking for 'let' expressions with multiple
+bindings, turning them into recursive single-binding 'let' expressions. This
+assumes that a 'let' has a single-element body, and MUST happen after
+body-desugaring."
+  (if (atom expr)
+      expr
+      (let ((first (first expr))
+            (args  (rest expr)))
+        (cond
+          ((ident-equal first "let")
+           (let ((bindings (first args))
+                 (body (rest args)))
+             (if (> (length bindings) 1)
+                 ;; Has more than one binding
+                 (list first                   ;; let
+                       (list (first bindings)) ;; ((var0 val0))
+                       (append
+                        (list first
+                              (rest bindings)) ;; ((var1 val1) ... (varn valn))
+                        body))
+                 expr))
+          (t
+           (cons (desugar-bindings (first expr))
+                 (desugar-bindings (rest expr)))))))))
+
 (defun desugar (expr)
   "To make type inference and compilation easier, certain structures undergo
   very simple transformations that have a great impact in the code's
