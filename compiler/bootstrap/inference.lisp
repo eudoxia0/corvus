@@ -133,9 +133,19 @@ defined by a let)."
 (defmethod algorithm-j (p (f corvus.parser:<constant>) e)
   (instance (constant-type f) (env-empty)))
 
+(defmethod algorithm-j (p (f corvus.parser:<identifier>) e)
+  (aif (env-val f p)
+       (let ((kind (first it))
+             (type (second it)))
+         (if (eq kind 'let)
+             (instance type p)
+             type))
+       ;; TODO: Return the type of a function with this name
+       nil))
+
 (defun infer (f)
   "Infer the type of 'f'."
   (declare (type <sexp> f))
-  (let ((e (env-empty))
-        (term (algorithm-j (env-empty) f)))
+  (let* ((e (env-empty))
+         (term (algorithm-j (env-empty) f e)))
     (subs term e)))
