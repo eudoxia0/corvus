@@ -44,10 +44,11 @@ bindings, turning them into recursive single-binding 'let' expressions."
                  ;; Has more than one binding
                  (list first                   ;; let
                        (list (first bindings)) ;; ((var0 val0))
-                       (append
-                        (list first            ;; let
-                              (rest bindings)) ;; ((var1 val1) ... (varn valn))
-                        body))
+                       (desugar-bindings
+                        (append
+                         (list first             ;; let
+                               (rest bindings)) ;; ((var1 val1) ... (varn valn))
+                         body)))
                  expr)))
           (t
            (cons (desugar-bindings (first expr))
