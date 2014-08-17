@@ -18,13 +18,13 @@
           ((or (ident-equal first "let") (ident-equal first "lambda"))
            ;; 'let' and 'lambda' have the same structure
            (let ((body (rest args)))
-             (list first
-                   (second expr)
-                   (if (> (length body) 1)
-                       (cons (make-instance 'corvus.parser:<identifier>
-                                            :val "begin")
-                             body)
-                   body))))
+             (append (list first
+                           (first args))
+                     (if (> (length body) 1)
+                         (list (cons (make-instance 'corvus.parser:<identifier>
+                                                    :val "begin")
+                                     body))
+                         body))))
           (t
            (cons (desugar-bodies (first expr))
                  (desugar-bodies (rest expr))))))))
