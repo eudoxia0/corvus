@@ -20,11 +20,12 @@
            (let ((body (rest args)))
              (append (list first
                            (first args))
-                     (if (> (length body) 1)
-                         (list (cons (make-instance 'corvus.parser:<identifier>
-                                                    :val "begin")
-                                     body))
-                         body))))
+                     (desugar-bodies
+                      (if (> (length body) 1)
+                          (list (cons (make-instance 'corvus.parser:<identifier>
+                                                     :val "begin")
+                                      body))
+                          body)))))
           (t
            (cons (desugar-bodies (first expr))
                  (desugar-bodies (rest expr))))))))
