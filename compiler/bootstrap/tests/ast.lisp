@@ -26,7 +26,11 @@
   (is-true (equal-trees
             (corvus.ast::desugar-bindings
              (parse-string "(let ((a 1) (b 2)) (let ((c 3) (d 4)) body))"))
-            (parse-string "(let ((a 1)) (let ((b 2)) (let ((c 3)) (let ((d 4)) body))))"))))
+            (parse-string "(let ((a 1)) (let ((b 2)) (let ((c 3)) (let ((d 4)) body))))")))
+  (is-true (equal-trees
+            (corvus.ast::desugar-bindings
+             (parse-string "(let ((a 1)) (let ((b 2) (c 3)) body))"))
+            (parse-string "(let ((a 1)) (let ((b 2)) (let ((c 3)) body)))"))))
 
 (test bodies
   (is-true (equal-trees

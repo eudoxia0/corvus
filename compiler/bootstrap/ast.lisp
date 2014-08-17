@@ -32,7 +32,8 @@
 
 (defun desugar-bindings (expr)
   "Recur through an expression, looking for 'let' expressions with multiple
-bindings, turning them into recursive single-binding 'let' expressions."
+bindings, turning them into recursive single-binding 'let' expressions. MUST be
+run after desugar-bodies."
   (if (atom expr)
       expr
       (let ((first (first expr))
@@ -49,8 +50,8 @@ bindings, turning them into recursive single-binding 'let' expressions."
                         (append
                          (list first             ;; let
                                (rest bindings)) ;; ((var1 val1) ... (varn valn))
-                         body)))
-                 expr)))
+                         (desugar-bindings body))))
+                 (list (first expr) (second expr) (desugar-bindings (third expr))))))
           (t
            (cons (desugar-bindings (first expr))
                  (desugar-bindings (rest expr))))))))
@@ -65,7 +66,7 @@ bindings, turning them into recursive single-binding 'let' expressions."
 
   * The body of a 'let' or 'lambda' expression is converted into a 'begin'
     expression."
-  (desugar-bodies (desugar-bindings expr)))
+  (desugar-bindings (desugar-bodies expr)))
 
 ;;; AST definitions
 
