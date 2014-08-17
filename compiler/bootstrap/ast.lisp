@@ -48,10 +48,10 @@ bindings, turning them into recursive single-binding 'let' expressions."
                         (list first            ;; let
                               (rest bindings)) ;; ((var1 val1) ... (varn valn))
                         body))
-                 expr))
+                 expr)))
           (t
            (cons (desugar-bindings (first expr))
-                 (desugar-bindings (rest expr)))))))))
+                 (desugar-bindings (rest expr))))))))
 
 (defun desugar (expr)
   "To make type inference and compilation easier, certain structures undergo
