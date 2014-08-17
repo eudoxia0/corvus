@@ -15,7 +15,8 @@
            :parse-string
            :parse-file
            :tree-to-string
-           :ident-equal))
+           :ident-equal
+           :equal-trees))
 (in-package :corvus.parser)
 
 (defclass <atom> ()
@@ -115,3 +116,8 @@
 (defun ident-equal (token str)
   (and (typep token '<identifier>)
        (equal (val token) str)))
+
+(defun equal-trees (tree-a tree-b)
+  (let ((tree-a* (tree-to-string tree-a))
+        (tree-b* (tree-to-string tree-b)))
+    (equal tree-a* tree-b*)))
