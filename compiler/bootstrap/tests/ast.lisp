@@ -9,7 +9,7 @@
 (def-suite ast)
 (in-suite ast)
 
-(test let
+(test bindings
   (is-true (equal-trees
             (corvus.ast::desugar-bindings
              (parse-string "(let ((a 1)) body)"))
@@ -22,5 +22,23 @@
             (corvus.ast::desugar-bindings
              (parse-string "(let ((a 1) (b 2) (c 3)) body)"))
             (parse-string "(let ((a 1)) (let ((b 2)) (let ((c 3)) body)))"))))
+
+(test bodies
+  (is-true (equal-trees
+            (corvus.ast::desugar-bodies
+             (parse-string "(let binds body)"))
+            (parse-string "(let binds body)")))
+  (is-true (equal-trees
+            (corvus.ast::desugar-bodies
+             (parse-string "(let binds 1 2 3)"))
+            (parse-string "(let binds (begin 1 2 3))")))
+  (is-true (equal-trees
+            (corvus.ast::desugar-bodies
+             (parse-string "(lambda args body)"))
+            (parse-string "(lambda args body)")))
+  (is-true (equal-trees
+            (corvus.ast::desugar-bodies
+             (parse-string "(lambda args 1 2 3)"))
+            (parse-string "(lambda args (begin 1 2 3))"))))
 
 (run! 'ast)
