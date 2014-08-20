@@ -1,40 +1,13 @@
 (in-package :cl-user)
 (defpackage :corvus.parser
   (:use :cl :esrap)
-  (:export :<token>
-           :<atom>
-           :<identifier>
-           :<constant>
-           :<integer>
-           :<float>
-           :<string>
-           :val
-           :line
-           :col
-           :<sexp>
-           :parse-string
-           :parse-file
-           :tree-to-string
-           :ident-equal
-           :equal-trees))
+  (:import-from :corvus.ast
+                :<identifier>
+                :<integer>
+                :<float>)
+  (:export :parse-string
+           :parse-file))
 (in-package :corvus.parser)
-
-(defclass <atom> ()
-  ((val :initarg :val :reader val :type string)
-   (line :initarg :line :reader line :initform 0)
-   (col :initarg :col :reader col :initform 0)))
-
-(defmethod print-object ((atom <atom>) stream)
-  (format stream "~A" (val atom)))
-
-(defclass <identifier> (<atom>) ())
-(defclass <constant> (<atom>) ())
-(defclass <integer> (<constant>) ())
-(defclass <float> (<constant>) ())
-(defclass <string> (<constant>) ())
-
-(deftype <sexp> ()
-  '(or <atom> list))
 
 (defparameter +integer-scanner+
   (cl-ppcre:create-scanner "^([+-]?(\\d)+)$"))
@@ -97,27 +70,10 @@
     (declare (ignore left-ws right-ws))
     (first (list text))))
 
+;;; Interface
+
 (defun parse-string (string)
   (parse 'sexp string))
 
 (defun parse-file (pathname)
   (parse-string (corvus.util:slurp-file pathname)))
-
-;;; Utilities
-
-(defun tree-to-string (tree)
-  "Convert an S-expression into a tree of strings."
-  (if tree
-      (if (atom tree)
-          (val tree)
-          (cons (tree-to-string (first tree))
-                (tree-to-string (rest tree))))))
-
-(defun ident-equal (token str)
-  (and (typep token '<identifier>)
-       (equal (val token) str)))
-
-(defun equal-trees (tree-a tree-b)
-  (let ((tree-a* (tree-to-string tree-a))
-        (tree-b* (tree-to-string tree-b)))
-    (equal tree-a* tree-b*)))

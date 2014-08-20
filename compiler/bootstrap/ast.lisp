@@ -1,12 +1,77 @@
+;;;; Corvus has two ASTs: A "naive" ast, where each form (Type <form>) is either
+;;;; a list or an <atom>, and a "full ast" (Type <ast>), where lists are further
+;;;; refined into more specific types, like 'let' and 'lambda' forms. The output
+;;;; of the parser is this naive AST, the annotate function performs some
+;;;; transformations to simplify the syntax (See desugar) and then processes the
+;;;; lists into the more specific classes.
 (in-package :cl-user)
 (defpackage :corvus.ast
   (:use :cl :trivial-types)
-  (:import-from :corvus.parser
-                :ident-equal)
-  (:export :annotate))
+  (:export :<ast>
+           :<atom>
+           :val
+           :line
+           :col
+           :<identifier>
+           :<constant>
+           :<integer>
+           :<float>
+           :<string>
+           :<list>
+           :<begin>
+           :steps
+           :<let>
+           :var
+           :val
+           :body
+           :<form>))
 (in-package :corvus.ast)
 
-;;; Built-in syntactic sugar
+;;;; Abstract syntax tree class definitions
+
+;;; The full AST
+
+(defclass <ast> () ())
+
+(defclass <atom> (<ast>)
+  ((val :initarg :val :reader val :type string)
+   (line :initarg :line :reader line :initform 0)
+   (col :initarg :col :reader col :initform 0)))
+
+(defmethod print-object ((atom <atom>) stream)
+  (format stream "~A" (val atom)))
+
+(defclass <identifier> (<atom>) ())
+(defclass <constant> (<atom>) ())
+(defclass <integer> (<constant>) ())
+(defclass <float> (<constant>) ())
+(defclass <string> (<constant>) ())
+
+(defclass <list> (<ast>) ())
+
+(defclass <begin> (<list>)
+  ((steps :initarg :steps
+          :reader steps
+          :type (proper-list <ast>))))
+
+(defclass <let> (<list>)
+  ((var :initarg :var
+        :reader var
+        :type <identifier>)
+   (val :initarg :val
+        :reader val
+        :type <ast>)
+   (body :initarg :body
+         :reader body
+         :type <ast>)))
+
+;;; The naive AST (This type exists for the purposes of annotation, and
+;;; otherwise doesn't do much).
+
+(deftype <form> ()
+  '(or <atom> list))
+
+;;;; Built-in syntactic sugar
 
 (defun desugar-bodies (expr)
   "Recur through the expression, desugaring the bodies of 'let's and 'lambda'."
@@ -22,7 +87,7 @@
                            (first args))
                      (desugar-bodies
                       (if (> (length body) 1)
-                          (list (cons (make-instance 'corvus.parser:<identifier>
+                          (list (cons (make-instance '<identifier>
                                                      :val "begin")
                                       body))
                           body)))))
@@ -68,38 +133,21 @@ run after desugar-bodies."
     expression."
   (desugar-bindings (desugar-bodies expr)))
 
-;;; AST definitions
+;;; Utilities
 
-(defclass <sexp> () ())
+(defun tree-to-string (tree)
+  "Convert an S-expression into a tree of strings."
+  (if tree
+      (if (atom tree)
+          (val tree)
+          (cons (tree-to-string (first tree))
+                (tree-to-string (rest tree))))))
 
-(defclass <atom> (<sexp>)
-  ((val :initarg :val :reader val :type string)
-   (line :initarg :line :reader line :initform 0)
-   (col :initarg :col :reader col :initform 0)))
+(defun ident-equal (token str)
+  (and (typep token '<identifier>)
+       (equal (val token) str)))
 
-(defmethod print-object ((atom <atom>) stream)
-  (format stream "~A" (val atom)))
-
-(defclass <identifier> (<atom>) ())
-(defclass <constant> (<atom>) ())
-(defclass <integer> (<constant>) ())
-(defclass <float> (<constant>) ())
-(defclass <string> (<constant>) ())
-
-(defclass <list> (<sexp>) ())
-
-(defclass <begin> (<list>)
-  ((steps :initarg :steps
-          :reader steps
-          :type (proper-list <ast>))))
-
-(defclass <let> (<list>)
-  ((var :initarg :var
-        :reader var
-        :type <identifier>)
-   (val :initarg :val
-        :reader val
-        :type <ast>)
-   (body :initarg :body
-         :reader body
-         :type <ast>)))
+(defun equal-trees (tree-a tree-b)
+  (let ((tree-a* (tree-to-string tree-a))
+        (tree-b* (tree-to-string tree-b)))
+    (equal tree-a* tree-b*)))

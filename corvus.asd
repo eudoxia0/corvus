@@ -12,8 +12,8 @@
                 :serial t
                 :components
                 ((:file "util")
-                 (:file "parser")
                  (:file "ast")
+                 (:file "parser")
                  (:file "modules")
                  (:file "macros")
                  (:file "types")
