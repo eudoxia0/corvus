@@ -24,7 +24,10 @@
            :var
            :val
            :body
-           :<form>))
+           :<form>
+           :tree-to-string
+           :ident-equal
+           :equal-trees))
 (in-package :corvus.ast)
 
 ;;;; Abstract syntax tree class definitions

@@ -11,7 +11,9 @@
   :components ((:module "compiler/bootstrap/tests"
                 :serial t
                 :components
-                ((:file "parser")
+                ((:file "parser") ;; The parser is tested before the AST,
+                                  ;; because the AST tests use `parse-string` to
+                                  ;; simplify things.
                  (:file "ast")
                  (:file "modules")
                  (:file "macros")

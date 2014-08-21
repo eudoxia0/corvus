@@ -2,8 +2,7 @@
 (defpackage :corvus-test.ast
   (:use :cl :fiveam :corvus.ast)
   (:import-from :corvus.parser
-                :parse-string
-                :equal-trees))
+                :parse-string))
 (in-package :corvus-test.ast)
 
 (def-suite ast)

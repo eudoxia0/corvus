@@ -4,7 +4,8 @@
   (:import-from :corvus.ast
                 :<identifier>
                 :<integer>
-                :<float>)
+                :<float>
+                :<string>)
   (:export :parse-string
            :parse-file))
 (in-package :corvus.parser)
