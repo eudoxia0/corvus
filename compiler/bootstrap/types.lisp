@@ -74,10 +74,9 @@
 (defclass <double> (<float>) ())
 (defclass <quad> (<float>) ())
 
-(defgeneric width (type)
-  (:method ((float <single>)) 32)
-  (:method ((float <double>)) 64)
-  (:method ((float <quad>)) 128))
+(defmethod width ((float <single>)) 32)
+(defmethod width ((float <double>)) 64)
+(defmethod width ((float <quad>)) 128)
 
 ;;;; Aggregate Types
 
