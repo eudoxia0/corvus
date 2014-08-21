@@ -169,7 +169,7 @@ defined by a let)."
 
 (defun infer (f)
   "Infer the type of 'f'."
-  (declare (type <sexp> f))
+  (declare (type <form> f))
   (let* ((e (env-empty))
          (term (algorithm-j (env-empty) f e)))
     (subs term e)))

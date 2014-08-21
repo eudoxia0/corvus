@@ -184,7 +184,7 @@ the look up the name in the type environment."
 (defun emit-list (first args tenv)
   "Emit the type specified by a list. For example, `(tup i8 i8 i8)` is a list
 that specifiers a triple of octets."
-  (declare (type <sexp> first args)
+  (declare (type <form> first args)
            (type <type-env> tenv))
   (let ((fn (val first))) ;; TODO: Validate that it is in fact a token
     (cond
@@ -210,7 +210,7 @@ that specifiers a triple of octets."
 
 (defun emit-type (ast tenv)
   "Return the type specified by the type specifier `ast`."
-  (declare (type <sexp> ast)
+  (declare (type <form> ast)
            (type <type-env> tenv))
   (if (null ast)
       (make-instance '<unit>)

@@ -1,6 +1,6 @@
 (in-package :cl-user)
 (defpackage :corvus.modules
-  (:use :cl :anaphora :corvus.util :corvus.parser)
+  (:use :cl :anaphora :corvus.util :corvus.ast)
   (:export :modularize))
 (in-package :corvus.modules)
 
@@ -22,7 +22,7 @@
 ;;; Module definition
 
 (defun find-subform (tree name)
-  (declare (type <sexp> tree)
+  (declare (type <form> tree)
            (type string name))
   (loop for form in tree do
     (if (and (listp form)

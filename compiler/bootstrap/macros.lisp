@@ -1,6 +1,6 @@
 (in-package :cl-user)
 (defpackage :corvus.macros
-  (:use :cl :trivial-types :corvus.parser))
+  (:use :cl :trivial-types :corvus.ast))
 (in-package :corvus.macros)
 
 ;;; Data structures
@@ -13,10 +13,10 @@
 (defclass <macro-case> ()
   ((pattern :initarg :pattern
             :reader pattern
-            :type <sexp>)
+            :type <form>)
    (template :initarg :template
              :reader template
-             :type <sexp>)))
+             :type <form>)))
 
 (defclass <macro> ()
   ((cases :initarg :cases
@@ -32,19 +32,19 @@
 ;;; Macro definition
 
 (defun process-cases (tree)
-  (declare (type <sexp> tree))
+  (declare (type <form> tree))
   (loop for (pattern template) on tree by #'cddr collecting
     (make-instance '<macro-case>
                    :pattern pattern
                    :template template)))
 
 (defun parse-macro-definition (tree)
-  (declare (type <sexp> tree))
+  (declare (type <form> tree))
   (make-instance '<macro>
                  :cases (process-cases tree)))
 
 (defun define-macro (tree menv)
-  (declare (type <sexp> tree)
+  (declare (type <form> tree)
            (type <macro-env> menv))
   (let ((name (val (first tree))))
     (setf (gethash name (macros menv))
