@@ -1,10 +1,11 @@
 (in-package :cl-user)
 (defpackage :corvus-test.modules
   (:use :cl :fiveam :corvus.modules)
-  (:import-from :corvus.parser
+  (:import-from :corvus.ast
                 :val
-                :parse-string
-                :tree-to-string))
+                :tree-to-string)
+  (:import-from :corvus.parser
+                :parse-string))
 (in-package :corvus-test.modules)
 
 (def-suite modules)
