@@ -117,11 +117,11 @@ defined by a let)."
 ;;;
 
 (defgeneric constant-type (constant)
-  (:method ((int corvus.parser:<integer>))
+  (:method ((int corvus.ast:<integer>))
     (make-instance '<i64>))
-  (:method ((float corvus.parser:<float>))
+  (:method ((float corvus.ast:<float>))
     (make-instance '<double>))
-  (:method ((str corvus.parser:<string>))
+  (:method ((str corvus.ast:<string>))
     (make-instance '<array>
                    :base-type (make-instance '<i8>))))
 
@@ -130,10 +130,10 @@ defined by a let)."
 (defgeneric algorithm-j (p f e)
   (:documentation "Robert Milner's Algorithm J."))
 
-(defmethod algorithm-j (p (f corvus.parser:<constant>) e)
+(defmethod algorithm-j (p (f corvus.ast:<constant>) e)
   (instance (constant-type f) (env-empty)))
 
-(defmethod algorithm-j (p (f corvus.parser:<identifier>) e)
+(defmethod algorithm-j (p (f corvus.ast:<identifier>) e)
   (cond
     ((equal (val f) "true")
      (make-instance '<true-literal>))

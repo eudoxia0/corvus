@@ -1,8 +1,8 @@
 (in-package :cl-user)
 (defpackage :corvus.types
   (:use :cl :trivial-types :anaphora)
-  (:import-from :corvus.parser
-                :<sexp>
+  (:import-from :corvus.ast
+                :<form>
                 :<atom>
                 :val
                 :ident-equal)
