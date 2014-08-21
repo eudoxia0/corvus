@@ -106,7 +106,7 @@
 
 (defclass <variant> ()
   ((name :initarg :name :reader name :type string)
-   (base-type :initarg :base-type :reader base-type :type <type>))
+   (base-type :initarg :base-type :reader base-type :type (or <type> null)))
   (:documentation "A variant of an ADT."))
 
 (defclass <datatype> (<aggregate>)
