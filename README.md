@@ -8,7 +8,7 @@ A statically-typed, low-level dialect of Lisp that targets LLVM.
 
 # Why?
 
-The era of dynamic languages if over. There is currently a 'race to the bottom':
+The era of dynamic languages is over. There is currently a 'race to the bottom':
 Languages like [Rust](http://www.rust-lang.org/) and
 [Nimrod](http://nimrod-lang.org/) are merging the world of low-level programming
 with high-level compiler features. [cmacro](https://github.com/eudoxia0/cmacro)
